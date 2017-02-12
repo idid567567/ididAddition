@@ -1,0 +1,405 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"cen",
+				"centerX"
+			],
+			[
+				"fore",
+				"forest_background"
+			],
+			[
+				"key",
+				"keyboard"
+			],
+			[
+				"ke",
+				"keyboard"
+			],
+			[
+				"ar",
+				"args\t(phaser.js)"
+			],
+			[
+				"Ke",
+				"Keyboard\t(phaser.js)"
+			],
+			[
+				"ba",
+				"background\t(phaser.js)"
+			],
+			[
+				"state",
+				"state1"
+			],
+			[
+				"fireca",
+				"firecat"
+			],
+			[
+				"im",
+				"img"
+			],
+			[
+				"mar",
+				"margin"
+			],
+			[
+				"st",
+				"style\tTag"
+			],
+			[
+				"met",
+				"meta"
+			],
+			[
+				"me",
+				"meta\tTag"
+			],
+			[
+				"rect",
+				"rect1"
+			],
+			[
+				"process",
+				"processing\t(processing.js)"
+			],
+			[
+				"in",
+				"init_dict\tstatement"
+			],
+			[
+				"init",
+				"init_array\tstatement"
+			],
+			[
+				"Or",
+				"OrderedDict"
+			],
+			[
+				"O",
+				"OrderedDict"
+			],
+			[
+				"try",
+				"try_array"
+			],
+			[
+				"mer",
+				"merge_array"
+			],
+			[
+				"merge",
+				"merge_array"
+			],
+			[
+				"m",
+				"merge_array"
+			],
+			[
+				"merge_b",
+				"merge_bug_array"
+			],
+			[
+				"temp",
+				"temp_array\tstatement"
+			],
+			[
+				"te",
+				"temp_array\tstatement"
+			],
+			[
+				"temparry",
+				"temp_array"
+			],
+			[
+				"is",
+				"is_exist"
+			],
+			[
+				"array",
+				"array\tfunction"
+			],
+			[
+				"vs",
+				"vstack\tfunction"
+			],
+			[
+				"report_",
+				"report_row"
+			],
+			[
+				"glob",
+				"glob\tfunction"
+			],
+			[
+				"getcwd",
+				"getcwd\tfunction"
+			],
+			[
+				"impo",
+				"import\tkeyword"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 375.0,
+		"last_filter": "Package Control: ",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"set syn",
+				"Set Syntax: Processing"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"About"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 453.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"package",
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/Yison_inside/GitHub/ididPhaser/js/state9.js",
+		"/Users/Yison_inside/GitHub/ididPhaser/js/state8.js",
+		"/Users/Yison_inside/GitHub/ididPhaser/js/state7.js",
+		"/Users/Yison_inside/GitHub/ididPhaser/js/state6.js",
+		"/Users/Yison_inside/GitHub/ididPhaser/js/state5.js",
+		"/Users/Yison_inside/GitHub/ididPhaser/js/state4.js",
+		"/Users/Yison_inside/GitHub/ididPhaser/js/state3.js",
+		"/Users/Yison_inside/GitHub/ididPhaser/js/state2.js",
+		"/Users/Yison_inside/Desktop/Phaser/index.html",
+		"/Users/Yison_inside/Documents/state2.js",
+		"/Users/Yison_inside/Desktop/Phaser/js/state1.js",
+		"/Users/Yison_inside/Desktop/Phaser/js/main.js",
+		"/Users/Yison_inside/Desktop/Phaser/assets/img",
+		"/Users/Yison_inside/Desktop/加法遊戲/style.css",
+		"/Users/Yison_inside/Desktop/加法遊戲/index.html",
+		"/Users/Yison_inside/Desktop/加法遊戲/firemoving.js",
+		"/private/var/folders/8t/v0xy1b4j70v8yzctzc3v8kjh0000gn/T/com.microsoft.Excel/修復結果至教育端組織、專案0.xml",
+		"/Users/Yison_inside/Desktop/DeepKnowledgeTracing-master/scripts/trainAssist.lua",
+		"/Users/Yison_inside/Desktop/DeepKnowledgeTracing-master/scripts/rnn.lua",
+		"/Users/Yison_inside/Desktop/DeepKnowledgeTracing-master/scripts/dataSynthetic.lua",
+		"/Users/Yison_inside/Desktop/f-f_business_31-svg_f_business_31_1nbg.svg",
+		"/Users/Yison_inside/Desktop/DeepKnowledgeTracing-master/README.md",
+		"/Users/Yison_inside/Desktop/DeepKnowledgeTracing-master/scripts/util.lua",
+		"/Users/Yison_inside/Desktop/DeepKnowledgeTracing-master/scripts/dataAssist.lua",
+		"/Users/Yison_inside/Desktop/processing_project/processing.pde",
+		"/Users/Yison_inside/Desktop/加法遊戲/jscode.js",
+		"/Users/Yison_inside/Desktop/processing_project/index.html",
+		"/Users/Yison_inside/Desktop/interact/mg01/add.html",
+		"/Users/Yison_inside/Desktop/interact/index.html",
+		"/Users/Yison_inside/Dropbox/JunYiExs/LaTeX/國中架構/mjayf8-因式分解.tex",
+		"/Users/Yison_inside/Desktop/processing_project/processing.js",
+		"/Users/Yison_inside/Desktop/Adobe.After.Effects.CC.2015.v13.5.0.347.Multilingual.MacOSX.Incl.Keygen-XFORCE/Instrucciones.txt",
+		"/Users/Yison_inside/Desktop/weekly_bug_report.ipynb",
+		"/Users/Yison_inside/Desktop/特定年級＆科目＿總做題數:總知識點.ipynb",
+		"/Users/Yison_inside/Desktop/results-20161106-182353.csv",
+		"/Users/Yison_inside/Desktop/results-20161106-181909.csv",
+		"/Users/Yison_inside/Desktop/三四年級成長.csv",
+		"/Users/Yison_inside/Downloads/Untitled.sql",
+		"/Users/Yison_inside/Downloads/-.sql",
+		"/private/var/folders/8t/v0xy1b4j70v8yzctzc3v8kjh0000gn/T/com.microsoft.Excel/修復結果至漢文校長 or 吳穆昌老師的學生 0.xml",
+		"/Users/Yison_inside/Desktop/arithmetic_word_problems_1.html",
+		"/Users/Yison_inside/miniconda3/envs/new3.5/bug_reports/mix_report.csv",
+		"/Users/Yison_inside/miniconda3/envs/new3.5/bug_reports/mixbug.csv",
+		"/Users/Yison_inside/miniconda3/envs/new3.5/bug_reports/20160328_exercise_bug_report.csv",
+		"/Users/Yison_inside/miniconda3/envs/new/try.py"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 95.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"game",
+			"state2",
+			"state1",
+			"GameState",
+			"nngraph",
+			"nn",
+			"ellipse",
+			"name",
+			"%s",
+			"％s",
+			"timestamp",
+			"backup_timestamp",
+			"since_datetime",
+			"DATE_ADD(backup_timestamp, 8 , 'hour')",
+			"backup_timestamp",
+			">",
+			"group",
+			"[",
+			"live",
+			"mix",
+			"temp",
+			"csv",
+			"count_one"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"state3",
+			"state2"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.autopep8":
+	{
+		"height": 102.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "index.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 227.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
