@@ -5,7 +5,7 @@ demo.state1 = function() {};
 demo.state1.prototype = {
     preload: function() {
         game.load.image("background", "assets/background/grassland.jpg");
-        game.load.spritesheet("start_btn", "assets/button/start_btn.png", 792, 350.2);
+        game.load.spritesheet("start_btn", "assets/button/start_btn.png", 792, 344);
 
     },
 
