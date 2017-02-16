@@ -193,7 +193,7 @@
 			"file": "js/state2.js",
 			"settings":
 			{
-				"buffer_size": 1244,
+				"buffer_size": 1245,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -415,7 +415,8 @@
 							"is_init_dirty_state": false,
 							"origin_encoding": "ASCII",
 							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -461,15 +462,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1244,
+						"buffer_size": 1245,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								764,
-								764
+								1245,
+								1245
 							]
 						],
 						"settings":
@@ -478,7 +479,8 @@
 							"is_init_dirty_state": false,
 							"origin_encoding": "ASCII",
 							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
