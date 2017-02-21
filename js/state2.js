@@ -29,7 +29,7 @@ demo.state2.prototype = {
     },
     create: function() {
         //define backgroung
-        game.stage.backgroundColor = "#AAAAAA";
+        game.stage.backgroundColor = "#000000";
         var background = game.add.sprite(0, 0, "background");
         background.scale.setTo(0.7);
         addChangeStateEvent();

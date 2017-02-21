@@ -1,24 +1,28 @@
 var mask;
+var radius;
 
 demo.state4 = function(){};
 demo.state4.prototype = {
   preload: function(){},
   create: function(){
-   	game.stage.backgroundColor = "#F33392";
+   	
   	addChangeStateEvent();
-    
-    mask = game.add.graphics(0,0);  
-    mask.beginFill(0xaaaaaa);  
-    mask.drawRect(200,200,300,200);
-      
-    game.input.addMoveCallback(move,this);
+    radius = 1;
+  
+   
+     
       
    
   },
-  update: function(){},
+  update: function(){
+        mask = game.add.graphics();  
+    mask.beginFill(0xaaaaaa);  
+       mask.drawCircle(centerX,centerY,radius);
+    radius*=1.2;
+    
+
+  },
 }
 
-function move(pointer,x,y){
-    mask.x = x - 200;
-    mask.y = y - 200;
-}
+
+    
