@@ -4,15 +4,14 @@ var start_btn;
 demo.state1 = function() {};
 demo.state1.prototype = {
     preload: function() {
-        game.load.image("background", "assets/background/grassland.jpg");
+       
         game.load.spritesheet("start_btn", "assets/button/start_btn.png", 792, 344);
 
     },
 
     create: function() {
         game.stage.backgroundColor = "#AAAAAA";
-        background = game.add.sprite(0, 0, "background");
-        background.scale.setTo(0.7);
+       
         addChangeStateEvent();
 
         start_btn = game.add.button(game.world.centerX + 100, 600, "start_btn", goToState2, this, 1, 0);
