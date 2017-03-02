@@ -7,49 +7,32 @@ var demo = {},
 demo.state0 = function() {};
 demo.state0.prototype = {
     preload: function() {
-        game.load.image("forest_background", "assets/background/forest_background.jpg");
-        game.load.spritesheet("rockman_1", "assets/sprites/moving_rockman.png", 500, 452);
+       
+        game.load.image('white','assets/particlestorm/particle/whiteparticle.png');
+
     },
+
     create: function() {
-        game.stage.backgroundColor = "#AAAAAA";
-        console.log("state0");
+        game.stage.backgroundColor = "#444444";
+       
         addChangeStateEvent();
+
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-        game.world.setBounds(0, 0, 2560, 1600);
-        var forest_background = game.add.sprite(0, 0, "forest_background");
-        rockman_1 = game.add.sprite(centerX, centerY, "rockman_1");
-        rockman_1.animations.add("walk", [0, 1, 2]);
-        rockman_1.anchor.setTo(0.5, 0.5);
-        rockman_1.scale.setTo(0.5, 0.5);
-        game.physics.enable(rockman_1);
-        rockman_1.body.collideWorldBounds = true;
-
-        game.camera.follow(rockman_1);
-        game.camera.deadzone = new Phaser.Rectangle(centerX - 200, 0, 600, 600);
+        start_btn = game.add.button(game.world.centerX, 600, "white", goToState1, this, 1, 0);
+        start_btn.anchor.setTo(0.5, 0.5);
+        start_btn.scale.setTo(4, 4);
+      	  
+        var starttext = game.add.text(game.world.centerX, 600,'START', { font: "30px Arial", fill: "#444444", align: "center" });
+        starttext.anchor.setTo(0.5, 0.5);
     },
-    update: function() {
-        if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-            rockman_1.x += speed;
-            rockman_1.scale.setTo(0.5, 0.5);
-            rockman_1.animations.play("walk", 10, true);
-        } else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-            rockman_1.x -= speed;
-            rockman_1.scale.setTo(-0.5, 0.5);
-            rockman_1.animations.play("walk", 10, true);
-        }
-
-        else {
-        	rockman_1.animations.stop("walk");
-        	rockman_1.frame = 0;
-        }
-
-        if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-            rockman_1.y -= speed;
-        } else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
-            rockman_1.y += speed;
-        }
-    },
+    update: function() {},
 };
+
+function goToState1() {
+    
+    game.state.start("state1");
+};
+
 
 function changeState(i, stateNum) {
 	console.log("state" + stateNum);

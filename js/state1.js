@@ -1,5 +1,6 @@
 var background;
-var start_btn;
+var level1_btn;
+var currentlevel;
 
 demo.state1 = function() {};
 demo.state1.prototype = {
@@ -11,26 +12,58 @@ demo.state1.prototype = {
 
     create: function() {
         game.stage.backgroundColor = "#444444";
-       
+        
         addChangeStateEvent();
-
+        
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-        start_btn = game.add.button(game.world.centerX, 600, "white", goToState2, this, 1, 0);
-        start_btn.anchor.setTo(0.5, 0.5);
-        start_btn.scale.setTo(4, 4);
-
-        start_btn.onInputOver.add(over, this);
+        
+        //level1 button
+        level1_btn = game.add.button(game.world.centerX, 600, "white", goTolevel1, this, 1, 0);
+        level1_btn.anchor.setTo(0.5, 0.5);
+        level1_btn.scale.setTo(4, 4);
+        level1_btn.onInputOver.add(over, this);
       	  
-        var starttext = game.add.text(game.world.centerX, 600,'START', { font: "30px Arial", fill: "#444444", align: "center" });
-        starttext.anchor.setTo(0.5, 0.5);
+        var level1text = game.add.text(game.world.centerX, 600,'LEVEL1', { font: "30px Arial", fill: "#444444", align: "center" });
+        level1text.anchor.setTo(0.5, 0.5);
+        
+        //level2 button
+        level2_btn = game.add.button(game.world.centerX + 400, 600, "white", goTolevel2, this, 1, 0);
+        level2_btn.anchor.setTo(0.5, 0.5);
+        level2_btn.scale.setTo(4, 4);
+        level2_btn.onInputOver.add(over, this);
+      	  
+        var level2text = game.add.text(game.world.centerX + 400, 600,'LEVEL2', { font: "30px Arial", fill: "#444444", align: "center" });
+        level2text.anchor.setTo(0.5, 0.5);
+        
+        //level3 button
+        level3_btn = game.add.button(game.world.centerX + 400, 200, "white", goTolevel3, this, 1, 0);
+        level3_btn.anchor.setTo(0.5, 0.5);
+        level3_btn.scale.setTo(4, 4);
+        level3_btn.onInputOver.add(over, this);
+      	  
+        var level3text = game.add.text(game.world.centerX + 400, 200,'LEVEL3', { font: "30px Arial", fill: "#444444", align: "center" });
+        level3text.anchor.setTo(0.5, 0.5);
+        
+        
+        function goTolevel1() {
+            game.state.start("state2");
+            currentlevel = 1;
+        }
+        function goTolevel2() {
+            game.state.start("state2");
+            currentlevel = 2;
+        }
+        function goTolevel3() {
+            game.state.start("state2");
+            currentlevel = 3;
+        }
+        
     },
-    update: function() {},
+    update: function() {
+        
+    }
 };
 
-function goToState2() {
-    
-    game.state.start("state2");
-};
 
 function over() {
 	

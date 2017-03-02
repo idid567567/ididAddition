@@ -1,6 +1,4 @@
-var mask;
-var radius;
-var i = 0,t=0;
+var i,t;
 
 demo.state4 = function(){};
 demo.state4.prototype = {
@@ -16,44 +14,34 @@ demo.state4.prototype = {
       t=0;
   	     
       addChangeStateEvent();  
-      radius = 1;
         
       var style = { font: "65px Arial", fill: "#ffffff", align: "center" }; 
         
       SCORE = game.add.text(100,700,'SCORE:', style);
-      scoreshow = game.add.text(400,700,'', style); 
-    
+      scoreshow = game.add.text(400,700,'', style);     
       
-    
       do_again_btn = game.add.button(game.world.centerX + 200, 700, 'white', backToState2, this, 1, 0);
       do_again_btn.anchor.setTo(0.3, 0.4);
       do_again_btn.scale.setTo(3, 3);
       var style = { font: "30px Arial", fill: "#222222", align: "center" };     
       game.add.text(game.world.centerX + 200, 700,'Play Again', style); 
-   
+
+      level_page_btn = game.add.button(game.world.centerX + 550, 700, 'white', backToState1, this, 1, 0);
+      level_page_btn.anchor.setTo(0.3, 0.4);
+      level_page_btn.scale.setTo(3, 3);     
+      game.add.text(game.world.centerX + 550, 700,'Level Page', style); 
+      
   },
   update: function(){
-    /*
-        mask = game.add.graphics();  
-    mask.beginFill(0xaaaaaa);  
-    if(radius<2500){
-      mask.drawCircle(centerX,centerY,radius);
-    radius*=1.2;  
-        console.log('1');
-    }
-    */
-    
+      
+      //show score
       if(i <= finalscore  && t > 60){
-          
           scoreshow.setText(i);
-          console.log(i);
-          i++;2
+          i++;
       }else{
           t++;
       }  
-    
-
-    } 
+  } 
 }
 
 function backToState2(){
@@ -62,4 +50,12 @@ function backToState2(){
     
     }
 }
+
+function backToState1(){
+    if(i >= finalscore){
+        game.state.start("state1");
+    
+    }
+}
+    
     
