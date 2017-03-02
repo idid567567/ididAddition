@@ -1,15 +1,16 @@
 var emitter,burst;
 var timer;
-var total = 10;
-var firetime = total*1000;
+var total;
+var firetime;
 var mask;
 var bombline;
 var move;
 var cheese;
 var gravity = 1.2,vy=0;
+var finalscore;
 
-var question = ['1+1','1+2','2+1','1+3','2+2','3+1'];
-var answer = [ 2 , 3 , 3 , 4 , 4 , 4 ];
+var questionlevel1 = ['1+1','2+1','3+1','4+1','5+1','6+1','7+1','8+1','9+1','2+1','2+2','3+2','4+2','5+2','6+2','7+2','8+2'];
+var answerlevel1   = [  2  ,  3  ,  4  ,  5  ,  6  ,  7  ,  8  ,  9  ,  10 ,  3  ,  4  ,  5  ,  6  ,  7  ,  8  ,  9  ,  10 ];
 
 var index = new Array();
 var questionindex = new Array(); 
@@ -41,7 +42,13 @@ demo.state2.prototype = {
         //define backgroung
         game.stage.backgroundColor = "#444444";
         
-       
+        //init parameter
+     
+        answercount = 0;
+        total = 10;
+        firetime = total*1000;
+        finalscore = 100;
+        
         addChangeStateEvent();
 
         //define how poke_mouse move
@@ -95,110 +102,68 @@ demo.state2.prototype = {
         mask.drawRect(255,660,500,100);
         bombline.mask = mask;
         
-
+        var questionrandseed = 16 ;
         
        //create the order of questions
-       for(var i = 0;i<questionamount;i++){
+       for(var i = 0;i<questionrandseed;i++){
            index[i] = i;
        }
     
         for(var i = 0;i<questionamount;i++){
-            var rand = Math.floor(Math.random()*(6-i));
+            var rand = Math.floor(Math.random()*(questionrandseed-i));
             questionindex[i] = index[rand];
             index.splice(rand,1);
         }
         
-        
+       
         
 	   var style = { font: "65px Arial", fill: "#ffffff", align: "center" };     
         var questionstring;    
-        questionstring = game.add.text(1000,110,question[questionindex[answercount]], style);
+        questionstring = game.add.text(1200,500,questionlevel1[questionindex[answercount]], style);
         
         function updatequestion(){
             if(questionamount == answercount){
-                game.state.start("state3");
+                game.state.start("state4");
             }else{
-                questionstring.setText(question[questionindex[answercount]]);
+                questionstring.setText(questionlevel1[questionindex[answercount]]);
 
             }
         }
-            
-                  
         
-        game.add.button(100,200,'white',function(){
-                
-            if(poke_mouse.y >=500){
-                vy *= -1;
-                poke_mouse.y +=vy;
-            }
-        });
-        game.add.text(150,243,0);
+        
+        game.add.text(1200,700,'LEVEL1', style);
+        
+        
+        //create the answer pannel        
+        for(var i = 0 ; i <= 10 ; i++){
+            answerpannel[i] = game.add.sprite( 200 + 100*i, 200,"white");
+            answerpannel[i].events.onInputDown.add(jump,{param1: i});
+            answerpannel[i].inputEnabled = true;  
+            game.add.text(250 + 100*i,243,i);
+        
+            function jump(){
+        
+                if(poke_mouse.y >=500){
+                    vy *= -1;
+                    poke_mouse.y +=vy;
 
-        
-        game.add.button(200,200,'white',function(){
+                    if( answerlevel1[questionindex[answercount]] == this.param1 ){
+                        answercount++;    
+                        updatequestion();
                 
-            if(poke_mouse.y >=500){
-                vy *= -1;
-                poke_mouse.y +=vy;
-            }
-        });
-        game.add.text(250,243,1);
-        
-        
-        game.add.button(300,200,'white',function(){
-                
-            if(poke_mouse.y >=500){
-                vy *= -1;
-                poke_mouse.y +=vy;
-
-            if(questionindex[answercount] == 0){
-                answercount++; 
-                updatequestion();
-            }
+                    }
+                }
             
-            }
-        });
-        game.add.text(350,243,2);
-
-        
-        game.add.button(400,200,'white',function(){
-                
-            if(poke_mouse.y >=500){
-                vy *= -1;
-                poke_mouse.y +=vy;
-            }
-            if(questionindex[answercount] == 1 || questionindex[answercount] == 2 ){
-                answercount++;    
-                updatequestion();
-            }
-
-        
-        });
-        game.add.text(450,243,3);
-        
-        game.add.button(500,200,'white',function(){
-                
-            if(poke_mouse.y >=500){
-                vy *= -1;
-                poke_mouse.y +=vy;
-            }
-            if(questionindex[answercount] == 3 || questionindex[answercount] == 4 || questionindex[answercount] == 5 ){
-                answercount++;    
-                updatequestion();
-            }
-        });
-        game.add.text(550,243,4);
             
-        
-  
-            
-        
+            }         
+        }
         
         
         
        
 
     },
+        
     update: function() {
        
         if (game.physics.arcade.distanceToXY(poke_mouse, game.input.mousePointer.x, 500) > 50) {
@@ -241,13 +206,16 @@ demo.state2.prototype = {
       }else{          
           vy = 20;
       }
-        
+       if( questionamount > answercount ){
+        finalscore -= 0.05;
+       }
+    } 
         
         
        
             
-    }
 }
+    
 
 //game time function
 function updateCounter(){

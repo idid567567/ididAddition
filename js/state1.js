@@ -5,31 +5,33 @@ demo.state1 = function() {};
 demo.state1.prototype = {
     preload: function() {
        
-        game.load.spritesheet("start_btn", "assets/button/start_btn.png", 792, 344);
+        game.load.image('white','assets/particlestorm/particle/whiteparticle.png');
 
     },
 
     create: function() {
-        game.stage.backgroundColor = "#AAAAAA";
+        game.stage.backgroundColor = "#444444";
        
         addChangeStateEvent();
 
-        start_btn = game.add.button(game.world.centerX + 100, 600, "start_btn", goToState2, this, 1, 0);
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        start_btn = game.add.button(game.world.centerX, 600, "white", goToState2, this, 1, 0);
         start_btn.anchor.setTo(0.5, 0.5);
-        start_btn.scale.setTo(0.3, 0.3);
+        start_btn.scale.setTo(4, 4);
 
         start_btn.onInputOver.add(over, this);
-      	
-
+      	  
+        var starttext = game.add.text(game.world.centerX, 600,'START', { font: "30px Arial", fill: "#444444", align: "center" });
+        starttext.anchor.setTo(0.5, 0.5);
     },
     update: function() {},
 };
 
 function goToState2() {
-    console.log("state2");
+    
     game.state.start("state2");
 };
 
 function over() {
-	console.log("hover start_btn");
+	
 };
