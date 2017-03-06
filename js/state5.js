@@ -1,4 +1,5 @@
-
+var data = new Array();
+data = {0:[1,1],1:[1,2],2:[1,3]};
 
 demo.state5 = function(){};
 demo.state5.prototype = {

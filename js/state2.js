@@ -9,28 +9,6 @@ var cheese;
 var gravity = 1.2,vy=0;
 var finalscore;
 
-//level1 questionlevel1.length = 17
-var questionlevel1 = ['1+1','2+1','3+1','4+1','5+1','6+1','7+1','8+1','9+1','1+2','2+2','3+2','4+2','5+2','6+2','7+2','8+2'];
-var answerlevel1   = [  2  ,  3  ,  4  ,  5  ,  6  ,  7  ,  8  ,  9  ,  10 ,  3  ,  4  ,  5  ,  6  ,  7  ,  8  ,  9  ,  10 ];
-//level2 = level1+level2 questionlevel2.length = 28
-var questionlevel2 = ['1+3','2+3','3+3','4+3','5+3','6+3','7+3','8+4','1+4','2+4','3+4','4+4','5+4','6+4','1+5','2+5','3+5','4+5','5+5',
-                      '1+6','2+6','3+6','4+6','1+7','2+7','3+7','1+8','2+8','1+9'];
-var answerlevel2   = [  4  ,  5  ,  6  ,  7  ,  8  ,  9  ,  10 ,  9  ,  5  ,  6  ,  7  ,  8  ,  9  ,  10 ,  6  ,  7  ,  8  ,  9  ,  10 ,
-                        7  ,  8  ,  9  ,  10 ,  8  ,  9  ,  10 ,  9  ,  10 ,  10 ];
-//level3 , questionlevel3.length = 18
-var questionlevel3 = ['1+10','2+10','3+10','4+10','5+10','6+10','7+10','8+10','9+10','10+1','10+2','10+3','10+4','10+5','10+6','10+7','10+8','10+9'];
-var answerlevel3   = [  11  ,  12  ,  13  ,  14  ,  15  ,  16  ,  17  ,  18  ,  19  ,  11  ,  12  ,  13  ,  14  ,  15  ,  16  ,  17  ,  18  ,  19  ];
-
-//level4 , questionlevel4.length = 10
-var questionlevel4 = ['1+1','2+2','3+3','4+4','5+5','6+6','7+7','8+8','9+9','10+10'];
-var answerlevel4   = [  2  ,  4  ,  6  ,  8  ,  10 ,  12 ,  14 ,  16 ,  18 ,  20   ];
-
-//level5 = level1+level2+level3+level5 , questionlevel5.length = 36
-var questionlevel5 = ['9+2','8+3','9+3','7+4','8+4','9+4','6+5','7+5','8+5','9+5','5+6','6+6','7+6','8+6','9+6','4+7','5+7','6+7','7+7','8+7','9+7',
-                      '3+8','4+8','5+8','6+8','7+8','8+8','9+8','2+9','3+9','4+9','5+9','6+9','7+9','8+9','9+9'];
-var answerlevel5   = [  11 ,  11 ,  12 ,  11 ,  12 ,  13 ,  11 ,  12 ,  13 ,  14 ,  11 ,  12 ,  13 ,  14 ,  15 ,  11 ,  12 ,  13 ,  14 ,  15 ,  16 ,
-                        11 ,  12 ,  13 ,  14 ,  15 ,  16 ,  17 ,  11 ,  12 ,  13 ,  14 ,  15 ,  16 ,  17 ,  18 ];
-
 
 var index = new Array();
 var questionindex = new Array(); 
@@ -44,7 +22,7 @@ demo.state2.prototype = {
     preload: function() {
         
         game.load.image("mouse_jump", "assets/sprites/poke_mouse_jump.png");
-        game.load.image("cheese_btn", "assets/button/cheese_btn.png");
+        
         game.load.spritesheet("poke_mouse", "assets/sprites/poke_mouse.png", 240, 290);
         
         game.load.image('white','assets/particlestorm/particle/whiteparticle.png');
@@ -136,13 +114,13 @@ demo.state2.prototype = {
         
         //create a question
         if( currentlevel == 1 ){
-            questionstring = game.add.text(1200,500,questionlevel1[questionindex[answercount]], style);
+            questionstring = game.add.text(1200,500,questionlevel1[questionindex[answercount]][0]+ '+' +questionlevel1[questionindex[answercount]][1], style);
         }else if( currentlevel == 2 ){
             var questionlevel12 = questionlevel2.concat(questionlevel1);
             questionstring = game.add.text(1200,500,questionlevel12[questionindex[answercount]], style);
             var answerlevel12 = answerlevel2.concat(answerlevel1);
         }else if( currentlevel == 3 ){
-            questionstring = game.add.text(1200,500,questionlevel3[questionindex[answercount]], style);
+            questionstring = game.add.text(1200,500,questionlevel3[questionindex[answercount]][0]+ '+' +questionlevel3[questionindex[answercount]][1], style);
         }
         
         //after answer check,create a new question
@@ -151,11 +129,11 @@ demo.state2.prototype = {
                 game.state.start("state4");
             }else{
                 if( currentlevel == 1 ){
-                    questionstring.setText(questionlevel1[questionindex[answercount]]);
+                    questionstring.setText(questionlevel1[questionindex[answercount]][0]+ '+' +questionlevel1[questionindex[answercount]][1]);
                 }else if( currentlevel == 2 ){
                     questionstring.setText(questionlevel12[questionindex[answercount]]);
                 }else if( currentlevel == 3 ){
-                    questionstring.setText(questionlevel3[questionindex[answercount]]);
+                    questionstring.setText(questionlevel3[questionindex[answercount]][0]+ '+' +questionlevel3[questionindex[answercount]][1]);
                 }
             }
         }
