@@ -1,4 +1,4 @@
-var move;
+
 var scorebar,scorebarY,scorebarcompleted,mask;
 
 var index = new Array();
@@ -44,9 +44,9 @@ demo.state3.prototype = {
         questionindex[answercount] = rand;
 
 	   
-        var style = { font: "65px Arial", fill: "#ffffff", align: "center" };     
+        var style = { font: "120px Arial", fill: "#ffffff", align: "center" };     
         var questionstring;    
-        questionstring = game.add.text(1200,500,questionlevel1[questionindex[answercount]][0]+ '+' +questionlevel1[questionindex[answercount]][1], style);
+        questionstring = game.add.text(800,400,questionlevel1[questionindex[answercount]][0]+ '+' +questionlevel1[questionindex[answercount]][1]+ '=' , style);
         
         function updatequestion(){
             rand = Math.floor(Math.random()*questionrandseed);
@@ -81,17 +81,18 @@ demo.state3.prototype = {
             
        
         if(scorebar.y < 800){
-            scorebar.y+=2;
+            scorebar.y+=1;
             
         }else{
             finalscore = 0;
-            game.state.start("state4");
+            game.state.start("state5");
         }
         
         if(scorebar.y <= 200){
-            game.state.start("state4");
+            game.state.start("state5");
         }else{
-            finalscore -= 0.05;
+            finalscore -= 0.02;
+            console.log(finalscore);
         }
 
 

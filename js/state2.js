@@ -116,9 +116,7 @@ demo.state2.prototype = {
         if( currentlevel == 1 ){
             questionstring = game.add.text(1200,500,questionlevel1[questionindex[answercount]][0]+ '+' +questionlevel1[questionindex[answercount]][1], style);
         }else if( currentlevel == 2 ){
-            var questionlevel12 = questionlevel2.concat(questionlevel1);
-            questionstring = game.add.text(1200,500,questionlevel12[questionindex[answercount]], style);
-            var answerlevel12 = answerlevel2.concat(answerlevel1);
+            questionstring = game.add.text(1200,500,questionlevel2[questionindex[answercount]][0]+ '+' +questionlevel2[questionindex[answercount]][1], style);
         }else if( currentlevel == 3 ){
             questionstring = game.add.text(1200,500,questionlevel3[questionindex[answercount]][0]+ '+' +questionlevel3[questionindex[answercount]][1], style);
         }
@@ -131,7 +129,7 @@ demo.state2.prototype = {
                 if( currentlevel == 1 ){
                     questionstring.setText(questionlevel1[questionindex[answercount]][0]+ '+' +questionlevel1[questionindex[answercount]][1]);
                 }else if( currentlevel == 2 ){
-                    questionstring.setText(questionlevel12[questionindex[answercount]]);
+                    questionstring.setText(questionlevel2[questionindex[answercount]][0]+ '+' +questionlevel2[questionindex[answercount]][1]);
                 }else if( currentlevel == 3 ){
                     questionstring.setText(questionlevel3[questionindex[answercount]][0]+ '+' +questionlevel3[questionindex[answercount]][1]);
                 }
@@ -168,20 +166,18 @@ demo.state2.prototype = {
                 game.add.text(240 + 100*i,243,' '+i);
         
                 function jump(){
-                    if(poke_mouse.y >=500){
-                        vy *= -1;
-                        poke_mouse.y +=vy;
+                   
                         if( answerlevel1[questionindex[answercount]] == this.param1 && currentlevel == 1 ){
                             answercount++;    
                             updatequestion();
-                        }else if( answerlevel12[questionindex[answercount]] == this.param1 && currentlevel == 2 ){
+                        }else if( answerlevel2[questionindex[answercount]] == this.param1 && currentlevel == 2 ){
                             answercount++;    
                             updatequestion();
                         }else if( answerlevel3[questionindex[answercount]] == this.param1 && currentlevel == 3 ){
                             answercount++;
                             updatequestion();
                         }
-                    }            
+                               
                 }         
             }        
         }
@@ -216,16 +212,7 @@ demo.state2.prototype = {
         else{
             mask.x --; 
         }
-                                 
-        if(poke_mouse.y <=500){
-            vy += gravity;
-            poke_mouse.y +=vy;
-        }else{          
-            vy = 20;
-        }
-        if( questionamount > answercount ){
-            finalscore -= 0.05;
-        }
+        finalscore -= 0.02;
     }                            
 }
     
