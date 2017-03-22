@@ -48,7 +48,7 @@ demo.startpage.prototype = {
         
 
         if(loadingbarwidth<692){
-            loadingbarwidth +=2;
+            loadingbarwidth +=4;
             loadingbar.drawRect(centerX-277,671,loadingbarwidth,4);
         }else if(loadingbarwidth == 692){
             startpageBG_button = game.add.button(0,0,'startpageBG', startgame);  

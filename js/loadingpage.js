@@ -14,10 +14,7 @@ demo.loadingpage.prototype = {
         //init parameter
         t = 0;
         
-        var loadingpage = game.add.sprite(0,0, "startpageBG");
-        loadingpage.alpha = 0;
-        var tween = game.add.tween(loadingpage).to({alpha:1},300,'Linear',true);
-       // tween.onComplete.add(completed, this);
+       
         
         for(var i = 0;i<3;i++){
             mouse_step[i] = game.add.sprite(280+50*i,810, "mouse_step");
@@ -53,7 +50,7 @@ demo.loadingpage.prototype = {
             mouse_step[2].alpha = 0;
         }
        if(t == 201){
-             game.state.start("game_menu");;
+             game.state.start('state8');
         }
             
         

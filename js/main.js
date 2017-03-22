@@ -1,6 +1,5 @@
 var game = new Phaser.Game(1600, 1000, Phaser.AUTO);
 game.state.add("startpage", demo.startpage);
-game.state.add("game_menu", demo.game_menu);
 game.state.add("state2", demo.state2);
 game.state.add("state3", demo.state3);
 game.state.add("state4", demo.state4);

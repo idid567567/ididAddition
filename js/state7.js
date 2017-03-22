@@ -15,6 +15,13 @@ demo.state7.prototype = {
         game.load.image('scorebar','assets/gameplay/scorebar.png');
         game.load.image('scorebarred','assets/gameplay/scorebarred.png');
         game.load.image('scorebarBG','assets/gameplay/scorebarBG.png');
+        game.load.image('BG','assets/fishingpage/BG.png');
+        game.load.image('greenatmosphere','assets/fishingpage/greenatmosphere.png');
+        game.load.image('yellowatmosphere','assets/fishingpage/yellowatmosphere.png');
+        game.load.image('whiteatmosphere','assets/fishingpage/whiteatmosphere.png');
+        game.load.image('sunlight1','assets/fishingpage/sunlight1.png');
+        game.load.image('sunlight2','assets/fishingpage/sunlight2.png');
+        game.load.image('grove','assets/fishingpage/grove.png');
  
     },
     create: function() {
@@ -22,30 +29,56 @@ demo.state7.prototype = {
         game.stage.backgroundColor = "#444444";
         
         //init parameter
+        finalscore = 100;
+        scorebarY = 500;
         
         addChangeStateEvent();
         
-        finalscore = 100;
-        scorebarY = 500;
-         
-        scorebarBG = game.add.sprite(750,200,'scorebarBG');
+        
+        game.add.sprite(0,0,'BG');
+        sunlight1 = game.add.sprite(0,0,'sunlight1');
+        sunlight2 = game.add.sprite(0,0,'sunlight2');
+        game.add.tween(sunlight1).to({alpha:0.2},1000,'Quad.easeInOut',true,0,false,true).loop(true); 
+        game.add.tween(sunlight2).to({alpha:0.2},1000,'Quad.easeInOut',true,1000,false,true).loop(true); 
+        
+        yellowatmosphere = game.add.sprite(0,0,'yellowatmosphere');
+        game.add.tween(yellowatmosphere).to({alpha:0.7},1000,'Quad.easeInOut',true,0,false,true).loop(true); 
+
+        whiteatmosphere = game.add.sprite(0,0,'whiteatmosphere');
+        game.add.tween(whiteatmosphere).to({alpha:0.7},1000,'Quad.easeInOut',true,1000,false,true).loop(true); 
+
+        greenatmosphere = game.add.sprite(0,0,'greenatmosphere');
+        game.add.tween(greenatmosphere).to({alpha:0.9},1000,'Quad.easeInOut',true,0,false,true).loop(true); 
+        
+        game.add.sprite(0,0,'grove');
+        
+        scorebarBG = game.add.sprite(100,200,'scorebarBG');
         scorebarBG.anchor.setTo(0, 0);
-        scorebar = game.add.sprite(750,scorebarY,'scorebar');
+        scorebar = game.add.sprite(100,scorebarY,'scorebar');
         scorebar.anchor.setTo(0, 0);
-        scorebarred = game.add.sprite(750,scorebarY,'scorebarred');
+        scorebarred = game.add.sprite(100,scorebarY,'scorebarred');
         scorebarred.anchor.setTo(0, 0);
         scorebarred.alpha = 0;
         game.add.tween(scorebar).to({alpha:0.5},1000,'Linear',true,false).loop(true);   
         
         mask = game.add.graphics();
         mask.beginFill(0xffffff);
-        mask.drawRect(750,200,10,600);
+        mask.drawRect(100,200,10,600);
         scorebar.mask = mask;
         scorebarred.mask = mask;
         
         
-        var b1 = game.add.button(150,200,'redbutton1',checkanswer1);
-        var b2 = game.add.button(800,200,'redbutton2',checkanswer2);
+        var b1 = game.add.button(centerX-50,500,'redbutton1',checkanswer1);
+        var b2 = game.add.button(centerX+250,500,'redbutton2',checkanswer2);
+        
+        b1.alpha = 0.3;
+        b2.alpha = 0.3;
+        
+        b1.scale.setTo(0.5,0.5);
+        b2.scale.setTo(0.5,0.5);
+        
+        b1.anchor.setTo(0.5,0.5);
+        b2.anchor.setTo(0.5,0.5);
         
         b1.onInputDown.add(this.tint,b1);
         b2.onInputDown.add(this.tint,b2);
@@ -155,16 +188,16 @@ demo.state7.prototype = {
     update: function() {
      
         if(scorebar.y < 800){
-            scorebar.y+=1;
-            scorebarred.y+=1;
+            scorebar.y+=2.5;
+            scorebarred.y+=2.5;
             
         }else{
             finalscore = 0;
-            game.state.start("state5");
+            game.state.start("state4");
         }
         
         if(scorebar.y <= 200){
-            game.state.start("state5");
+            game.state.start("state4");
         }else{
             finalscore -= 0.02;
             
