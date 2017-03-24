@@ -135,6 +135,7 @@ function create_answer_button(){
     for(var i = 0;i<=2;i++){
             answerpannel[i] = game.add.sprite( buttonpositionY+200*i, 500,"button");
             answerpannel[i].scale.setTo(0.3,0.3); 
+            answerpannel[i].alpha = 0.4; 
             answerpannel[i].inputEnabled = true;  
     }
     answerpannel[0].events.onInputDown.add(checkanswer_fishing0);

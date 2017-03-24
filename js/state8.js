@@ -112,12 +112,22 @@ demo.state8.prototype = {
       sunlight2 = game.add.sprite(0,0,'sunlight2');
       game.add.tween(sunlight2).to({alpha:0.2},1000,'Quad.easeInOut',true,1000,false,true).loop(true); 
     
-      taskBG = game.add.sprite(-1610,0,'taskBG');
-      backbutton = game.add.button(-400, 800, 'backbuttonsheet', backtomenu ,this, 1, 0);
-       
-      button1 = game.add.button(-1410, 350, 'button1sheet', dailynews ,this, 1, 0);
-      button2 = game.add.button(-1410, 500, 'button2sheet', dailytask ,this, 1, 0);
-      button3 = game.add.button(-1410, 650, 'button3sheet', dailyprice ,this, 1, 0);
+      taskBG = game.add.sprite(0,0,'taskBG');
+      taskBG.alpha = 0;
+      
+      backbutton = game.add.button(1200, 800, 'backbuttonsheet', backtomenu ,this, 1, 0);
+      backbutton.alpha = 0;
+      backbutton.inputEnabled = false;
+      
+      button1 = game.add.button(300, 350, 'button1sheet', dailynews ,this, 1, 0);
+      button2 = game.add.button(300, 500, 'button2sheet', dailytask ,this, 1, 0);
+      button3 = game.add.button(300, 650, 'button3sheet', dailyprice ,this, 1, 0);
+      button1.alpha = 0;
+      button2.alpha = 0;
+      button3.alpha = 0;
+      button1.inputEnabled = false;
+      button2.inputEnabled = false;
+      button3.inputEnabled = false;
     
 
       //openBG
@@ -194,22 +204,32 @@ function gotocity(){
 function opendailytask(){
    
    
-    game.add.tween(taskBG).to({x:'+1610'},1500,'Quad.easeOut',true); 
-    game.add.tween(backbutton).to({x:'+1610'},1500,'Quad.easeOut',true); 
-    game.add.tween(button1).to({x:'+1610'},1500,'Quad.easeOut',true); 
-    game.add.tween(button2).to({x:'+1610'},1500,'Quad.easeOut',true);
-    game.add.tween(button3).to({x:'+1610'},1500,'Quad.easeOut',true);
+    game.add.tween(taskBG).to({alpha:0.6},500,'Quad.easeOut',true); 
+    game.add.tween(backbutton).to({alpha:0.8},500,'Quad.easeOut',true); 
+    game.add.tween(button1).to({alpha:1},500,'Quad.easeOut',true); 
+    game.add.tween(button2).to({alpha:1},500,'Quad.easeOut',true);
+    game.add.tween(button3).to({alpha:1},500,'Quad.easeOut',true);
+
+    backbutton.inputEnabled = true;
+    button1.inputEnabled = true;
+    button2.inputEnabled = true;
+    button3.inputEnabled = true;    
+    
     house.inputEnabled = false;
     billboard.inputEnabled = false;
 }
 
 function backtomenu(){
-    game.add.tween(taskBG).to({x:'-1610'},1500,'Quad.easeOut',true); 
-    game.add.tween(backbutton).to({x:'-1610'},1500,'Quad.easeOut',true); 
-    game.add.tween(button1).to({x:'-1610'},1500,'Quad.easeOut',true); 
-    game.add.tween(button2).to({x:'-1610'},1500,'Quad.easeOut',true);
-    game.add.tween(button3).to({x:'-1610'},1500,'Quad.easeOut',true);
+    game.add.tween(taskBG).to({alpha:0},500,'Quad.easeOut',true); 
+    game.add.tween(backbutton).to({alpha:0},500,'Quad.easeOut',true); 
+    game.add.tween(button1).to({alpha:0},500,'Quad.easeOut',true); 
+    game.add.tween(button2).to({alpha:0},500,'Quad.easeOut',true);
+    game.add.tween(button3).to({alpha:0},500,'Quad.easeOut',true);
 
+    button1.inputEnabled = false;
+    button2.inputEnabled = false;
+    button3.inputEnabled = false;
+    
     house.inputEnabled = true;
     billboard.inputEnabled = true;
 }

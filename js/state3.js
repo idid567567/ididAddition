@@ -11,7 +11,7 @@ var t,t2;
 
 var foxpulling,shadow,fishingrodpullingsheet;
 
-var playing_status;
+var playing_status,complete_status;
 var waitingclick;
 
 demo.state3 = function() {};
@@ -38,8 +38,17 @@ demo.state3.prototype = {
         
         game.load.spritesheet('foxpulling','assets/charactor/pullingsheet.png',718,678);
         game.load.spritesheet('fishingrodpullingsheet','assets/charactor/fishingrodpullingsheet.png',512,446);
-
         
+        game.load.spritesheet('foxfalling','assets/charactor/fallingsheet2.png',450,328);
+        game.load.spritesheet('dropfishingrod','assets/charactor/dropfishingrodsheet.png',512,431);
+        
+        game.load.spritesheet('foxgetfishingsheet','assets/charactor/foxgetfishingsheet.png',772,651);
+        game.load.spritesheet('fishsheet','assets/charactor/fishsheet.png',157,247);
+        
+        game.load.image('getfishBG','assets/fishingpage/getfishboardBG.png');
+        game.load.spritesheet('button_getfish_continue','assets/fishingpage/button_continue_sheet.png',134,82);
+        game.load.spritesheet('button_getfish_backhome','assets/fishingpage/button_back_home_sheet.png',134,82);
+        game.load.spritesheet('fishbox','assets/fishingpage/fishbox_sheet.png',183,148);
     },
     create: function() {
         //define backgroung
@@ -53,6 +62,7 @@ demo.state3.prototype = {
         t=0;
         playing_status = false;
         waitingclick = false;
+        complete_status = false;
 
         questionrandseed = 16;
         rand = Math.floor(Math.random()*questionrandseed);
@@ -131,14 +141,59 @@ demo.state3.prototype = {
         foxpulling.anchor.setTo(0.7,0.9);
         foxpulling.alpha = 0;
 
+        foxfalling = game.add.sprite(foxpositionX+400, foxpositionY+300, "foxfalling");
+        foxfalling.animations.add("foxfalling", [0,1,2,3,4,5,6,7,8,9]);
 
+        foxfalling.anchor.setTo(0.7,0.9);
+        foxfalling.alpha = 0;
+
+        dropfishingrod = game.add.sprite(foxpositionX+400, foxpositionY+300, "dropfishingrod");
+        dropfishingrod.animations.add("dropfishingrod", [0,1,2,3]);
+
+        dropfishingrod.anchor.setTo(0.7,0.9);
+        dropfishingrod.alpha = 0;
+
+        foxgetfishingsheet = game.add.sprite(foxpositionX+500, foxpositionY+300, "foxgetfishingsheet");
+        foxgetfishingsheet.animations.add("foxgetfishingsheet", [0,1,2,3,4,5,6,7,8,9]);
+        foxgetfishingsheet.anchor.setTo(0.7,0.9);
+        foxgetfishingsheet.alpha = 0;
+
+        fishsheet = game.add.sprite(foxpositionX+410, foxpositionY+300, "fishsheet");
+        fishsheet.animations.add("foxgetfishingsheet", [0,1,2]);
+        fishsheet.anchor.setTo(0.7,0.9);
+        fishsheet.scale.setTo(0.5,0.5);
+        fishsheet.angle = -90;
+        fishsheet.alpha = 0;
+        
+        var getfishboardX = centerX,
+            getfishboardY = 500;
+        
+        getfishBG = game.add.sprite(getfishboardX, getfishboardY, "getfishBG");
+        getfishBG.anchor.setTo(0.5,0.5);
+        getfishBG.scale.setTo(0,0);
+        
+        btn_getfish_backhome = game.add.button(getfishboardX+1, getfishboardY-82, 'button_getfish_backhome', backhome, this, 1, 0);
+        btn_getfish_backhome.anchor.setTo(0,-2);
+        btn_getfish_backhome.scale.setTo(0,0);
+        btn_getfish_backhome.inputEnabled = false;
+        
+        btn_getfish_continue = game.add.button(getfishboardX-1, getfishboardY-82, 'button_getfish_continue', continuefishing, this, 1, 0);
+        btn_getfish_continue.anchor.setTo(1,-2);
+        btn_getfish_continue.scale.setTo(0,0);
+        btn_getfish_continue.inputEnabled = false;
+        
+        fishbox = game.add.sprite(getfishboardX, getfishboardY, "fishbox");
+        fishbox.animations.add("fishbox", [0,1,2,3,4,5,6,7,8]);
+        fishbox.anchor.setTo(0.5,0.5);
+        fishbox.scale.setTo(0,0);
+        
         
     },     
     update: function() {
         t++;
         
         var rand;
-        if(playing_status == false && waitingclick == false ){
+        if(playing_status == false && waitingclick == false && complete_status == false ){
             rand = Math.floor(Math.random()*300);
         }
         
@@ -164,8 +219,9 @@ demo.state3.prototype = {
             scorebar.y+=0.5;
             scorebarred.y+=0.5;
             
-        }else{
-            finalscore = 0;
+        }
+        if(scorebar.y >= 800 && playing_status == true){
+           failfishing();
             
         }
         
@@ -213,11 +269,11 @@ function startfishing(){
     foxtail.animations.stop("fishing");
     foxbody.alpha = 0;
     fishingrod.alpha = 0;
+    
 
 }
 function finishfishing(){
-    //game.state.start('state3'); 
-    console.log('stopmode');  
+    complete_status = true;
     playing_status = false; 
     scorebarBG.alpha = 0;
     scorebar.alpha = 0;
@@ -240,8 +296,62 @@ function finishfishing(){
     
     foxpulling.alpha = 0;
     fishingrodpullingsheet.alpha = 0;
-    foxtail.alpha = 1;
-    foxbody.alpha = 1;
-    fishingrod.alpha = 1;
+    foxgetfishingsheet.animations.play("foxgetfishingsheet",8,false);
+    foxgetfishingsheet.alpha = 1;
+    fishsheet.animations.play("foxgetfishingsheet",20,true);
     
+    game.add.tween(fishsheet).to({alpha:1},100,'Quad.easeOut',true,1100);
+
+    shadow.alpha = 0;
+    showupfishboard();
+    
+}
+
+function failfishing(){
+    complete_status = true;
+    playing_status = false; 
+    scorebarBG.alpha = 0;
+    scorebar.alpha = 0;
+    scorebar.y = -1000;
+    
+    questionstring1.setText(' ');
+    questionstring2.setText(' ');
+    questionstring3.setText(' ');
+    answerpannelstring[0].setText(' ');
+    answerpannelstring[1].setText(' ');
+    answerpannelstring[2].setText(' ');
+    answerpannel[0].alpha = 0;
+    answerpannel[1].alpha = 0;
+    answerpannel[2].alpha = 0;
+    answerpannel[0].inputEnabled = false;  
+    answerpannel[1].inputEnabled = false;  
+    answerpannel[2].inputEnabled = false;  
+    foxpulling.animations.stop("fishing");
+    foxpulling.alpha = 0;
+    fishingrodpullingsheet.alpha = 0;
+    foxfalling.animations.play("foxfalling",9,false);
+    game.add.tween(foxfalling).to({x:'+40'},400,'Quad.easeOut',true);
+    foxfalling.alpha = 1;
+    
+    dropfishingrod.animations.play("dropfishingrod",12,false,true);
+    game.add.tween(dropfishingrod).to({x:'+500'},100,'Quad.easeOut',true);
+    dropfishingrod.alpha = 1;
+    shadow.alpha = 0;
+
+    
+}
+function backhome(){
+    game.state.start('state8');
+}
+function continuefishing(){
+    game.state.start('state3');
+}
+function showupfishboard(){
+    game.add.tween(fishbox.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+    game.add.tween(btn_getfish_continue.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+    game.add.tween(btn_getfish_backhome.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+    game.add.tween(getfishBG.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+    fishbox.animations.play("fishbox",15,true);
+    btn_getfish_backhome.inputEnabled = true;
+    btn_getfish_continue.inputEnabled = true;
 }
