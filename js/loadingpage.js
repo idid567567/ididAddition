@@ -1,6 +1,9 @@
 var mouse_step = new Array();
 var delay = 20;
 var t
+
+
+
 demo.loadingpage = function() {};
 demo.loadingpage.prototype = {
     preload: function() {
@@ -14,7 +17,8 @@ demo.loadingpage.prototype = {
         //init parameter
         t = 0;
         
-       
+        
+       game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         
         for(var i = 0;i<3;i++){
             mouse_step[i] = game.add.sprite(280+50*i,810, "mouse_step");
