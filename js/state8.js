@@ -39,7 +39,10 @@ demo.state8.prototype = {
       game.load.image('flying_engine_light','assets/game_menu/flying_engine_light.png');
       game.load.image('garden','assets/game_menu/garden&road.png');
       game.load.image('city','assets/game_menu/city.png');
+      
       game.load.image('whiteBG','assets/game_menu/whiteBG.png');
+      game.load.image('blackBG','assets/game_menu/blackBG.jpg');
+      
       game.load.spritesheet('house','assets/game_menu/myhousesheet.png',367,565);
       game.load.image('flying_bug','assets/game_menu/flying_bug.png');
       game.load.audio('menu', 'assets/audio/menu.mp3');
@@ -165,21 +168,19 @@ demo.state8.prototype = {
       btn_complete.scale.setTo(0,0);  
       btn_complete.inputEnabled = false;
         
-
-      
       btn_back = game.add.button(centerX+343,centerY+205, 'btn_back_sheet', back_to_menu, this, 1, 0);
       btn_back.anchor.setTo(0.5,0.5);
       btn_back.scale.setTo(1,1);  
       btn_back.alpha = 0;
       btn_back.inputEnabled = false;
-
  
-
       //openBG
       whiteBG = game.add.sprite(0,0,'whiteBG');
       game.add.tween(whiteBG).to({alpha:0},3000,'Quad.easeIn',true); 
-
-  
+      
+      //closeBG
+      blackBG = game.add.sprite(0,0,'blackBG');
+      blackBG.alpha = 0;
   },
 
   update: function(){
@@ -193,6 +194,10 @@ demo.state8.prototype = {
           changepagearrow.alpha = 1;
       }else if(changepagearrow.alpha > 0.5){
           changepagearrow.alpha -= 0.02;
+      }
+      
+      if( blackBG.alpha == 1 ){
+          game.state.start('state3');
       }
 
   }
@@ -311,6 +316,6 @@ function complete_task(){
 
 function accept_task(){
       
-    game.state.start('state3');
     game_menu_music.stop(); 
+    game.add.tween(blackBG).to({alpha:1},500,'Quad.easeIn',true); 
 }

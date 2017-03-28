@@ -17,6 +17,8 @@ var waitingclick;
 demo.state3 = function() {};
 demo.state3.prototype = {
     preload: function() {
+        game.load.image('blackBG','assets/fishingpage/black.jpg');
+        
         game.load.image('button','assets/button/redbutton.png');
         game.load.image('scorebar','assets/gameplay/scorebar.png');
         game.load.image('scorebarred','assets/gameplay/scorebarred.png');
@@ -192,7 +194,10 @@ demo.state3.prototype = {
         fishbox.anchor.setTo(0.5,0.5);
         fishbox.scale.setTo(0,0);
         
-        
+        /*
+        blackBGfishing = game.add.sprite(0,0, "blackBG");
+        game.add.tween(blackBGfishing).to({alpha:0},500,'Quad.easeIn',true); 
+        */
         
     },     
     update: function() {
@@ -206,8 +211,8 @@ demo.state3.prototype = {
         
         if(rand == 15 && mark.scale.x == 0){
             waitingclick = true;
-            t2 = 20;
-            game.add.tween(mark.scale).to({x:2,y:2},200,Phaser.Easing.Elastic.Out,true);
+            t2 = 40;
+            game.add.tween(mark.scale).to({x:2.2,y:2.2},200,Phaser.Easing.Elastic.Out,true);
         }
         
         if(t2>0){
@@ -222,8 +227,8 @@ demo.state3.prototype = {
         
 
         if(scorebar.y < 800 && playing_status == true){
-            scorebar.y+=1.5;
-            scorebarred.y+=1.5;
+            scorebar.y += 1.5;
+            scorebarred.y += 1.5;
             
         }
         if(scorebar.y >= 800 && playing_status == true){
@@ -252,6 +257,8 @@ demo.state3.prototype = {
         }else if(scorebar.alpha > 0.5){
             scorebar.alpha -= 0.03;
         }
+        
+
     }    
 }
 
