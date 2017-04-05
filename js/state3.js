@@ -2,6 +2,7 @@ var index = new Array();
 var questionindex = new Array(); 
 var answercount;
 
+var blackBG_open_fishing,blackBG_close_fishing;
 
 var scorebar,scorebarY,scorebarcompleted,mask;
 var questionrandseed;
@@ -17,7 +18,8 @@ var waitingclick;
 demo.state3 = function() {};
 demo.state3.prototype = {
     preload: function() {
-        game.load.image('blackBG','assets/fishingpage/black.jpg');
+        game.load.image('blackBG','assets/fishingpage/blackBG.jpg');
+        game.load.image('blackBG2','assets/fishingpage/blackBG2.jpg');
         
         game.load.image('button','assets/button/redbutton.png');
         game.load.image('scorebar','assets/gameplay/scorebar.png');
@@ -194,10 +196,13 @@ demo.state3.prototype = {
         fishbox.anchor.setTo(0.5,0.5);
         fishbox.scale.setTo(0,0);
         
-        /*
-        blackBGfishing = game.add.sprite(0,0, "blackBG");
-        game.add.tween(blackBGfishing).to({alpha:0},500,'Quad.easeIn',true); 
-        */
+        //open BG
+        blackBG_open_fishing = game.add.sprite(0,0, "blackBG");
+        game.add.tween(blackBG_open_fishing).to({alpha:0},1000,'Quad.easeIn',true); 
+        //close BG
+        blackBG_close_fishing = game.add.sprite(0,0, "blackBG");
+        blackBG_close_fishing.alpha = 0;
+        
         
     },     
     update: function() {
@@ -205,7 +210,7 @@ demo.state3.prototype = {
         
         var rand;
         if(playing_status == false && waitingclick == false && complete_status == false ){
-            rand = Math.floor(Math.random()*300);
+            rand = Math.floor(Math.random()*200);
         }
         
         
@@ -227,8 +232,8 @@ demo.state3.prototype = {
         
 
         if(scorebar.y < 800 && playing_status == true){
-            scorebar.y += 1.5;
-            scorebarred.y += 1.5;
+            scorebar.y += 1;
+            scorebarred.y += 1;
             
         }
         if(scorebar.y >= 800 && playing_status == true){
@@ -258,6 +263,9 @@ demo.state3.prototype = {
             scorebar.alpha -= 0.03;
         }
         
+        if(blackBG_close_fishing.alpha == 1){
+            game.state.start('state8');
+        }
 
     }    
 }
@@ -273,7 +281,8 @@ function startfishing(){
     game.add.tween(foxpulling).to({x:'-10'},1000,'Linear',true,0,false,false).loop(true); 
     game.add.tween(fishingrodpullingsheet).to({x:'-10'},1000,'Linear',true,0,false,false).loop(true); 
     game.add.tween(shadow).to({x:'-10'},1000,'Linear',true,0,false,false).loop(true); 
-    scorebar.y = 500;        
+    scorebar.y = 500; 
+    scorebarred.y = 500; 
     console.log('fishingmode');        
     mark.scale.setTo(0,0);      
     playing_status = true;       
@@ -364,10 +373,35 @@ function failfishing(){
     
 }
 function backhome(){
-    game.state.start('state8');
+    game.add.tween(blackBG_close_fishing).to({alpha:1},1000,'Quad.easeIn',true); 
+    
 }
 function continuefishing(){
-    game.state.start('state3');
+    //game.state.start('state3');
+    complete_status = false;
+    
+    btn_getfish_backhome.inputEnabled = false;
+    btn_getfish_continue.inputEnabled = false;
+    game.add.tween(fishbox.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(btn_getfish_continue.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(btn_getfish_backhome.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(getfishBG.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(btn_getfish_continue.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(btn_getfish_backhome.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(failBG.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    
+    foxfalling.alpha = 0;
+    foxgetfishingsheet.alpha = 0;
+    fishsheet.alpha = 0;
+    
+    fishingrod.alpha = 1;
+    foxbody.alpha = 1;
+    foxtail.alpha = 1;
+
+    
+    
+    
+    
 }
 function showupfishboard(){
     game.add.tween(fishbox.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
