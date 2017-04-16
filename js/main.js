@@ -9,5 +9,5 @@ game.state.add("state7", demo.state7);
 game.state.add("state8", demo.state8);
 game.state.add("state9", demo.state9);
 game.state.add("loadingpage", demo.loadingpage);
-game.state.start("loadingpage");
+game.state.start("state3");
 

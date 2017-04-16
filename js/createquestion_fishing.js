@@ -1,5 +1,5 @@
 var questionstring1,questionstring2,questionstring3;
-var style = { font: "100px Arial", fill: "#ffffff", align: "center" };
+
 var answer = new Array();
 var answerpannel = new Array();
 var answerpannelstring = new Array();
@@ -37,6 +37,8 @@ function createquestion(){
         
     var questionpositionX = 1000,
         questionpositionY = 300;
+    
+   
         
     if( rand%2 == 0 ){
         questionstring1 = game.add.text(questionpositionX+150,questionpositionY,questionlevel1[rand][0],style);
@@ -109,32 +111,7 @@ function createanswerbutton(){
     }
 }
 
-/*
 
-function updateanswerbutton(){
-    var answerindex = 0;
-    createanswer();
-    for(var i = 0;i<=2;i++){
-        if( rand%3 == i ){
-            if(addmode == true){
-                answerpannel[i].events.onInputDown.add(checkanswer,{param1: answerlevel1[rand]});
-
-                answerpannelstring[i].setText(answerlevel1[rand]);
-            }
-            if(minusmode == true){
-                answerpannel[i].events.onInputDown.add(checkanswer,{param1: questionlevel1[rand][0]});
-
-                answerpannelstring[i].setText(questionlevel1[rand][0]);
-            }
-        }else{
-            answerpannel[i].events.onInputDown.add(checkanswer,{param1: answer[answerindex]});
-
-            answerpannelstring[i].setText(answer[answerindex]);
-            answerindex++;
-        }
-    }
-}
-*/
 function createanswer(){
     answer[0] = Math.floor(Math.random()*10);
     answer[1] = Math.floor(Math.random()*10);
