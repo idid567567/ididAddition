@@ -83,6 +83,11 @@ demo.state3.prototype = {
         game.load.image('correct_fx','assets/fishingpage/whiteBG.png');
         game.load.image('wrong_fx','assets/fishingpage/redBG.png');
         
+        game.load.spritesheet('blue_FX_sheet','assets/fishingpage/question/blue_FX_sheet.png',250,250);
+        game.load.spritesheet('green_FX_sheet','assets/fishingpage/question/green_FX_sheet.png',250,250);
+        game.load.spritesheet('red_FX_sheet','assets/fishingpage/question/red_FX_sheet.png',250,250);
+        
+        
         //answer_pannel_number
         game.load.image('0','assets/fishingpage/question/0.png');
         game.load.image('1','assets/fishingpage/question/1.png');
@@ -361,6 +366,33 @@ demo.state3.prototype = {
         question_blue_pannel2.animations.add("question_blue_pannel_dyn2", [0,1,2,3,4,5,6,7,8]);
         question_blue_pannel2.alpha = 0;
         
+        //FX
+        blue_FX_sheet = game.add.sprite(questionpositionX+150,questionpositionY,"blue_FX_sheet");
+        // blue_FX_sheet.scale.setTo(0.6,0.6);
+        blue_FX_sheet.anchor.setTo(0.5,0.5);
+        blue_FX_sheet.animations.add("blue_FX", [0,1,2,3,4,5,6,7]);
+        blue_FX_sheet.alpha = 0;
+        
+        green_FX_sheet = game.add.sprite(questionpositionX,questionpositionY-150,"blue_FX_sheet");
+        green_FX_sheet.anchor.setTo(0.5,0.5);
+        green_FX_sheet.animations.add("green_FX", [0,1,2,3,4,5,6,7]);
+        green_FX_sheet.alpha = 0;
+
+        red_FX_sheet1 = game.add.sprite(questionpositionX,questionpositionY-150,"red_FX_sheet");
+        red_FX_sheet1.anchor.setTo(0.5,0.5);
+        red_FX_sheet1.animations.add("red_FX1", [0,1,2,3,4,5,6,7]);
+        red_FX_sheet1.alpha = 0;
+
+        red_FX_sheet2 = game.add.sprite(questionpositionX+150,questionpositionY,"red_FX_sheet");
+        red_FX_sheet2.anchor.setTo(0.5,0.5);
+        red_FX_sheet2.animations.add("red_FX2", [0,1,2,3,4,5,6,7]);
+        red_FX_sheet2.alpha = 0;
+        
+        red_FX_sheet3 = game.add.sprite(questionpositionX-150,questionpositionY,"red_FX_sheet");
+        red_FX_sheet3.anchor.setTo(0.5,0.5);
+        red_FX_sheet3.animations.add("red_FX3", [0,1,2,3,4,5,6,7]);
+        red_FX_sheet3.alpha = 0;
+
         //add question text image  
         for(var i = 0;i<=10;i++){
             question_text0[i] =  game.add.sprite(questionpositionX,questionpositionY-150,'Q'+i+'_green');    

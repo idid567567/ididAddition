@@ -18,12 +18,17 @@ var questionpositionX = 1050,
 var question_mark0,question_mark1;
 
 function checkanswer_fishing0(){
+
+    
+    
     if(answerpannelcheck[0] == true && minusmode == true){
         game.add.tween(scorebar).to({y:'-100'},50,'Linear',true); 
         game.add.tween(scorebarred).to({y:'-100'},50,'Linear',true); 
         correct_fx.alpha = correctFX;
         anwser_pannel_light[0].alpha = correctFX;
         rightFX.play();
+        blue_FX_sheet.animations.play("blue_FX",25,false);
+        blue_FX_sheet.alpha = 1;
         update_question();
         answercount++;
 
@@ -33,6 +38,12 @@ function checkanswer_fishing0(){
         scorebarred.alpha = 1;
         wrong_fx.alpha = wrongFX;
         wrongFX.play();
+        red_FX_sheet1.animations.play("red_FX1",25,false);
+        red_FX_sheet1.alpha = 1;
+        red_FX_sheet2.animations.play("red_FX2",25,false);
+        red_FX_sheet2.alpha = 1;
+        red_FX_sheet3.animations.play("red_FX3",25,false);
+        red_FX_sheet3.alpha = 1;
         anwser_pannel_redlight[0].alpha = wrongFX;
         update_question();
         
@@ -41,6 +52,8 @@ function checkanswer_fishing0(){
         game.add.tween(scorebarred).to({y:'-100'},50,'Linear',true); 
         correct_fx.alpha = correctFX;
         anwser_pannel_light[0].alpha = correctFX;
+        green_FX_sheet.animations.play("green_FX",25,false);
+        green_FX_sheet.alpha = 1;
         rightFX.play();
         update_question();
         answercount++;
@@ -51,6 +64,12 @@ function checkanswer_fishing0(){
         game.add.tween(scorebarred).to({y:'+50'},50,'Linear',true); 
         scorebarred.alpha = 1;
         wrong_fx.alpha = wrongFX;
+        red_FX_sheet1.animations.play("red_FX1",25,false);
+        red_FX_sheet1.alpha = 1;
+        red_FX_sheet2.animations.play("red_FX2",25,false);
+        red_FX_sheet2.alpha = 1;
+        red_FX_sheet3.animations.play("red_FX3",25,false);
+        red_FX_sheet3.alpha = 1;
         wrongFX.play();
         anwser_pannel_redlight[0].alpha = wrongFX;
         update_question();
@@ -63,6 +82,8 @@ function checkanswer_fishing1(){
         game.add.tween(scorebarred).to({y:'-100'},50,'Linear',true);
         correct_fx.alpha = correctFX;
         anwser_pannel_light[1].alpha = correctFX;
+        blue_FX_sheet.animations.play("blue_FX",25,false);
+        blue_FX_sheet.alpha = 1;
         rightFX.play();
         update_question();
         answercount++;
@@ -73,6 +94,12 @@ function checkanswer_fishing1(){
         scorebarred.alpha = 1;
         wrong_fx.alpha = wrongFX;
         wrongFX.play();
+        red_FX_sheet1.animations.play("red_FX1",25,false);
+        red_FX_sheet1.alpha = 1;
+        red_FX_sheet2.animations.play("red_FX2",25,false);
+        red_FX_sheet2.alpha = 1;
+        red_FX_sheet3.animations.play("red_FX3",25,false);
+        red_FX_sheet3.alpha = 1;
         anwser_pannel_redlight[1].alpha = wrongFX;
         update_question();
         
@@ -81,6 +108,8 @@ function checkanswer_fishing1(){
         game.add.tween(scorebarred).to({y:'-100'},50,'Linear',true); 
         correct_fx.alpha = correctFX;
         anwser_pannel_light[1].alpha = correctFX; 
+        green_FX_sheet.animations.play("green_FX",25,false);
+        green_FX_sheet.alpha = 1;
         rightFX.play();
         update_question();
         answercount++;
@@ -92,6 +121,12 @@ function checkanswer_fishing1(){
         scorebarred.alpha = 1;
         wrong_fx.alpha = wrongFX;
         wrongFX.play();
+        red_FX_sheet1.animations.play("red_FX1",25,false);
+        red_FX_sheet1.alpha = 1;
+        red_FX_sheet2.animations.play("red_FX2",25,false);
+        red_FX_sheet2.alpha = 1;
+        red_FX_sheet3.animations.play("red_FX3",25,false);
+        red_FX_sheet3.alpha = 1;
         anwser_pannel_redlight[1].alpha = wrongFX;
         update_question();
     }
@@ -103,6 +138,8 @@ function checkanswer_fishing2(){
         game.add.tween(scorebarred).to({y:'-100'},50,'Linear',true); 
         correct_fx.alpha = correctFX;
         anwser_pannel_light[2].alpha = correctFX; 
+        blue_FX_sheet.animations.play("blue_FX",25,false);
+        blue_FX_sheet.alpha = 1;
         rightFX.play();
         update_question();
         answercount++;
@@ -113,6 +150,12 @@ function checkanswer_fishing2(){
         scorebarred.alpha = 1;
         wrong_fx.alpha = wrongFX;
         wrongFX.play();
+        red_FX_sheet1.animations.play("red_FX1",25,false);
+        red_FX_sheet1.alpha = 1;
+        red_FX_sheet2.animations.play("red_FX2",25,false);
+        red_FX_sheet2.alpha = 1;
+        red_FX_sheet3.animations.play("red_FX3",25,false);
+        red_FX_sheet3.alpha = 1;
         anwser_pannel_redlight[2].alpha = wrongFX;
         update_question();
         
@@ -121,6 +164,8 @@ function checkanswer_fishing2(){
         game.add.tween(scorebarred).to({y:'-100'},50,'Linear',true); 
         correct_fx.alpha = correctFX;
         anwser_pannel_light[2].alpha = correctFX;
+        green_FX_sheet.animations.play("green_FX",25,false);
+        green_FX_sheet.alpha = 1;
         rightFX.play();
         update_question();
         answercount++;
@@ -132,6 +177,12 @@ function checkanswer_fishing2(){
         scorebarred.alpha = 1;
         wrong_fx.alpha = wrongFX;
         wrongFX.play();
+        red_FX_sheet1.animations.play("red_FX1",25,false);
+        red_FX_sheet1.alpha = 1;
+        red_FX_sheet2.animations.play("red_FX2",25,false);
+        red_FX_sheet2.alpha = 1;
+        red_FX_sheet3.animations.play("red_FX3",25,false);
+        red_FX_sheet3.alpha = 1;
         anwser_pannel_redlight[2].alpha = wrongFX;
         update_question();
     }
