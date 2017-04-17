@@ -4,7 +4,7 @@ var answercount;
 
 var blackBG_open_fishing,blackBG_close_fishing;
 
-var scorebar,scorebarY,scorebarcompleted,mask;
+var scorebar,scorebarX,scorebarY,scorebarcompleted,mask;
 var questionrandseed;
 var rand;
 
@@ -20,7 +20,11 @@ var correct_fx,wrong_fx;
 var anwser_pannel_light = new Array();
 var anwser_pannel_redlight = new Array();
 
+var question_green_pannel,question_blue_pannel1,question_blue_pannel2;
+
 var game_fishing_music,rightFX,wrongFX,successFX,alertFX,startFX,failureFX,fishingBG,birdFX;
+
+var buttonpositionY;
 
 demo.state3 = function() {};
 demo.state3.prototype = {
@@ -68,6 +72,10 @@ demo.state3.prototype = {
         game.load.image('question_pannel2','assets/fishingpage/question/question_pannel2.png');
         game.load.image('anwser_pannel','assets/fishingpage/question/anwser_pannel1.png');
         
+        game.load.spritesheet('question_green_pannel','assets/fishingpage/question/question_green_sheet.png',162,162);
+        game.load.spritesheet('question_blue_pannel','assets/fishingpage/question/question_blue_sheet.png',162,162);
+        
+        
         //fx
         game.load.image('anwser_pannel_light','assets/fishingpage/question/anwser_pannel_light.png');
         game.load.image('anwser_pannel_redlight','assets/fishingpage/question/anwser_pannel_redlight.png');
@@ -88,6 +96,32 @@ demo.state3.prototype = {
         game.load.image('9','assets/fishingpage/question/9.png');
         game.load.image('10','assets/fishingpage/question/10.png');
         
+        //question_pannel_text
+        game.load.image('Q0_blue','assets/fishingpage/question/Q0_blue.png');
+        game.load.image('Q1_blue','assets/fishingpage/question/Q1_blue.png');
+        game.load.image('Q2_blue','assets/fishingpage/question/Q2_blue.png');
+        game.load.image('Q3_blue','assets/fishingpage/question/Q3_blue.png');
+        game.load.image('Q4_blue','assets/fishingpage/question/Q4_blue.png');
+        game.load.image('Q5_blue','assets/fishingpage/question/Q5_blue.png');
+        game.load.image('Q6_blue','assets/fishingpage/question/Q6_blue.png');
+        game.load.image('Q7_blue','assets/fishingpage/question/Q7_blue.png');
+        game.load.image('Q8_blue','assets/fishingpage/question/Q8_blue.png');
+        game.load.image('Q9_blue','assets/fishingpage/question/Q9_blue.png');
+        game.load.image('Q10_blue','assets/fishingpage/question/Q10_blue.png');       
+        game.load.image('Qmark_blue','assets/fishingpage/question/Qmark_blue.png');          
+        
+        game.load.image('Q0_green','assets/fishingpage/question/Q0_green.png');
+        game.load.image('Q1_green','assets/fishingpage/question/Q1_green.png');
+        game.load.image('Q2_green','assets/fishingpage/question/Q2_green.png');
+        game.load.image('Q3_green','assets/fishingpage/question/Q3_green.png');
+        game.load.image('Q4_green','assets/fishingpage/question/Q4_green.png');
+        game.load.image('Q5_green','assets/fishingpage/question/Q5_green.png');
+        game.load.image('Q6_green','assets/fishingpage/question/Q6_green.png');
+        game.load.image('Q7_green','assets/fishingpage/question/Q7_green.png');
+        game.load.image('Q8_green','assets/fishingpage/question/Q8_green.png');
+        game.load.image('Q9_green','assets/fishingpage/question/Q9_green.png');
+        game.load.image('Q10_green','assets/fishingpage/question/Q10_green.png');       
+        game.load.image('Qmark_green','assets/fishingpage/question/Qmark_green.png'); 
         
         game.load.audio('fishing', 'assets/audio/fishing.mp3');
         game.load.audio('rightFX', 'assets/audio/rightFX.mp3');
@@ -114,6 +148,7 @@ demo.state3.prototype = {
         answercount = 0;
         addChangeStateEvent();
         finalscore = 100;
+        scorebarX = 1400;
         scorebarY = 500;
         t=0;
         playing_status = false;
@@ -140,20 +175,20 @@ demo.state3.prototype = {
         
         game.add.sprite(0,0,'grove');
         
-        scorebarBG = game.add.sprite(100,200,'scorebarBG');
-        scorebarBG.anchor.setTo(0, 0);
+        scorebarBG = game.add.sprite(scorebarX+5,200,'scorebarBG');
+        scorebarBG.anchor.setTo(0.5, 0);
         scorebarBG.alpha = 0;
-        scorebar = game.add.sprite(100,scorebarY,'scorebar');
-        scorebar.anchor.setTo(0, 0);
+        scorebar = game.add.sprite(scorebarX+5,scorebarY,'scorebar');
+        scorebar.anchor.setTo(0.5, 0);
         scorebar.alpha = 0;
-        scorebarred = game.add.sprite(100,scorebarY,'scorebarred');
-        scorebarred.anchor.setTo(0, 0);
+        scorebarred = game.add.sprite(scorebarX+5,scorebarY,'scorebarred');
+        scorebarred.anchor.setTo(0.5, 0);
         scorebarred.alpha = 0;
 
         
         mask = game.add.graphics();
         mask.beginFill(0xffffff);
-        mask.drawRect(100,200,10,600);
+        mask.drawRect(scorebarX,200,10,600);
         scorebar.mask = mask;
         scorebarred.mask = mask;
    
@@ -261,10 +296,10 @@ demo.state3.prototype = {
         wrong_fx = game.add.sprite(0,0,'wrong_fx');
         wrong_fx.alpha = 0;
         
-   
+        buttonpositionY = 500;
         
         for(var i = 0;i<=2;i++){
-            answerpannel[i] = game.add.sprite( buttonpositionY+200*i, 500,"anwser_pannel");
+            answerpannel[i] = game.add.sprite( questionpositionX+150*(i-1), buttonpositionY,"anwser_pannel");
             answerpannel[i].scale.setTo(0.8,0.8); 
             answerpannel[i].anchor.setTo(0.5,0.5);
             answerpannel[i].alpha = 0; 
@@ -273,17 +308,17 @@ demo.state3.prototype = {
         //add 0~10 answer number image    
         for(var i = 1;i<11;i++){
       
-            answer_number0[i] =  game.add.sprite(buttonpositionY, 500,i);    
+            answer_number0[i] =  game.add.sprite(questionpositionX-150, buttonpositionY,i);    
             answer_number0[i].scale.setTo(0.8,0.8); 
             answer_number0[i].anchor.setTo(0.5,0.5);   
             answer_number0[i].alpha = 0;     
                 
-            answer_number1[i] =  game.add.sprite(buttonpositionY+200, 500,i);    
+            answer_number1[i] =  game.add.sprite(questionpositionX, buttonpositionY,i);    
             answer_number1[i].scale.setTo(0.8,0.8); 
             answer_number1[i].anchor.setTo(0.5,0.5);   
             answer_number1[i].alpha = 0; 
                 
-            answer_number2[i] =  game.add.sprite(buttonpositionY+400, 500,i);    
+            answer_number2[i] =  game.add.sprite(questionpositionX+150, buttonpositionY,i);    
             answer_number2[i].scale.setTo(0.8,0.8); 
             answer_number2[i].anchor.setTo(0.5,0.5);   
             answer_number2[i].alpha = 0; 
@@ -291,32 +326,81 @@ demo.state3.prototype = {
         }    
         
     
-        answer_number0[0] =  game.add.sprite(buttonpositionY, 500,'0');    
+        answer_number0[0] =  game.add.sprite(questionpositionX-150, buttonpositionY,'0');    
         answer_number0[0].scale.setTo(0.8,0.8); 
         answer_number0[0].anchor.setTo(0.5,0.5);   
         answer_number0[0].alpha = 0;     
                 
-        answer_number1[0] =  game.add.sprite(buttonpositionY+200, 500,'0');    
+        answer_number1[0] =  game.add.sprite(questionpositionX, buttonpositionY,'0');    
         answer_number1[0].scale.setTo(0.8,0.8); 
         answer_number1[0].anchor.setTo(0.5,0.5);   
         answer_number1[0].alpha = 0; 
                 
-        answer_number2[0] =  game.add.sprite(buttonpositionY+400, 500,'0');    
+        answer_number2[0] =  game.add.sprite(questionpositionX+150, buttonpositionY,'0');    
         answer_number2[0].scale.setTo(0.8,0.8); 
         answer_number2[0].anchor.setTo(0.5,0.5);   
         answer_number2[0].alpha = 0;  
+            
+        //question number bond image
+        bonds = game.add.sprite(questionpositionX,questionpositionY,"bonds");
+        bonds.anchor.setTo(0.5,1);
+        bonds.alpha = 0;
+       
+        question_green_pannel = game.add.sprite(questionpositionX,questionpositionY-150,"question_green_pannel");
+        question_green_pannel.anchor.setTo(0.5,0.5);
+        question_green_pannel.animations.add("question_green_pannel_dyn", [0,1,2,3,4,5,6,7,8]);
+        question_green_pannel.alpha = 0;
+
+        question_blue_pannel1 = game.add.sprite(questionpositionX+150,questionpositionY,"question_blue_pannel");
+        question_blue_pannel1.anchor.setTo(0.5,0.5);
+        question_blue_pannel1.animations.add("question_blue_pannel_dyn1", [0,1,2,3,4,5,6,7,8]);
+        question_blue_pannel1.alpha = 0;
+
+        question_blue_pannel2 = game.add.sprite(questionpositionX-150,questionpositionY,"question_blue_pannel");
+        question_blue_pannel2.anchor.setTo(0.5,0.5);
+        question_blue_pannel2.animations.add("question_blue_pannel_dyn2", [0,1,2,3,4,5,6,7,8]);
+        question_blue_pannel2.alpha = 0;
         
+        //add question text image  
+        for(var i = 0;i<=10;i++){
+            question_text0[i] =  game.add.sprite(questionpositionX,questionpositionY-150,'Q'+i+'_green');    
+            question_text0[i].anchor.setTo(0.5,0.5);
+            question_text0[i].scale.setTo(0.8,0.8); 
+            question_text0[i].alpha = 0;     
+            //game.add.tween(question_text0[i].scale).to({x:'+0.1',y:'+0.1'},200,'Quad.easeInOut',true,0,false,true).loop(true); 
+                
+            question_text1[i] =  game.add.sprite(questionpositionX+150,questionpositionY,'Q'+i+'_blue');    
+            question_text1[i].anchor.setTo(0.5,0.5);   
+            question_text1[i].scale.setTo(0.8,0.8);
+            question_text1[i].alpha = 0; 
+                
+            question_text2[i] =  game.add.sprite(questionpositionX-150,questionpositionY,'Q'+i+'_blue');    
+            question_text2[i].anchor.setTo(0.5,0.5);
+            question_text2[i].scale.setTo(0.8,0.8);
+            question_text2[i].alpha = 0; 
+        }
+        //add question mark image 
+        question_mark0 =  game.add.sprite(questionpositionX,questionpositionY-150,'Qmark_green');    
+        question_mark0.anchor.setTo(0.5,0.5);   
+        question_mark0.alpha = 0;     
+                
+        question_mark1 =  game.add.sprite(questionpositionX+150,questionpositionY,'Qmark_blue');    
+        question_mark1.anchor.setTo(0.5,0.5);   
+        question_mark1.alpha = 0; 
+                
+
         
         //fx
         for(var i = 0;i<=2;i++){
-            anwser_pannel_light[i] = game.add.sprite(buttonpositionY+200*i, 500,'anwser_pannel_light');
+            anwser_pannel_light[i] = game.add.sprite(questionpositionX+150*(i-1), buttonpositionY,'anwser_pannel_light');
             anwser_pannel_light[i].anchor.setTo(0.5,0.5);   
             anwser_pannel_light[i].alpha = 0;  
 
-            anwser_pannel_redlight[i] = game.add.sprite(buttonpositionY+200*i, 500,'anwser_pannel_redlight');
+            anwser_pannel_redlight[i] = game.add.sprite(questionpositionX+150*(i-1),buttonpositionY,'anwser_pannel_redlight');
             anwser_pannel_redlight[i].anchor.setTo(0.5,0.5);   
             anwser_pannel_redlight[i].alpha = 0;  
         }
+        
         
         //sound
         rightFX = game.add.audio('rightFX');
@@ -470,11 +554,11 @@ function finishfishing(){
     scorebar.alpha = 0;
     scorebar.y = -1000;
     game.add.tween(scorebar).to({alpha:0},100,'Linear',true);
-
+    /*
     questionstring1.setText(' ');
     questionstring2.setText(' ');
     questionstring3.setText(' ');
-    /*
+    
     answerpannelstring[0].setText(' ');
     answerpannelstring[1].setText(' ');
     answerpannelstring[2].setText(' ');
@@ -483,6 +567,11 @@ function finishfishing(){
         answer_number0[n].alpha = 0;
         answer_number1[n].alpha = 0;
         answer_number2[n].alpha = 0;
+        question_text0[n].alpha = 0;
+        question_text1[n].alpha = 0;
+        question_text2[n].alpha = 0;
+        question_mark0.alpha = 0;
+        question_mark1.alpha = 0;
     }
     
     answerpannel[0].alpha = 0;
@@ -494,10 +583,14 @@ function finishfishing(){
 
     
     bonds.alpha = 0;
+    question_green_pannel.alpha = 0;
+    question_blue_pannel1.alpha = 0;
+    question_blue_pannel2.alpha = 0;
+    /*
     question_circle1.scale.setTo(0,0);
     question_circle2.scale.setTo(0,0);
     question_circle3.scale.setTo(0,0);
-
+    */
     
     foxpulling.alpha = 0;
     fishingrodpullingsheet.alpha = 0;
@@ -522,18 +615,23 @@ function failfishing(){
     scorebarBG.alpha = 0;
     scorebar.alpha = 0;
     scorebar.y = -1000;
-    
+    /*
     questionstring1.setText(' ');
     questionstring2.setText(' ');
     questionstring3.setText(' ');
-    //answerpannelstring[0].setText(' ');
-    //answerpannelstring[1].setText(' ');
-    //answerpannelstring[2].setText(' ');
-    
+    answerpannelstring[0].setText(' ');
+    answerpannelstring[1].setText(' ');
+    answerpannelstring[2].setText(' ');
+    */
     for(var n = 0;n<=10;n++){
         answer_number0[n].alpha = 0;
         answer_number1[n].alpha = 0;
         answer_number2[n].alpha = 0;
+        question_text0[n].alpha = 0;
+        question_text1[n].alpha = 0;
+        question_text2[n].alpha = 0;
+        question_mark0.alpha = 0;
+        question_mark1.alpha = 0;
     }
     
     answerpannel[0].alpha = 0;
@@ -544,9 +642,9 @@ function failfishing(){
     answerpannel[2].inputEnabled = false;  
     
     bonds.alpha = 0;
-    question_circle1.scale.setTo(0,0);
-    question_circle2.scale.setTo(0,0);
-    question_circle3.scale.setTo(0,0);
+    question_green_pannel.alpha = 0;
+    question_blue_pannel1.alpha = 0;
+    question_blue_pannel2.alpha = 0;
     
     foxpulling.animations.stop("fishing");
     foxpulling.alpha = 0;

@@ -7,6 +7,16 @@ var answer_number0 = new Array();
 var answer_number1 = new Array();
 var answer_number2 = new Array();
 
+var question_text0 = new Array();
+var question_text1 = new Array();
+var question_text2 = new Array();
+
+var questionpositionX = 1050,
+    questionpositionY = 300;
+
+
+var question_mark0,question_mark1;
+
 function checkanswer_fishing0(){
     if(answerpannelcheck[0] == true && minusmode == true){
         game.add.tween(scorebar).to({y:'-100'},50,'Linear',true); 
@@ -131,42 +141,39 @@ var question_circle1,question_circle2,question_circle3,bonds;
 
 function create_question(){
         
-    var questionpositionX = 1000,
-        questionpositionY = 300,
-        numberpositionX = 970,
-        numberpositionY = 250;
-    
-    bonds = game.add.sprite(questionpositionX,questionpositionY,"bonds");
-    bonds.anchor.setTo(0.5,1);
-    
-    question_circle1 = game.add.sprite(questionpositionX,questionpositionY-150,"question_pannel1");
-    question_circle1.anchor.setTo(0.5,0.5);
-    
-
-    question_circle2 = game.add.sprite(questionpositionX+150,questionpositionY,"question_pannel2");
-    question_circle2.anchor.setTo(0.5,0.5);
-
-    
-    question_circle3 = game.add.sprite(questionpositionX-150,questionpositionY,"question_pannel2");
-    question_circle3.anchor.setTo(0.5,0.5);
-
-
-    
+    question_green_pannel.animations.play("question_green_pannel_dyn",15,true);
+    question_blue_pannel1.animations.play("question_blue_pannel_dyn1",15,true);
+    question_blue_pannel2.animations.play("question_blue_pannel_dyn2",15,true);
+    question_green_pannel.alpha = 1;
+    question_blue_pannel1.alpha = 1;
+    question_blue_pannel2.alpha = 1;
+    bonds.alpha = 1;
     if( rand%2 == 0 ){
+        /*
         questionstring1 = game.add.text(numberpositionX+150,numberpositionY,questionlevel1[rand][0],style);
         questionstring2 = game.add.text(numberpositionX-150,numberpositionY,questionlevel1[rand][1],style);
         questionstring3 = game.add.text(numberpositionX,numberpositionY-150,'?',style);
+        */
+        show_question_text(-1,0);
+        show_question_text(questionlevel1[rand][0],1);
+        show_question_text(questionlevel1[rand][1],2);
         addmode = true;
         minusmode = false;
+        
             
     }
     if( rand%2 == 1 ){
+        /*
         questionstring1 = game.add.text(numberpositionX+150,numberpositionY,'?',style);
         questionstring2 = game.add.text(numberpositionX-150,numberpositionY,questionlevel1[rand][1],style);
         questionstring3 = game.add.text(numberpositionX,numberpositionY-150,answerlevel1[rand],style);
+        */
+        show_question_text(answerlevel1[rand],0);
+        show_question_text(-1,1);
+        show_question_text(questionlevel1[rand][1],2);
         addmode = false;
         minusmode = true;
-
+        
     }
 
 }
@@ -175,23 +182,33 @@ function update_question(){
 
     rand = Math.floor(Math.random()*questionrandseed);
     if( rand%2 == 0 ){
+        /*
         questionstring1.setText(questionlevel1[rand][0]);
         questionstring2.setText(questionlevel1[rand][1]);
         questionstring3.setText('?');
+        */
+        show_question_text(-1,0);
+        show_question_text(questionlevel1[rand][0],1);
+        show_question_text(questionlevel1[rand][1],2);
         addmode = true;
         minusmode = false;
     }
     if( rand%2 == 1 ){
+        /*
         questionstring1.setText('?');
         questionstring2.setText(questionlevel1[rand][1]);
         questionstring3.setText(answerlevel1[rand]);
+        */
+        show_question_text(answerlevel1[rand],0);
+        show_question_text(-1,1);
+        show_question_text(questionlevel1[rand][1],2);
         addmode = false;
         minusmode = true;
     }
     update_answerstring();
 }
 
-var buttonpositionY = 800;
+
 
 
 
@@ -299,449 +316,41 @@ function show_number(num,i){
             answer_number2[n].alpha = 0;
         }
     }
-    /*
-    if( num == 0 && i == 0 ){
-        answer_number0[0].alpha = 1;
-        answer_number0[1].alpha = 0;
-        answer_number0[2].alpha = 0; 
-        answer_number0[3].alpha = 0;
-        answer_number0[4].alpha = 0;
-        answer_number0[5].alpha = 0;
-        answer_number0[6].alpha = 0;
-        answer_number0[7].alpha = 0;
-        answer_number0[8].alpha = 0;
-        answer_number0[9].alpha = 0;
-        answer_number0[10].alpha = 0;
+ 
+}
 
-    }            
-    if( num == 1 && i == 0 ){
-        answer_number0[0].alpha = 0;
-        answer_number0[1].alpha = 1;
-        answer_number0[2].alpha = 0; 
-        answer_number0[3].alpha = 0;
-        answer_number0[4].alpha = 0;
-        answer_number0[5].alpha = 0;
-        answer_number0[6].alpha = 0;
-        answer_number0[7].alpha = 0;
-        answer_number0[8].alpha = 0;
-        answer_number0[9].alpha = 0;
-        answer_number0[10].alpha = 0;
-
-    }else if( num == 2 && i == 0 ){
-        answer_number0[0].alpha = 0;
-        answer_number0[1].alpha = 0;
-        answer_number0[2].alpha = 1; 
-        answer_number0[3].alpha = 0;
-        answer_number0[4].alpha = 0;
-        answer_number0[5].alpha = 0;
-        answer_number0[6].alpha = 0;
-        answer_number0[7].alpha = 0;
-        answer_number0[8].alpha = 0;
-        answer_number0[9].alpha = 0;
-        answer_number0[10].alpha = 0;
+function show_question_text(num,i){
+    var index = num;
+    
+    if(num == -1 && i == 0){
+        question_mark0.alpha = 0.8;
+        question_mark1.alpha = 0;
+        for(var n = 0;n<=10;n++){
+            question_text0[n].alpha = 0;
+        }
     }
-    if( num == 3 && i == 0 ){
-        answer_number0[0].alpha = 0;
-        answer_number0[1].alpha = 0;
-        answer_number0[2].alpha = 0; 
-        answer_number0[3].alpha = 1;
-        answer_number0[4].alpha = 0;
-        answer_number0[5].alpha = 0;
-        answer_number0[6].alpha = 0;
-        answer_number0[7].alpha = 0;
-        answer_number0[8].alpha = 0;
-        answer_number0[9].alpha = 0;
-        answer_number0[10].alpha = 0;
+    if(num == -1 && i == 1){
+        question_mark0.alpha = 0;
+        question_mark1.alpha = 0.8;
+        for(var n = 0;n<=10;n++){
+            question_text1[n].alpha = 0;
+        }
     }
-    if( num == 4 && i == 0 ){
-        answer_number0[0].alpha = 0;
-        answer_number0[1].alpha = 0;
-        answer_number0[2].alpha = 0; 
-        answer_number0[3].alpha = 0;
-        answer_number0[4].alpha = 1;
-        answer_number0[5].alpha = 0;
-        answer_number0[6].alpha = 0;
-        answer_number0[7].alpha = 0;
-        answer_number0[8].alpha = 0;
-        answer_number0[9].alpha = 0;
-        answer_number0[10].alpha = 0;
-
+    
+    for(var n = 0;n<=10;n++){
+        if(n == index && i == 0){
+            question_text0[n].alpha = 0.8;
+        }else if(n != index && i == 0){
+            question_text0[n].alpha = 0;
+        }else if(n == index && i == 1){
+            question_text1[n].alpha = 0.8;
+        }else if(n != index && i == 1){
+            question_text1[n].alpha = 0;
+        }else if(n == index && i == 2){
+            question_text2[n].alpha = 0.8;
+        }else if(n != index && i == 2){
+            question_text2[n].alpha = 0;
+        }
     }
-    if( num == 5 && i == 0 ){
-        answer_number0[0].alpha = 0;
-        answer_number0[1].alpha = 0;
-        answer_number0[2].alpha = 0; 
-        answer_number0[3].alpha = 0;
-        answer_number0[4].alpha = 0;
-        answer_number0[5].alpha = 1;
-        answer_number0[6].alpha = 0;
-        answer_number0[7].alpha = 0;
-        answer_number0[8].alpha = 0;
-        answer_number0[9].alpha = 0;
-        answer_number0[10].alpha = 0;
-
-    }
-    if( num == 6 && i == 0 ){
-        answer_number0[0].alpha = 0;
-        answer_number0[1].alpha = 0;
-        answer_number0[2].alpha = 0; 
-        answer_number0[3].alpha = 0;
-        answer_number0[4].alpha = 0;
-        answer_number0[5].alpha = 0;
-        answer_number0[6].alpha = 1;
-        answer_number0[7].alpha = 0;
-        answer_number0[8].alpha = 0;
-        answer_number0[9].alpha = 0;
-        answer_number0[10].alpha = 0;
-
-    }
-    if( num == 7 && i == 0 ){
-        answer_number0[0].alpha = 0;
-        answer_number0[1].alpha = 0;
-        answer_number0[2].alpha = 0; 
-        answer_number0[3].alpha = 0;
-        answer_number0[4].alpha = 0;
-        answer_number0[5].alpha = 0;
-        answer_number0[6].alpha = 0;
-        answer_number0[7].alpha = 1;
-        answer_number0[8].alpha = 0;
-        answer_number0[9].alpha = 0;
-        answer_number0[10].alpha = 0;
-
-    }
-    if( num == 8 && i == 0 ){
-        answer_number0[0].alpha = 0;
-        answer_number0[1].alpha = 0;
-        answer_number0[2].alpha = 0; 
-        answer_number0[3].alpha = 0;
-        answer_number0[4].alpha = 0;
-        answer_number0[5].alpha = 0;
-        answer_number0[6].alpha = 0;
-        answer_number0[7].alpha = 0;
-        answer_number0[8].alpha = 1;
-        answer_number0[9].alpha = 0;
-        answer_number0[10].alpha = 0;
-
-    }
-    if( num == 9 && i == 0 ){
-        answer_number0[0].alpha = 0;
-        answer_number0[1].alpha = 0;
-        answer_number0[2].alpha = 0; 
-        answer_number0[3].alpha = 0;
-        answer_number0[4].alpha = 0;
-        answer_number0[5].alpha = 0;
-        answer_number0[6].alpha = 0;
-        answer_number0[7].alpha = 0;
-        answer_number0[8].alpha = 0;
-        answer_number0[9].alpha = 1;
-        answer_number0[10].alpha = 0;
-
-    }
-    if( num == 10 && i == 0 ){
-        answer_number0[0].alpha = 0;
-        answer_number0[1].alpha = 0;
-        answer_number0[2].alpha = 0; 
-        answer_number0[3].alpha = 0;
-        answer_number0[4].alpha = 0;
-        answer_number0[5].alpha = 0;
-        answer_number0[6].alpha = 0;
-        answer_number0[7].alpha = 0;
-        answer_number0[8].alpha = 0;
-        answer_number0[9].alpha = 0;
-        answer_number0[10].alpha = 1;
-
-    }
-   
-//------------------------------
-    if( num == 0 && i == 1 ){
-        answer_number1[0].alpha = 1;
-        answer_number1[1].alpha = 0;
-        answer_number1[2].alpha = 0; 
-        answer_number1[3].alpha = 0;
-        answer_number1[4].alpha = 0;
-        answer_number1[5].alpha = 0;
-        answer_number1[6].alpha = 0;
-        answer_number1[7].alpha = 0;
-        answer_number1[8].alpha = 0;
-        answer_number1[9].alpha = 0;
-        answer_number1[10].alpha = 0;
-
-    }                
-    if( num == 1 && i == 1 ){
-        answer_number1[0].alpha = 0;
-        answer_number1[1].alpha = 1;
-        answer_number1[2].alpha = 0; 
-        answer_number1[3].alpha = 0;
-        answer_number1[4].alpha = 0;
-        answer_number1[5].alpha = 0;
-        answer_number1[6].alpha = 0;
-        answer_number1[7].alpha = 0;
-        answer_number1[8].alpha = 0;
-        answer_number1[9].alpha = 0;
-        answer_number1[10].alpha = 0;
-
-    }else if( num == 2 && i == 1 ){
-        answer_number1[0].alpha = 0;
-        answer_number1[1].alpha = 0;
-        answer_number1[2].alpha = 1; 
-        answer_number1[3].alpha = 0;
-        answer_number1[4].alpha = 0;
-        answer_number1[5].alpha = 0;
-        answer_number1[6].alpha = 0;
-        answer_number1[7].alpha = 0;
-        answer_number1[8].alpha = 0;
-        answer_number1[9].alpha = 0;
-        answer_number1[10].alpha = 0;
-    }
-    if( num == 3 && i == 1 ){
-        answer_number1[0].alpha = 0;
-        answer_number1[1].alpha = 0;
-        answer_number1[2].alpha = 0; 
-        answer_number1[3].alpha = 1;
-        answer_number1[4].alpha = 0;
-        answer_number1[5].alpha = 0;
-        answer_number1[6].alpha = 0;
-        answer_number1[7].alpha = 0;
-        answer_number1[8].alpha = 0;
-        answer_number1[9].alpha = 0;
-        answer_number1[10].alpha = 0;
-    }
-    if( num == 4 && i == 1 ){
-        answer_number1[0].alpha = 0;
-        answer_number1[1].alpha = 0;
-        answer_number1[2].alpha = 0; 
-        answer_number1[3].alpha = 0;
-        answer_number1[4].alpha = 1;
-        answer_number1[5].alpha = 0;
-        answer_number1[6].alpha = 0;
-        answer_number1[7].alpha = 0;
-        answer_number1[8].alpha = 0;
-        answer_number1[9].alpha = 0;
-        answer_number1[10].alpha = 0;
-    }
-    if( num == 5 && i == 1 ){
-        answer_number1[0].alpha = 0;
-        answer_number1[1].alpha = 0;
-        answer_number1[2].alpha = 0; 
-        answer_number1[3].alpha = 0;
-        answer_number1[4].alpha = 0;
-        answer_number1[5].alpha = 1;
-        answer_number1[6].alpha = 0;
-        answer_number1[7].alpha = 0;
-        answer_number1[8].alpha = 0;
-        answer_number1[9].alpha = 0;
-        answer_number1[10].alpha = 0;
-    }
-    if( num == 6 && i == 1 ){
-        answer_number1[0].alpha = 0;
-        answer_number1[1].alpha = 0;
-        answer_number1[2].alpha = 0; 
-        answer_number1[3].alpha = 0;
-        answer_number1[4].alpha = 0;
-        answer_number1[5].alpha = 0;
-        answer_number1[6].alpha = 1;
-        answer_number1[7].alpha = 0;
-        answer_number1[8].alpha = 0;
-        answer_number1[9].alpha = 0;
-        answer_number1[10].alpha = 0;
-    }
-    if( num == 7 && i == 1 ){
-        answer_number1[0].alpha = 0;
-        answer_number1[1].alpha = 0;
-        answer_number1[2].alpha = 0; 
-        answer_number1[3].alpha = 0;
-        answer_number1[4].alpha = 0;
-        answer_number1[5].alpha = 0;
-        answer_number1[6].alpha = 0;
-        answer_number1[7].alpha = 1;
-        answer_number1[8].alpha = 0;
-        answer_number1[9].alpha = 0;
-        answer_number1[10].alpha = 0;
-    }
-    if( num == 8 && i == 1 ){
-        answer_number1[0].alpha = 0;
-        answer_number1[1].alpha = 0;
-        answer_number1[2].alpha = 0; 
-        answer_number1[3].alpha = 0;
-        answer_number1[4].alpha = 0;
-        answer_number1[5].alpha = 0;
-        answer_number1[6].alpha = 0;
-        answer_number1[7].alpha = 0;
-        answer_number1[8].alpha = 1;
-        answer_number1[9].alpha = 0;
-        answer_number1[10].alpha = 0;
-    }
-    if( num == 9 && i == 1 ){
-        answer_number1[0].alpha = 0;
-        answer_number1[1].alpha = 0;
-        answer_number1[2].alpha = 0; 
-        answer_number1[3].alpha = 0;
-        answer_number1[4].alpha = 0;
-        answer_number1[5].alpha = 0;
-        answer_number1[6].alpha = 0;
-        answer_number1[7].alpha = 0;
-        answer_number1[8].alpha = 0;
-        answer_number1[9].alpha = 1;
-        answer_number1[10].alpha = 0;
-    }
-    if( num == 10 && i == 1 ){
-        answer_number1[0].alpha = 0;
-        answer_number1[1].alpha = 0;
-        answer_number1[2].alpha = 0; 
-        answer_number1[3].alpha = 0;
-        answer_number1[4].alpha = 0;
-        answer_number1[5].alpha = 0;
-        answer_number1[6].alpha = 0;
-        answer_number1[7].alpha = 0;
-        answer_number1[8].alpha = 0;
-        answer_number1[9].alpha = 0;
-        answer_number1[10].alpha = 1;
-    }
-//----------------------------------
-    if( num == 0 && i == 2 ){
-        answer_number2[0].alpha = 1;
-        answer_number2[1].alpha = 0;
-        answer_number2[2].alpha = 0; 
-        answer_number2[3].alpha = 0;
-        answer_number2[4].alpha = 0;
-        answer_number2[5].alpha = 0;
-        answer_number2[6].alpha = 0;
-        answer_number2[7].alpha = 0;
-        answer_number2[8].alpha = 0;
-        answer_number2[9].alpha = 0;
-        answer_number2[10].alpha = 0;
-
-    }                
-    if( num == 1 && i == 2 ){
-        answer_number2[0].alpha = 0;
-        answer_number2[1].alpha = 1;
-        answer_number2[2].alpha = 0; 
-        answer_number2[3].alpha = 0;
-        answer_number2[4].alpha = 0;
-        answer_number2[5].alpha = 0;
-        answer_number2[6].alpha = 0;
-        answer_number2[7].alpha = 0;
-        answer_number2[8].alpha = 0;
-        answer_number2[9].alpha = 0;
-        answer_number2[10].alpha = 0;
-
-    }else if( num == 2 && i == 2 ){
-        answer_number2[0].alpha = 0;
-        answer_number2[1].alpha = 0;
-        answer_number2[2].alpha = 1; 
-        answer_number2[3].alpha = 0;
-        answer_number2[4].alpha = 0;
-        answer_number2[5].alpha = 0;
-        answer_number2[6].alpha = 0;
-        answer_number2[7].alpha = 0;
-        answer_number2[8].alpha = 0;
-        answer_number2[9].alpha = 0;
-        answer_number2[10].alpha = 0;
-    }
-    if( num == 3 && i == 2 ){
-        answer_number2[0].alpha = 0;
-        answer_number2[1].alpha = 0;
-        answer_number2[2].alpha = 0; 
-        answer_number2[3].alpha = 1;
-        answer_number2[4].alpha = 0;
-        answer_number2[5].alpha = 0;
-        answer_number2[6].alpha = 0;
-        answer_number2[7].alpha = 0;
-        answer_number2[8].alpha = 0;
-        answer_number2[9].alpha = 0;
-        answer_number2[10].alpha = 0;
-    }
-    if( num == 4 && i == 2 ){
-        answer_number2[0].alpha = 0;
-        answer_number2[1].alpha = 0;
-        answer_number2[2].alpha = 0; 
-        answer_number2[3].alpha = 0;
-        answer_number2[4].alpha = 1;
-        answer_number2[5].alpha = 0;
-        answer_number2[6].alpha = 0;
-        answer_number2[7].alpha = 0;
-        answer_number2[8].alpha = 0;
-        answer_number2[9].alpha = 0;
-        answer_number2[10].alpha = 0;
-    }
-    if( num == 5 && i == 2 ){
-        answer_number2[0].alpha = 0;
-        answer_number2[1].alpha = 0;
-        answer_number2[2].alpha = 0; 
-        answer_number2[3].alpha = 0;
-        answer_number2[4].alpha = 0;
-        answer_number2[5].alpha = 1;
-        answer_number2[6].alpha = 0;
-        answer_number2[7].alpha = 0;
-        answer_number2[8].alpha = 0;
-        answer_number2[9].alpha = 0;
-        answer_number2[10].alpha = 0;
-    }
-    if( num == 6 && i == 2 ){
-        answer_number2[0].alpha = 0;
-        answer_number2[1].alpha = 0;
-        answer_number2[2].alpha = 0; 
-        answer_number2[3].alpha = 0;
-        answer_number2[4].alpha = 0;
-        answer_number2[5].alpha = 0;
-        answer_number2[6].alpha = 1;
-        answer_number2[7].alpha = 0;
-        answer_number2[8].alpha = 0;
-        answer_number2[9].alpha = 0;
-        answer_number2[10].alpha = 0;
-    }
-    if( num == 7 && i == 2 ){
-        answer_number2[0].alpha = 0;
-        answer_number2[1].alpha = 0;
-        answer_number2[2].alpha = 0; 
-        answer_number2[3].alpha = 0;
-        answer_number2[4].alpha = 0;
-        answer_number2[5].alpha = 0;
-        answer_number2[6].alpha = 0;
-        answer_number2[7].alpha = 1;
-        answer_number2[8].alpha = 0;
-        answer_number2[9].alpha = 0;
-        answer_number2[10].alpha = 0;
-    }
-    if( num == 8 && i == 2 ){
-        answer_number2[0].alpha = 0;
-        answer_number2[1].alpha = 0;
-        answer_number2[2].alpha = 0; 
-        answer_number2[3].alpha = 0;
-        answer_number2[4].alpha = 0;
-        answer_number2[5].alpha = 0;
-        answer_number2[6].alpha = 0;
-        answer_number2[7].alpha = 0;
-        answer_number2[8].alpha = 1;
-        answer_number2[9].alpha = 0;
-        answer_number2[10].alpha = 0;
-    }
-    if( num == 9 && i == 2 ){
-        answer_number2[0].alpha = 0;
-        answer_number2[1].alpha = 0;
-        answer_number2[2].alpha = 0; 
-        answer_number2[3].alpha = 0;
-        answer_number2[4].alpha = 0;
-        answer_number2[5].alpha = 0;
-        answer_number2[6].alpha = 0;
-        answer_number2[7].alpha = 0;
-        answer_number2[8].alpha = 0;
-        answer_number2[9].alpha = 1;
-        answer_number2[10].alpha = 0;
-    }
-    if( num == 10 && i == 2 ){
-        answer_number2[0].alpha = 0;
-        answer_number2[1].alpha = 0;
-        answer_number2[2].alpha = 0; 
-        answer_number2[3].alpha = 0;
-        answer_number2[4].alpha = 0;
-        answer_number2[5].alpha = 0;
-        answer_number2[6].alpha = 0;
-        answer_number2[7].alpha = 0;
-        answer_number2[8].alpha = 0;
-        answer_number2[9].alpha = 0;
-        answer_number2[10].alpha = 1;
-    }
-     */
-   
+ 
 }
