@@ -1,5 +1,5 @@
 var demo = {},
-    centerX = 1500 / 2,
+    centerX = 1600 / 2,
     centerY = 1000 / 2,
     rockman_1,
     speed = 5;

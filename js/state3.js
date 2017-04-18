@@ -26,6 +26,10 @@ var game_fishing_music,rightFX,wrongFX,successFX,alertFX,startFX,failureFX,fishi
 
 var buttonpositionY;
 
+var first_try;
+
+var tutorial_page1,tutorial_page2,tutorial_page3,continue_text;  
+
 demo.state3 = function() {};
 demo.state3.prototype = {
     preload: function() {
@@ -136,17 +140,22 @@ demo.state3.prototype = {
         game.load.audio('alertFX', 'assets/audio/alertFX.mp3');
         game.load.audio('startFX', 'assets/audio/startFX.mp3');
         game.load.audio('fishingBG', 'assets/audio/fishingBG.mp3');
-        game.load.audio('birdFX', 'assets/audio/birdFX.mp3');        
+        game.load.audio('birdFX', 'assets/audio/birdFX.mp3');  
+        game.load.audio('clickFX', 'assets/audio/clickFX.mp3');  
+        
+        //tutorial
+        game.load.image('tutorial_page0','assets/fishingpage/tutorial/tutorial_page0.png');
+        game.load.image('tutorial_page1','assets/fishingpage/tutorial/tutorial_page1.png');
+        game.load.image('tutorial_page2','assets/fishingpage/tutorial/tutorial_page2.png');
+        game.load.image('tutorial_page3','assets/fishingpage/tutorial/tutorial_page3.png');
+        game.load.image('continue_text','assets/fishingpage/tutorial/continue_text.png');
         
         
-        
-        
-
         
     },
     create: function() {
         //define backgroung
-        game.stage.backgroundColor = "#000000";
+       
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         
         //init parameter
@@ -159,6 +168,7 @@ demo.state3.prototype = {
         playing_status = false;
         waitingclick = false;
         complete_status = false;
+        first_try = true;
 
         questionrandseed = 16;
         rand = Math.floor(Math.random()*questionrandseed);
@@ -286,6 +296,23 @@ demo.state3.prototype = {
         fishbox.animations.add("fishbox", [0,1,2,3,4,5,6,7,8]);
         fishbox.anchor.setTo(0.5,0.5);
         fishbox.scale.setTo(0,0);
+
+        
+        //tutorial page
+        tutorial_page3 = game.add.button(0,0, 'tutorial_page3', start_fishing_page);
+        tutorial_page3.inputEnabled = false;
+        
+        tutorial_page2 = game.add.button(0,0, 'tutorial_page2', go_to_page3);
+        tutorial_page2.inputEnabled = false;         
+                
+        tutorial_page1 = game.add.button(0,0, 'tutorial_page1', go_to_page2);
+        tutorial_page1.inputEnabled = false;   
+        
+        tutorial_page0 = game.add.button(0,0, 'tutorial_page0', go_to_page1);
+        tutorial_page0.inputEnabled = true;     
+        
+        continue_text = game.add.sprite(centerX,centerY+420, "continue_text");
+        continue_text.anchor.setTo(0.5,0.5);
         
         //open BG
         blackBG_open_fishing = game.add.sprite(0,0, "blackBG");
@@ -434,12 +461,16 @@ demo.state3.prototype = {
         }
         
         
+        
+
+        
         //sound
         rightFX = game.add.audio('rightFX');
         wrongFX = game.add.audio('wrongFX');
         successFX = game.add.audio('successFX');
         startFX = game.add.audio('startFX');
         failureFX = game.add.audio('failureFX');
+        clickFX = game.add.audio('clickFX');
         
         fishingBG = game.add.audio('fishingBG');
         fishingBG.loopFull(1);
@@ -453,7 +484,7 @@ demo.state3.prototype = {
         }
         
         
-        if(rand == 15 && mark.scale.x == 0){
+        if(rand == 15 && mark.scale.x == 0 && first_try == false ){
             alertFX = game.add.audio('alertFX');
             alertFX.play();
             waitingclick = true;
@@ -538,11 +569,37 @@ demo.state3.prototype = {
             anwser_pannel_redlight[2].alpha -= 0.1;
         }
         
+        if( continue_text.alpha > 0.2 && first_try == true ){
+            continue_text.alpha -= 0.05;
+        }else if( 0.2 > continue_text.alpha > 0.1 && first_try == true ){
+            continue_text.alpha = 1;
+        }
+        
     }    
+}
+function go_to_page1(){
+    game.add.tween(tutorial_page0).to({alpha:0},1000,'Linear',true);
+    tutorial_page0.inputEnabled = false;
+    tutorial_page1.inputEnabled = true;
+}
+function go_to_page2(){
+    game.add.tween(tutorial_page1).to({alpha:0},1000,'Linear',true);
+    tutorial_page1.inputEnabled = false;
+    tutorial_page2.inputEnabled = true;
+}
+function go_to_page3(){
+    game.add.tween(tutorial_page2).to({alpha:0},1000,'Linear',true);
+    tutorial_page2.inputEnabled = false;
+    tutorial_page3.inputEnabled = true;
+}
+function start_fishing_page(){
+    game.add.tween(tutorial_page3).to({alpha:0},1000,'Linear',true);
+    game.add.tween(continue_text).to({alpha:0},1000,'Linear',true);
+    tutorial_page3.inputEnabled = false;
+    first_try = false;
 }
 
 
-    
 function startfishing(){
     foxpulling.animations.play("pulling",100,true);
     foxpulling.alpha = 1;
@@ -618,6 +675,9 @@ function finishfishing(){
     question_green_pannel.alpha = 0;
     question_blue_pannel1.alpha = 0;
     question_blue_pannel2.alpha = 0;
+    
+    blue_FX_sheet.alpha = 0;
+    green_FX_sheet.alpha = 0;
     /*
     question_circle1.scale.setTo(0,0);
     question_circle2.scale.setTo(0,0);
@@ -721,6 +781,7 @@ function continuefishing(){
     foxtail.alpha = 1;
     
     fishingBG.loopFull(1);
+    startFX.play();
 
     
     
