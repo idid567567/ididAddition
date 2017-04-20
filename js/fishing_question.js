@@ -18,17 +18,12 @@ var questionpositionX = 1050,
 var question_mark0,question_mark1;
 
 function checkanswer_fishing0(){
-
-    
     
     if(answerpannelcheck[0] == true && minusmode == true){
-        game.add.tween(scorebar).to({y:'-100'},50,'Linear',true); 
-        game.add.tween(scorebarred).to({y:'-100'},50,'Linear',true); 
-        correct_fx.alpha = correctFX;
+
+        energy_transfer();
         anwser_pannel_light[0].alpha = correctFX;
-        rightFX.play();
-        blue_FX_sheet.animations.play("blue_FX",25,false);
-        blue_FX_sheet.alpha = 1;
+
         update_question();
         answercount++;
 
@@ -48,13 +43,11 @@ function checkanswer_fishing0(){
         update_question();
         
     }else if(answerpannelcheck[0] == true && addmode == true){
-        game.add.tween(scorebar).to({y:'-100'},50,'Linear',true); 
-        game.add.tween(scorebarred).to({y:'-100'},50,'Linear',true); 
-        correct_fx.alpha = correctFX;
+
+        energy_transfer();
+      
         anwser_pannel_light[0].alpha = correctFX;
-        green_FX_sheet.animations.play("green_FX",25,false);
-        green_FX_sheet.alpha = 1;
-        rightFX.play();
+ 
         update_question();
         answercount++;
         
@@ -78,13 +71,10 @@ function checkanswer_fishing0(){
 
 function checkanswer_fishing1(){
     if(answerpannelcheck[1] == true && minusmode == true){
-        game.add.tween(scorebar).to({y:'-100'},50,'Linear',true); 
-        game.add.tween(scorebarred).to({y:'-100'},50,'Linear',true);
-        correct_fx.alpha = correctFX;
+
+        energy_transfer();
         anwser_pannel_light[1].alpha = correctFX;
-        blue_FX_sheet.animations.play("blue_FX",25,false);
-        blue_FX_sheet.alpha = 1;
-        rightFX.play();
+
         update_question();
         answercount++;
 
@@ -104,13 +94,13 @@ function checkanswer_fishing1(){
         update_question();
         
     }else if(answerpannelcheck[1] == true && addmode == true){
-        game.add.tween(scorebar).to({y:'-100'},50,'Linear',true); 
-        game.add.tween(scorebarred).to({y:'-100'},50,'Linear',true); 
-        correct_fx.alpha = correctFX;
+
+        energy_transfer();
+        //correct_fx.alpha = correctFX;
         anwser_pannel_light[1].alpha = correctFX; 
-        green_FX_sheet.animations.play("green_FX",25,false);
-        green_FX_sheet.alpha = 1;
-        rightFX.play();
+        //green_FX_sheet.animations.play("green_FX",25,false);
+        //green_FX_sheet.alpha = 1;
+        //rightFX.play();
         update_question();
         answercount++;
         
@@ -134,13 +124,13 @@ function checkanswer_fishing1(){
 
 function checkanswer_fishing2(){
     if(answerpannelcheck[2] == true && minusmode == true){
-        game.add.tween(scorebar).to({y:'-100'},50,'Linear',true); 
-        game.add.tween(scorebarred).to({y:'-100'},50,'Linear',true); 
-        correct_fx.alpha = correctFX;
+ 
+        energy_transfer();
+        //correct_fx.alpha = correctFX;
         anwser_pannel_light[2].alpha = correctFX; 
-        blue_FX_sheet.animations.play("blue_FX",25,false);
-        blue_FX_sheet.alpha = 1;
-        rightFX.play();
+        //blue_FX_sheet.animations.play("blue_FX",25,false);
+        //blue_FX_sheet.alpha = 1;
+        //rightFX.play();
         update_question();
         answercount++;
 
@@ -160,13 +150,13 @@ function checkanswer_fishing2(){
         update_question();
         
     }else if(answerpannelcheck[2] == true && addmode == true){
-        game.add.tween(scorebar).to({y:'-100'},50,'Linear',true); 
-        game.add.tween(scorebarred).to({y:'-100'},50,'Linear',true); 
-        correct_fx.alpha = correctFX;
+ 
+        energy_transfer();
+        //correct_fx.alpha = correctFX;
         anwser_pannel_light[2].alpha = correctFX;
-        green_FX_sheet.animations.play("green_FX",25,false);
-        green_FX_sheet.alpha = 1;
-        rightFX.play();
+        //green_FX_sheet.animations.play("green_FX",25,false);
+        //green_FX_sheet.alpha = 1;
+        //rightFX.play();
         update_question();
         answercount++;
         
@@ -187,6 +177,7 @@ function checkanswer_fishing2(){
         update_question();
     }
 }
+
 
 var question_circle1,question_circle2,question_circle3,bonds;
 

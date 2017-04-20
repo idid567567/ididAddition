@@ -10,7 +10,7 @@ game.state.add("state8", demo.state8);
 game.state.add("state9", demo.state9);
 game.state.add("loadingpage", demo.loadingpage);
 game.state.add("tutorial", demo.tutorial);
-
+game.state.add("energy_transfer_FX", demo.energy_transfer_FX);
 
 game.state.start("state3");
 
