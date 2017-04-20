@@ -98,11 +98,8 @@ function checkanswer_fishing1(){
     }else if(answerpannelcheck[1] == true && addmode == true){
 
         energy_transfer();
-        //correct_fx.alpha = correctFX;
         anwser_pannel_light[1].alpha = correctFX; 
-        //green_FX_sheet.animations.play("green_FX",25,false);
-        //green_FX_sheet.alpha = 1;
-        //rightFX.play();
+
         update_question();
         answercount++;
         
@@ -154,11 +151,7 @@ function checkanswer_fishing2(){
     }else if(answerpannelcheck[2] == true && addmode == true){
  
         energy_transfer();
-        //correct_fx.alpha = correctFX;
         anwser_pannel_light[2].alpha = correctFX;
-        //green_FX_sheet.animations.play("green_FX",25,false);
-        //green_FX_sheet.alpha = 1;
-        //rightFX.play();
         update_question();
         answercount++;
         
@@ -192,32 +185,26 @@ function create_question(){
     question_blue_pannel1.alpha = 1;
     question_blue_pannel2.alpha = 1;
     bonds.alpha = 1;
-    if( rand%2 == 0 ){
-        /*
-        questionstring1 = game.add.text(numberpositionX+150,numberpositionY,questionlevel1[rand][0],style);
-        questionstring2 = game.add.text(numberpositionX-150,numberpositionY,questionlevel1[rand][1],style);
-        questionstring3 = game.add.text(numberpositionX,numberpositionY-150,'?',style);
-        */
+    if( addmode == true ){
+
         show_question_text(-1,0);
         show_question_text(questionlevel1[rand][0],1);
         show_question_text(questionlevel1[rand][1],2);
+        /*
         addmode = true;
         minusmode = false;
-        
+        */
             
     }
-    if( rand%2 == 1 ){
-        /*
-        questionstring1 = game.add.text(numberpositionX+150,numberpositionY,'?',style);
-        questionstring2 = game.add.text(numberpositionX-150,numberpositionY,questionlevel1[rand][1],style);
-        questionstring3 = game.add.text(numberpositionX,numberpositionY-150,answerlevel1[rand],style);
-        */
+    if( minusmode == true ){
+
         show_question_text(answerlevel1[rand],0);
         show_question_text(-1,1);
         show_question_text(questionlevel1[rand][1],2);
+        /*
         addmode = false;
         minusmode = true;
-        
+        */
     }
 
 }
@@ -225,29 +212,25 @@ function create_question(){
 function update_question(){
 
     rand = Math.floor(Math.random()*questionrandseed);
-    if( rand%2 == 0 ){
-        /*
-        questionstring1.setText(questionlevel1[rand][0]);
-        questionstring2.setText(questionlevel1[rand][1]);
-        questionstring3.setText('?');
-        */
+    if( addmode == true ){
+
         show_question_text(-1,0);
         show_question_text(questionlevel1[rand][0],1);
         show_question_text(questionlevel1[rand][1],2);
+        /*
         addmode = true;
         minusmode = false;
-    }
-    if( rand%2 == 1 ){
-        /*
-        questionstring1.setText('?');
-        questionstring2.setText(questionlevel1[rand][1]);
-        questionstring3.setText(answerlevel1[rand]);
         */
+    }
+    if( minusmode == true ){
+
         show_question_text(answerlevel1[rand],0);
         show_question_text(-1,1);
         show_question_text(questionlevel1[rand][1],2);
+        /*
         addmode = false;
         minusmode = true;
+        */
     }
     update_answerstring();
 }
@@ -280,17 +263,14 @@ function create_answerstring(){
     for(var i = 0;i<=2;i++){
         if( rand%3 == i ){
             if(addmode == true){
-                //answerpannelstring[i] = game.add.text(answernumberX+200*i,answernumberY,answerlevel1[rand],style_answer);
                 show_number(answerlevel1[rand],i);
                 answerpannelcheck[i] = true;
             }
             if(minusmode == true){
-                //answerpannelstring[i] = game.add.text(answernumberX+200*i,answernumberY,questionlevel1[rand][0],style_answer);
                 show_number(questionlevel1[rand][0],i);
                 answerpannelcheck[i] = true;
             }
         }else{
-            //answerpannelstring[i] = game.add.text(answernumberX+200*i,answernumberY,answer[answerindex],style_answer);
             show_number(answer[answerindex],i);
             answerpannelcheck[i] = false;
             answerindex++;
@@ -304,17 +284,14 @@ function update_answerstring(){
     for(var i = 0;i<=2;i++){
         if( rand%3 == i ){
             if(addmode == true){
-                //answerpannelstring[i].setText(answerlevel1[rand]);
                 show_number(answerlevel1[rand],i);
                 answerpannelcheck[i] = true;
             }
             if(minusmode == true){
-                //answerpannelstring[i].setText(questionlevel1[rand][0]);
                 show_number(questionlevel1[rand][0],i);
                 answerpannelcheck[i] = true;
             }
         }else{
-            //answerpannelstring[i].setText(answer[answerindex]);
             show_number(answer[answerindex],i);
             answerpannelcheck[i] = false;
             answerindex++;

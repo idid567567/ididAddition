@@ -41,13 +41,17 @@ var first_try;
 var tutorial_page1,tutorial_page2,tutorial_page3,continue_text,show_up_continue_text,show_up_changepagearrow1;  
 var show_up_time;
 
+var getfishboardX = centerX,
+    getfishboardY = 500;
+
+
 demo.state3 = function() {};
 demo.state3.prototype = {
     preload: function() {
         game.load.image('blackBG','assets/fishingpage/blackBG.jpg');
         game.load.image('blackBG2','assets/fishingpage/blackBG2.jpg');
         
-        game.load.image('button','assets/button/redbutton.png');
+
         //scorebar
         game.load.image('scorebar','assets/gameplay/scorebar.png');
         game.load.image('scorebarred','assets/gameplay/scorebarred.png');
@@ -80,8 +84,11 @@ demo.state3.prototype = {
         game.load.spritesheet('fishsheet','assets/charactor/fishsheet.png',157,247);
         
         game.load.image('getfishBG','assets/fishingpage/getfishboardBG.png');
+        //btn
         game.load.spritesheet('button_getfish_continue','assets/fishingpage/button_continue_sheet.png',134,82);
-        game.load.spritesheet('button_getfish_backhome','assets/fishingpage/button_back_home_sheet.png',134,82);
+        game.load.spritesheet('button_restart_sheet','assets/fishingpage/button_restart_sheet.png',134,82);
+        game.load.spritesheet('button_finish_sheet','assets/fishingpage/button_finish_sheet.png',134,82);
+        
         game.load.spritesheet('fishbox','assets/fishingpage/fishbox_sheet.png',183,148);
         game.load.image('failBG','assets/fishingpage/failboardBG.png');
         
@@ -221,6 +228,8 @@ demo.state3.prototype = {
         show_up_changepagearrow3  = false;
         show_up_start_game_text = false;
         show_up_NEXT_text = false;
+        addmode = true;
+        minusmode = false;
 
         questionrandseed = 16;
         rand = Math.floor(Math.random()*questionrandseed);
@@ -332,8 +341,7 @@ demo.state3.prototype = {
         fishsheet.angle = -90;
         fishsheet.alpha = 0;
        
-        var getfishboardX = centerX,
-            getfishboardY = 500;
+
         
         getfishBG = game.add.sprite(getfishboardX, getfishboardY, "getfishBG");
         getfishBG.anchor.setTo(0.5,0.5);
@@ -343,10 +351,16 @@ demo.state3.prototype = {
         failBG.anchor.setTo(0.5,0.5);
         failBG.scale.setTo(0,0);
         
-        btn_getfish_backhome = game.add.button(getfishboardX+1, getfishboardY, 'button_getfish_backhome', backhome, this, 1, 0);
-        btn_getfish_backhome.anchor.setTo(0,-1);
-        btn_getfish_backhome.scale.setTo(0,0);
-        btn_getfish_backhome.inputEnabled = false;
+        //button
+        button_finish_sheet = game.add.button(getfishboardX+1, getfishboardY, 'button_finish_sheet', finishstate, this, 1, 0);
+        button_finish_sheet.anchor.setTo(0,-1);
+        button_finish_sheet.scale.setTo(0,0);
+        button_finish_sheet.inputEnabled = false;
+        
+        button_restart_sheet = game.add.button(getfishboardX+1, getfishboardY, 'button_restart_sheet', resatartfishing, this, 1, 0);
+        button_restart_sheet.anchor.setTo(0,-1);
+        button_restart_sheet.scale.setTo(0,0);
+        button_restart_sheet.inputEnabled = false;
         
         btn_getfish_continue = game.add.button(getfishboardX-1, getfishboardY, 'button_getfish_continue', continuefishing, this, 1, 0);
         btn_getfish_continue.anchor.setTo(1,-1);
@@ -566,12 +580,9 @@ demo.state3.prototype = {
         equal_mark_tutorial.alpha = 0;
         
         //tutorial page
-        /*
-        tutorial_text = game.add.sprite(centerX,centerY-200, "tutorial_text");
-        tutorial_text.anchor.setTo(0.5,0.5);
-        */
         continue_text = game.add.sprite(centerX,centerY+200, "continue_text");
-        continue_text.anchor.setTo(0.5,0.5);     
+        continue_text.anchor.setTo(0.5,0.5); 
+        continue_text.scale.setTo(0.5,0.5);
         
         click_to_continue = game.add.button(0,0, "blackBG",start_tutorial);
         click_to_continue.alpha = 0;
@@ -639,8 +650,6 @@ demo.state3.prototype = {
         NEXT_text.anchor.setTo(0.5,0.5);
         NEXT_text.scale.setTo(0.4,0.4);
         
-        
-        
         changepagearrow1 = game.add.sprite(textpositionX + 450,textpositionY,"changepagearrow1");
         changepagearrow1.alpha = 0;
         changepagearrow1.scale.setTo(0.5,0.5);
@@ -672,10 +681,6 @@ demo.state3.prototype = {
             anwser_pannel_redlight[i].anchor.setTo(0.5,0.5);   
             anwser_pannel_redlight[i].alpha = 0;  
         }
-        
-        
-        
-
         
         //sound
         rightFX = game.add.audio('rightFX');
@@ -830,6 +835,7 @@ demo.state3.prototype = {
 }
 
 function startfishing(){
+   
     foxpulling.animations.play("pulling",100,true);
     foxpulling.alpha = 1;
     fishingrodpullingsheet.animations.play("fishingrodpulling",20,true);
@@ -839,10 +845,11 @@ function startfishing(){
     game.add.tween(fishingrodpullingsheet).to({x:'-10'},1000,'Linear',true,0,false,false).loop(true); 
     game.add.tween(shadow).to({x:'-10'},1000,'Linear',true,0,false,false).loop(true); 
     scorebar.y = 500; 
-    scorebarred.y = 500; 
-    //console.log('fishingmode');        
-    mark.scale.setTo(0,0);      
-    playing_status = true;       
+    scorebarred.y = 500;       
+    mark.scale.setTo(0,0); 
+    
+    playing_status = true;  
+
 
     create_question(); 
     create_answer_button();
@@ -859,6 +866,38 @@ function startfishing(){
     game_fishing_music = game.add.audio('fishing');
     game_fishing_music.loopFull(1);
 
+}
+function finishstate(){
+    game.add.tween(blackBG_close_fishing).to({alpha:1},1000,'Quad.easeIn',true);
+    button_finish_sheet.inputEnabled = false;
+    button_restart_sheet.inputEnabled = false;
+    btn_getfish_continue.inputEnabled = false;  
+}
+function resatartfishing(){
+    complete_status = false;
+    
+    button_finish_sheet.inputEnabled = false;
+    button_restart_sheet.inputEnabled = false;
+    btn_getfish_continue.inputEnabled = false;
+    game.add.tween(fishbox.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(btn_getfish_continue.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(button_restart_sheet.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(getfishBG.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(btn_getfish_continue.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(button_restart_sheet.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(button_finish_sheet.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(failBG.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    
+    foxfalling.alpha = 0;
+    foxgetfishingsheet.alpha = 0;
+    fishsheet.alpha = 0;
+    
+    fishingrod.alpha = 1;
+    foxbody.alpha = 1;
+    foxtail.alpha = 1;
+    
+    fishingBG.loopFull(1);
+    startFX.play();    
 }
 function finishfishing(){
 
@@ -878,14 +917,10 @@ function finishfishing(){
         question_mark0.alpha = 0;
         question_mark1.alpha = 0;
     }
-    
-    answerpannel[0].alpha = 0;
-    answerpannel[1].alpha = 0;
-    answerpannel[2].alpha = 0;
-    answerpannel[0].inputEnabled = false;  
-    answerpannel[1].inputEnabled = false;  
-    answerpannel[2].inputEnabled = false;  
-
+    for(var n = 0;n<=2;n++){
+        answerpannel[n].alpha = 0;
+        answerpannel[n].inputEnabled = false;     
+    }
     
     bonds.alpha = 0;
     question_green_pannel.alpha = 0;
@@ -894,12 +929,7 @@ function finishfishing(){
     
     blue_FX_sheet.alpha = 0;
     green_FX_sheet.alpha = 0;
-    /*
-    question_circle1.scale.setTo(0,0);
-    question_circle2.scale.setTo(0,0);
-    question_circle3.scale.setTo(0,0);
-    */
-    
+
     foxpulling.alpha = 0;
     fishingrodpullingsheet.alpha = 0;
     foxgetfishingsheet.animations.play("foxgetfishingsheet",8,false);
@@ -910,11 +940,8 @@ function finishfishing(){
 
     shadow.alpha = 0;
     showupfishboard();
-    
     game_fishing_music.stop();
-    
     successFX.play();
-    
 }
 
 function failfishing(){
@@ -923,14 +950,7 @@ function failfishing(){
 
     scorebar.alpha = 0;
     scorebar.y = -1000;
-    /*
-    questionstring1.setText(' ');
-    questionstring2.setText(' ');
-    questionstring3.setText(' ');
-    answerpannelstring[0].setText(' ');
-    answerpannelstring[1].setText(' ');
-    answerpannelstring[2].setText(' ');
-    */
+
     for(var n = 0;n<=10;n++){
         answer_number0[n].alpha = 0;
         answer_number1[n].alpha = 0;
@@ -941,13 +961,11 @@ function failfishing(){
         question_mark0.alpha = 0;
         question_mark1.alpha = 0;
     }
+    for(var n = 0;n<=2;n++){
+        answerpannel[n].alpha = 0;
+        answerpannel[n].inputEnabled = false;     
+    }
     
-    answerpannel[0].alpha = 0;
-    answerpannel[1].alpha = 0;
-    answerpannel[2].alpha = 0;
-    answerpannel[0].inputEnabled = false;  
-    answerpannel[1].inputEnabled = false;  
-    answerpannel[2].inputEnabled = false;  
     
     bonds.alpha = 0;
     question_green_pannel.alpha = 0;
@@ -970,22 +988,20 @@ function failfishing(){
     game_fishing_music.stop();
     failureFX.play();
 }
-function backhome(){
-    game.add.tween(blackBG_close_fishing).to({alpha:1},1000,'Quad.easeIn',true); 
-    
-}
+
 function continuefishing(){
-    //game.state.start('state3');
+    addmode = false;
+    minusmode = true;
     complete_status = false;
     
-    btn_getfish_backhome.inputEnabled = false;
+    button_restart_sheet.inputEnabled = false;
     btn_getfish_continue.inputEnabled = false;
     game.add.tween(fishbox.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
     game.add.tween(btn_getfish_continue.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
-    game.add.tween(btn_getfish_backhome.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(button_restart_sheet.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
     game.add.tween(getfishBG.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
     game.add.tween(btn_getfish_continue.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
-    game.add.tween(btn_getfish_backhome.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(button_restart_sheet.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
     game.add.tween(failBG.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
     
     foxfalling.alpha = 0;
@@ -1001,21 +1017,52 @@ function continuefishing(){
  
 }
 function showupfishboard(){
-    game.add.tween(fishbox.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
-    game.add.tween(btn_getfish_continue.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
-    game.add.tween(btn_getfish_backhome.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
-    game.add.tween(getfishBG.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+    if(addmode == true){
+        btn_getfish_continue.x = getfishboardX-1;
+        btn_getfish_continue.y = getfishboardY;
+        btn_getfish_continue.anchor.setTo(1,-1);
+        
+        button_restart_sheet.x = getfishboardX+1;
+        button_restart_sheet.y = getfishboardY;
+        button_restart_sheet.anchor.setTo(0,-1);
+        
+        game.add.tween(fishbox.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+        game.add.tween(btn_getfish_continue.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+        game.add.tween(button_restart_sheet.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+        game.add.tween(getfishBG.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000); 
+        btn_getfish_continue.inputEnabled = true;
+        button_restart_sheet.inputEnabled = true;
+    }
+    if(minusmode == true){
+        button_finish_sheet.x = getfishboardX-1;
+        button_finish_sheet.y = getfishboardY;
+        button_finish_sheet.anchor.setTo(1,-1);
+        
+        button_restart_sheet.x = getfishboardX+1;
+        button_restart_sheet.y = getfishboardY;
+        button_restart_sheet.anchor.setTo(0,-1);
+        
+        game.add.tween(fishbox.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+        game.add.tween(button_finish_sheet.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+        game.add.tween(button_restart_sheet.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+        game.add.tween(getfishBG.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+        button_finish_sheet.inputEnabled = true;
+        button_restart_sheet.inputEnabled = true;
+    }
     fishbox.animations.play("fishbox",15,true);
-    btn_getfish_backhome.inputEnabled = true;
-    btn_getfish_continue.inputEnabled = true;
+
+
 }
 
 function showupfailboard(){
     
-    game.add.tween(btn_getfish_continue.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
-    game.add.tween(btn_getfish_backhome.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+    //game.add.tween(btn_getfish_continue.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+    button_restart_sheet.x = getfishboardX;
+    button_restart_sheet.y = getfishboardY;
+    button_restart_sheet.anchor.setTo(0.5,-1);
+    game.add.tween(button_restart_sheet.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
     game.add.tween(failBG.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
     
-    btn_getfish_backhome.inputEnabled = true;
+    button_restart_sheet.inputEnabled = true;
     btn_getfish_continue.inputEnabled = true;
 }
