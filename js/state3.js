@@ -40,6 +40,7 @@ var first_try;
 
 var tutorial_page1,tutorial_page2,tutorial_page3,continue_text,show_up_continue_text,show_up_changepagearrow1;  
 var show_up_time;
+
 demo.state3 = function() {};
 demo.state3.prototype = {
     preload: function() {
