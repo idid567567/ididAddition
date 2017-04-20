@@ -11,6 +11,8 @@ var question_text0 = new Array();
 var question_text1 = new Array();
 var question_text2 = new Array();
 
+var answer = new Array();
+
 var questionpositionX = 1050,
     questionpositionY = 300;
 

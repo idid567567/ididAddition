@@ -1,3 +1,11 @@
+var demo = {},
+    centerX = 1600 / 2,
+    centerY = 1000 / 2,
+    rockman_1,
+    speed = 5;
+var startmusic,startbtndown;
+var BG,startpageBG,startpageBG_button,loadingbar,loadingbarwidth,loadingbarcompleted;
+
 var index = new Array();
 var questionindex = new Array(); 
 var answercount;
@@ -16,7 +24,7 @@ var playing_status,complete_status;
 var waitingclick;
 
 var correct_fx,wrong_fx;
-
+var answerpannel = new Array();
 var anwser_pannel_light = new Array();
 var anwser_pannel_redlight = new Array();
 
@@ -197,7 +205,6 @@ demo.state3.prototype = {
         
         //init parameter
         answercount = 0;
-        addChangeStateEvent();
         finalscore = 100;
         scorebarX = 1450;
         scorebarY = 500;
@@ -853,24 +860,13 @@ function startfishing(){
 
 }
 function finishfishing(){
-    if(daily_task_status == false){
-        daily_task_status = true;
-    }
-    
+
     complete_status = true;
     playing_status = false; 
     scorebar.alpha = 0;
     scorebar.y = -1000;
     game.add.tween(scorebar).to({alpha:0},100,'Linear',true);
-    /*
-    questionstring1.setText(' ');
-    questionstring2.setText(' ');
-    questionstring3.setText(' ');
-    
-    answerpannelstring[0].setText(' ');
-    answerpannelstring[1].setText(' ');
-    answerpannelstring[2].setText(' ');
-    */
+
     for(var n = 0;n<=10;n++){
         answer_number0[n].alpha = 0;
         answer_number1[n].alpha = 0;

@@ -1,10 +1,4 @@
-var demo = {},
-    centerX = 1600 / 2,
-    centerY = 1000 / 2,
-    rockman_1,
-    speed = 5;
-var startmusic,startbtndown;
-var BG,startpageBG,startpageBG_button,loadingbar,loadingbarwidth,loadingbarcompleted;
+
  
 demo.startpage = function() {};
 demo.startpage.prototype = {
