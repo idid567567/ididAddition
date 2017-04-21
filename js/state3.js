@@ -15,7 +15,6 @@ var foxpulling,shadow,fishingrodpullingsheet;
 var playing_status,complete_status;
 var waitingclick;
 
-var correct_fx,wrong_fx;
 
 var anwser_pannel_light = new Array();
 var anwser_pannel_redlight = new Array();
@@ -30,8 +29,10 @@ var buttonpositionY;
 
 var first_try;
 
-var tutorial_page1,tutorial_page2,tutorial_page3,continue_text,show_up_continue_text,show_up_changepagearrow1;  
+var tutorial_page1,tutorial_page2,tutorial_page3; 
 var show_up_time;
+
+var tween_continue_text;
 demo.state3 = function() {};
 demo.state3.prototype = {
     preload: function() {
@@ -90,14 +91,16 @@ demo.state3.prototype = {
         game.load.image('anwser_pannel_redlight','assets/fishingpage/question/anwser_pannel_redlight.png');
         
         game.load.image('correct_fx','assets/fishingpage/whiteBG.png');
-        game.load.image('wrong_fx','assets/fishingpage/redBG.png');
+
         
         game.load.spritesheet('blue_FX_sheet','assets/fishingpage/question/blue_FX_sheet.png',250,250);
         game.load.spritesheet('green_FX_sheet','assets/fishingpage/question/green_FX_sheet.png',250,250);
         game.load.spritesheet('red_FX_sheet','assets/fishingpage/question/red_FX_sheet.png',250,250);
         
         game.load.spritesheet('energy_transfer_sheet','assets/fishingpage/question/energy_transfer_sheet.png',250,250);
-        
+        game.load.spritesheet('scorebar_wrong_fx_sheet','assets/gameplay/scorebar_wrong_fx_sheet.png',200,728);
+        game.load.spritesheet('scorebar_right_fx_sheet','assets/gameplay/scorebar_right_fx_sheet.png',200,728);
+
         //answer_pannel_number
         game.load.image('0','assets/fishingpage/question/0.png');
         game.load.image('1','assets/fishingpage/question/1.png');
@@ -158,9 +161,8 @@ demo.state3.prototype = {
         game.load.image('tutorial_text','assets/fishingpage/tutorial/tutorial_text.png');
         game.load.image('finger_pointer','assets/fishingpage/tutorial/finger_pointer.png');
         game.load.image('finger_pointer3','assets/fishingpage/tutorial/finger_pointer.png');
-        game.load.image('changepagearrow1','assets/fishingpage/tutorial/next_step_arrow.png');
-        game.load.image('changepagearrow2','assets/fishingpage/tutorial/next_step_arrow.png');
-        game.load.image('changepagearrow3','assets/fishingpage/tutorial/next_step_arrow.png');
+        game.load.spritesheet('tutorial_frame_sheet','assets/fishingpage/tutorial/tutorial_frame_sheet.png',400,300);
+        
         //tutorial_text
         game.load.image('add_mode_text1','assets/fishingpage/tutorial/add_mode_text1.png');
         game.load.image('add_mode_text2','assets/fishingpage/tutorial/add_mode_text2.png');
@@ -173,8 +175,6 @@ demo.state3.prototype = {
 
         game.load.image('Qmark_tutorial','assets/fishingpage/tutorial/Qmark_tutorial.png');
         game.load.image('equal_mark_tutorial','assets/fishingpage/tutorial/equal_mark_tutorial.png');
-        
-        game.load.image('NEXT_text','assets/fishingpage/tutorial/NEXT_text.png');
         
         game.load.image('plus_tutorial','assets/fishingpage/tutorial/plus.png');
         game.load.image('minus_tutorial','assets/fishingpage/tutorial/minus.png');
@@ -207,12 +207,8 @@ demo.state3.prototype = {
         waitingclick = false;
         complete_status = false;
         first_try = true;
-        show_up_continue_text = true;
-        show_up_changepagearrow1  = false;
-        show_up_changepagearrow2  = false;
-        show_up_changepagearrow3  = false;
-        show_up_start_game_text = false;
-        show_up_NEXT_text = false;
+
+
 
         questionrandseed = 16;
         rand = Math.floor(Math.random()*questionrandseed);
@@ -361,9 +357,13 @@ demo.state3.prototype = {
         //fx
         correct_fx = game.add.sprite(0,0,'correct_fx');
         correct_fx.alpha = 0;
-        
-        wrong_fx = game.add.sprite(0,0,'wrong_fx');
-        wrong_fx.alpha = 0;
+
+        tutorial_frame_sheet = game.add.sprite(questionpositionX-440,questionpositionY+40,"tutorial_frame_sheet");
+        tutorial_frame_sheet.anchor.setTo(0.5,0.5);
+        tutorial_frame_sheet.scale.setTo(0.9,0.9);
+        tutorial_frame_sheet.animations.add("tutorial_frame_sheet_dyn", [0,1,2,3,4,5,6,7,8,9]);
+        tutorial_frame_sheet.alpha = 0;
+
         
         
         
@@ -402,7 +402,7 @@ demo.state3.prototype = {
         }    
         
     
-        answer_number0[0] =  game.add.sprite(questionpositionX-150, buttonpositionY,'0');    
+        answer_number0[0] = game.add.sprite(questionpositionX-150, buttonpositionY,'0');    
         answer_number0[0].scale.setTo(0.8,0.8); 
         answer_number0[0].anchor.setTo(0.5,0.5);   
         answer_number0[0].alpha = 0;     
@@ -487,6 +487,17 @@ demo.state3.prototype = {
         energy_transfer_sheet2.anchor.setTo(0.5,0.5);
         energy_transfer_sheet2.alpha = 0;
         
+        scorebar_wrong_fx_sheet = game.add.sprite(scorebarX+10,110, "scorebar_wrong_fx_sheet");
+        scorebar_wrong_fx_sheet.animations.add("scorebar_wrong_fx_dynamic", [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]);
+        scorebar_wrong_fx_sheet.anchor.setTo(0.5,0);
+        scorebar_wrong_fx_sheet.alpha = 0;
+        
+        scorebar_right_fx_sheet = game.add.sprite(scorebarX+10,110, "scorebar_right_fx_sheet");
+        scorebar_right_fx_sheet.animations.add("scorebar_right_fx_dynamic", [0,1,2,3,4,5,6,7,8,9,10,11]);
+        scorebar_right_fx_sheet.anchor.setTo(0.5,0);
+        scorebar_right_fx_sheet.alpha = 0;
+
+        
 
         //add question text image  
         for(var i = 0;i<=10;i++){
@@ -541,7 +552,7 @@ demo.state3.prototype = {
         plus_tutorial.alpha = 0;
         
         minus_tutorial = game.add.sprite(questionpositionX-500,questionpositionY,'minus_tutorial');    
-        minus_tutorial.scale.setTo(0.8,0.8); 
+        minus_tutorial.scale.setTo(0.4,0.4); 
         minus_tutorial.anchor.setTo(0.5,0.5);   
         minus_tutorial.alpha = 0;
         
@@ -558,12 +569,10 @@ demo.state3.prototype = {
         equal_mark_tutorial.alpha = 0;
         
         //tutorial page
-        /*
-        tutorial_text = game.add.sprite(centerX,centerY-200, "tutorial_text");
-        tutorial_text.anchor.setTo(0.5,0.5);
-        */
         continue_text = game.add.sprite(centerX,centerY+200, "continue_text");
         continue_text.anchor.setTo(0.5,0.5);     
+        continue_text.scale.setTo(0.5,0.5);  
+        tween_continue_text = game.add.tween(continue_text).to({alpha:0.2},500,'Linear',true,0,false,false).loop(true);
         
         click_to_continue = game.add.button(0,0, "blackBG",start_tutorial);
         click_to_continue.alpha = 0;
@@ -579,75 +588,25 @@ demo.state3.prototype = {
         finger_pointer.alpha = 0;
         finger_pointer.anchor.setTo(0.5,0.5);
         
-        finger_pointer2 = game.add.sprite(textpositionX + 450,textpositionY+50,"finger_pointer");
-        finger_pointer2.alpha = 0;
-        finger_pointer2.anchor.setTo(0.5,0.5);
-        
-        
-        finger_pointer3 = game.add.sprite(questionpositionX+150, buttonpositionY+50,"finger_pointer");
-        finger_pointer3.alpha = 0;
-        finger_pointer3.anchor.setTo(0.5,0.5);
-        
-        finger_pointer4 = game.add.sprite(questionpositionX-400,questionpositionY+150,"finger_pointer");
-        finger_pointer4.alpha = 0;
-        finger_pointer4.anchor.setTo(0.5,0.5);
-        
-        finger_pointer5 = game.add.sprite(questionpositionX-150, buttonpositionY+50,"finger_pointer");
-        finger_pointer5.alpha = 0;
-        finger_pointer5.anchor.setTo(0.5,0.5);        
-        
-        
         get_fish_tutorial = game.add.sprite(foxpositionX+450, foxpositionY-70,"get_fish_tutorial");
         get_fish_tutorial.anchor.setTo(0.5,0.5);
         get_fish_tutorial.scale.setTo(0,0);
 
-        add_mode_text1 = game.add.sprite(textpositionX ,textpositionY ,"add_mode_text1");
-        add_mode_text1.alpha = 0;
-        add_mode_text1.anchor.setTo(0,0.5);
-        add_mode_text1.scale.setTo(0.6,0.6);
-        
-        add_mode_text2 = game.add.sprite(questionpositionX-400,buttonpositionY ,"add_mode_text2");
+        add_mode_text2 = game.add.sprite(questionpositionX-440,buttonpositionY-120 ,"add_mode_text2");
         add_mode_text2.alpha = 0;
         add_mode_text2.anchor.setTo(0.5,0.5);
-        add_mode_text2.scale.setTo(0.6,0.6);
+        add_mode_text2.scale.setTo(0.5,0.5);
 
-        minus_mode_text1 = game.add.sprite(textpositionX ,textpositionY ,"minus_mode_text1");
-        minus_mode_text1.alpha = 0;
-        minus_mode_text1.anchor.setTo(0,0.5);
-        minus_mode_text1.scale.setTo(0.6,0.6);
-        
-        minus_mode_text2 = game.add.sprite(questionpositionX-400,buttonpositionY,"minus_mode_text2");
+        minus_mode_text2 = game.add.sprite(questionpositionX-440,buttonpositionY-120 ,"minus_mode_text2");
         minus_mode_text2.alpha = 0;
         minus_mode_text2.anchor.setTo(0.5,0.5);
-        minus_mode_text2.scale.setTo(0.6,0.6);
+        minus_mode_text2.scale.setTo(0.5,0.5);
         
         correct_text1 = game.add.sprite(questionpositionX-600,questionpositionY,"correct_text1");
         correct_text1.alpha = 0;
         correct_text1.anchor.setTo(0,0.5);
         correct_text1.scale.setTo(0.6,0.6);
-        
-        NEXT_text = game.add.sprite(questionpositionX-400,questionpositionY+100,"NEXT_text");
-        NEXT_text.alpha = 0;
-        NEXT_text.anchor.setTo(0.5,0.5);
-        NEXT_text.scale.setTo(0.4,0.4);
-        
-        
-        
-        changepagearrow1 = game.add.sprite(textpositionX + 450,textpositionY,"changepagearrow1");
-        changepagearrow1.alpha = 0;
-        changepagearrow1.scale.setTo(0.5,0.5);
-        changepagearrow1.anchor.setTo(0.5,0.5);
-         
-        changepagearrow2 = game.add.sprite(textpositionX + 450,textpositionY,"changepagearrow2");
-        changepagearrow2.alpha = 0;
-        changepagearrow2.scale.setTo(0.5,0.5);
-        changepagearrow2.anchor.setTo(0.5,0.5);       
 
-        changepagearrow3 = game.add.sprite(textpositionX + 450,textpositionY,"changepagearrow3");
-        changepagearrow3.alpha = 0;
-        changepagearrow3.scale.setTo(0.5,0.5);
-        changepagearrow3.anchor.setTo(0.5,0.5);        
-        
         start_game_text = game.add.sprite(centerX,centerY+200,"start_game_text");
         start_game_text.alpha = 0;
         start_game_text.scale.setTo(0.5,0.5);
@@ -664,11 +623,7 @@ demo.state3.prototype = {
             anwser_pannel_redlight[i].anchor.setTo(0.5,0.5);   
             anwser_pannel_redlight[i].alpha = 0;  
         }
-        
-        
-        
-
-        
+     
         //sound
         rightFX = game.add.audio('rightFX');
         wrongFX = game.add.audio('wrongFX');
@@ -746,78 +701,8 @@ demo.state3.prototype = {
             scorebar.alpha = 1;
         }else if(scorebar.alpha > 0.5){
             scorebar.alpha -= 0.03;
-        }
-        
-        if(blackBG_close_fishing.alpha == 1){
-            game.state.start('state8');
-        }
-        
-        if(correct_fx.alpha > 0){
-            correct_fx.alpha -= 0.1;
-        }
-        
-        if(wrong_fx.alpha > 0){
-            wrong_fx.alpha -= 0.1;
-        }
+        }  
 
-        if(anwser_pannel_light[0].alpha > 0){
-            anwser_pannel_light[0].alpha -= 0.1;
-        }
-        
-        if( anwser_pannel_redlight[0].alpha > 0 ){
-            anwser_pannel_redlight[0].alpha -= 0.1;
-        }
-        if(anwser_pannel_light[1].alpha > 0){
-            anwser_pannel_light[1].alpha -= 0.1;
-        }
-        
-        if( anwser_pannel_redlight[1].alpha > 0 ){
-            anwser_pannel_redlight[1].alpha -= 0.1;
-        }
-        if(anwser_pannel_light[2].alpha > 0){
-            anwser_pannel_light[2].alpha -= 0.1;
-        }
-        
-        if( anwser_pannel_redlight[2].alpha > 0 ){
-            anwser_pannel_redlight[2].alpha -= 0.1;
-        }
-     
-        if( continue_text.alpha > 0.2 && show_up_continue_text  == true ){
-            continue_text.alpha -= 0.05;
-        }else if( 0.2 > continue_text.alpha > 0.1 && show_up_continue_text  == true ){
-            continue_text.alpha = 1;
-        }
-        if( changepagearrow1.alpha > 0.2 && show_up_changepagearrow1  == true ){
-            changepagearrow1.alpha -= 0.05;
-        }else if( 0.2 > changepagearrow1.alpha > 0.15 && show_up_changepagearrow1  == true ){
-            changepagearrow1.alpha = 1;
-        }
-        
-        if( changepagearrow2.alpha > 0.2 && show_up_changepagearrow2  == true ){
-            changepagearrow2.alpha -= 0.05;
-        }else if( 0.2 > changepagearrow2.alpha > 0.15 && show_up_changepagearrow2  == true ){
-            changepagearrow2.alpha = 1;
-        }
-        
-        if( changepagearrow3.alpha > 0.2 && show_up_changepagearrow3  == true ){
-            changepagearrow3.alpha -= 0.05;
-        }else if( 0.2 > changepagearrow2.alpha > 0.15 && show_up_changepagearrow3  == true ){
-            changepagearrow3.alpha = 1;
-        }
-                
-        if( start_game_text.alpha > 0.2 && show_up_start_game_text  == true ){
-            start_game_text.alpha -= 0.05;
-        }else if( 0.2 > start_game_text.alpha > 0.15 && show_up_start_game_text  == true ){
-            start_game_text.alpha = 1;
-        }
-        
-        if( NEXT_text.alpha > 0.2 && show_up_NEXT_text  == true ){
-            NEXT_text.alpha -= 0.05;
-        }else if( 0.2 > NEXT_text.alpha > 0.15 && show_up_NEXT_text  == true ){
-            NEXT_text.alpha = 1;
-        }
-       
-        
     }    
 }
 
@@ -978,7 +863,7 @@ function backhome(){
     
 }
 function continuefishing(){
-    //game.state.start('state3');
+
     complete_status = false;
     
     btn_getfish_backhome.inputEnabled = false;
