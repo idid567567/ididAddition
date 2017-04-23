@@ -83,18 +83,31 @@ function checkanswer_fishing2(){
 }
 
 //create question---------------------------------------------------------------------------------------
-
+var questionrandseed;
+var rand;
 var question_circle1,question_circle2,question_circle3,bonds;
 
+function create_question_index(){         
+    questionrandseed = 16;
+    rand = Math.floor(Math.random()*questionrandseed);      
+}
+
+
+
 function create_question(){
-        
-    question_green_pannel.animations.play("question_green_pannel_dyn",15,true);
-    question_blue_pannel1.animations.play("question_blue_pannel_dyn1",15,true);
-    question_blue_pannel2.animations.play("question_blue_pannel_dyn2",15,true);
-    question_green_pannel.alpha = 1;
-    question_blue_pannel1.alpha = 1;
-    question_blue_pannel2.alpha = 1;
-    bonds.alpha = 1;
+    create_question_index();
+    
+    question_pannel1_create_fx_animation = question_pannel1_create_fx.animations.play("question_pannel1_create_fx",25,false);
+    question_pannel2_create_fx_animation = question_pannel2_create_fx.animations.play("question_pannel2_create_fx",25,false);
+    question_pannel3_create_fx_animation = question_pannel3_create_fx.animations.play("question_pannel3_create_fx",25,false);
+    question_green_pannel.animations.play("question_green_pannel_dyn",10,true);
+    question_blue_pannel1.animations.play("question_blue_pannel_dyn1",10,true);
+    question_blue_pannel2.animations.play("question_blue_pannel_dyn2",10,true);
+    game.add.tween(question_green_pannel).to({alpha:1},300,'Linear',true,300);
+    game.add.tween(question_blue_pannel1).to({alpha:1},300,'Linear',true,300);
+    game.add.tween(question_blue_pannel2).to({alpha:1},300,'Linear',true,300);
+    game.add.tween(bonds).to({alpha:1},500,'Linear',true,300);
+    
     if( rand%2 == 0 ){
 
         show_question_text(-1,0);
@@ -115,7 +128,7 @@ function create_question(){
 
 function update_question(){
 
-    rand = Math.floor(Math.random()*questionrandseed);
+    create_question_index();
     if( rand%2 == 0 ){
 
         show_question_text(-1,0);

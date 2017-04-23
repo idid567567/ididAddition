@@ -25,6 +25,14 @@ function startfishing_tutorial(){
     mark_tutorial.inputEnabled = false;
     scorebarBG.alpha = 1;       
     scorebar.alpha = 1;
+    
+    question_pannel1_create_fx.alpha = 1;
+    question_pannel1_create_fx_animation = question_pannel1_create_fx.animations.play("question_pannel1_create_fx",20,false);
+    question_pannel2_create_fx.alpha = 1;
+    question_pannel2_create_fx_animation = question_pannel2_create_fx.animations.play("question_pannel2_create_fx",20,false);
+    question_pannel3_create_fx.alpha = 1;
+    question_pannel3_create_fx_animation = question_pannel3_create_fx.animations.play("question_pannel3_create_fx",20,false);    
+    
     tutorial_q1();
 } 
 
@@ -32,13 +40,14 @@ var tutorial_number_4_tween;
 
 function tutorial_q1(){
     
-    question_green_pannel.animations.play("question_green_pannel_dyn",15,true);
-    question_blue_pannel1.animations.play("question_blue_pannel_dyn1",15,true);
-    question_blue_pannel2.animations.play("question_blue_pannel_dyn2",15,true);
-    question_green_pannel.alpha = 1;
-    question_blue_pannel1.alpha = 1;
-    question_blue_pannel2.alpha = 1;
-    bonds.alpha = 1;
+    question_green_pannel.animations.play("question_green_pannel_dyn",10,true);
+    question_blue_pannel1.animations.play("question_blue_pannel_dyn1",10,true);
+    question_blue_pannel2.animations.play("question_blue_pannel_dyn2",10,true);
+    game.add.tween(question_green_pannel).to({alpha:1},500,'Linear',true,300);
+    game.add.tween(question_blue_pannel1).to({alpha:1},500,'Linear',true,300);
+    game.add.tween(question_blue_pannel2).to({alpha:1},500,'Linear',true,300);
+    game.add.tween(bonds).to({alpha:1},500,'Linear',true,300);
+
     show_question_text(-1,0);
     show_question_text(4,1);
     show_question_text(2,2);  
@@ -50,9 +59,9 @@ function tutorial_q1(){
     show_number(4,1);
     show_number(6,2);
     
-    game.add.tween(tutorial_number_2).to({alpha:1},500,Phaser.Easing.Elastic.Out,true,500);
-    game.add.tween(plus_tutorial).to({alpha:1},500,Phaser.Easing.Elastic.Out,true,1000);
-    tutorial_number_4_tween = game.add.tween(tutorial_number_4).to({alpha:1},500,Phaser.Easing.Elastic.Out,true,1500);
+    game.add.tween(tutorial_number_2).to({alpha:1},500,Phaser.Easing.Elastic.Out,true,1000);
+    game.add.tween(plus_tutorial).to({alpha:1},500,Phaser.Easing.Elastic.Out,true,1500);
+    tutorial_number_4_tween = game.add.tween(tutorial_number_4).to({alpha:1},500,Phaser.Easing.Elastic.Out,true,2000);
     tutorial_number_4_tween.onComplete.add(completed_tutorial_number_4_tween, this);
 }
 
@@ -115,7 +124,7 @@ function correct_answer_tutorial(){
     
     finger_pointer.alpha = 0;
     finger_pointer_tween.pause();
-    
+     
     answerpannel_tutorial[2].inputEnabled = false;
     anwser_pannel_light[2].alpha = correctFX;
     game.add.tween(anwser_pannel_light[2]).to({alpha:0},500,'Quad.easeOut',true);
@@ -248,7 +257,11 @@ function finish_tutorial(){
     game.add.tween(question_green_pannel).to({alpha:0},500,'Quad.easeInOut',true);
     game.add.tween(question_blue_pannel1).to({alpha:0},500,'Quad.easeInOut',true);
     game.add.tween(question_blue_pannel2).to({alpha:0},500,'Quad.easeInOut',true);
-   
+    
+    question_green_pannel_animation.stop();
+    question_blue_pannel1_animation.stop();
+    question_blue_pannel2_animation.stop();
+
     blue_FX_sheet.alpha = 0;
     green_FX_sheet.alpha = 0;
     first_try = false;

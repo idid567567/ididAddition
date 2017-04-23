@@ -21,6 +21,7 @@ function completed_energy_transfer_sheet1_tutorial(){
     game.add.tween(correct_fx).to({alpha:0},200,'Quad.easeOut',true);
     scorebar_right_fx_sheet.animations.play("scorebar_right_fx_dynamic",15,false);
     scorebar_right_fx_sheet.alpha = 1;    
+    add_energyFX.play();
     tutorial_q2();
 }
 var energy_transfer_sheet2_tween;
@@ -44,6 +45,7 @@ function completed_energy_transfer_sheet2_tutorial(){
     game.add.tween(correct_fx).to({alpha:0},200,'Quad.easeOut',true);
     scorebar_right_fx_sheet.animations.play("scorebar_right_fx_dynamic",15,false);
     scorebar_right_fx_sheet.alpha = 1;
+    add_energyFX.play();
     start_game_text_tween = game.add.tween(start_game_text).to({alpha:1},500,'Linear',true,500);
     start_game_text_tween.onComplete.add(completed_start_game_text, this);
     
@@ -84,6 +86,7 @@ function completed_energy_transfer_sheet(){
     game.add.tween(correct_fx).to({alpha:0},200,'Quad.easeOut',true);
     scorebar_right_fx_sheet.animations.play("scorebar_right_fx_dynamic",20,false);
     scorebar_right_fx_sheet.alpha= 1;
+    add_energyFX.play();
 }
 
 //wrong fx-----------------------------------------------------------------------------------------------------------------
