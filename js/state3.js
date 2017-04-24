@@ -39,10 +39,12 @@ var foxtail_animation,
     question_green_pannel_animation,
     question_blue_pannel1_animation,
     question_blue_pannel2_animation,
-    fishsheet_animation,
     foxgetfishingsheet_animation,
     foxgetfishing_purple_sheet_animation,
-    fish_sheet_purple_animation;
+    foxgetfishing_yellow_sheet_animation,
+    fishsheet_animation,
+    fish_sheet_purple_animation,
+    fish_sheet_yellow_animation;
 
 demo.state3 = function() {};
 demo.state3.prototype = {
@@ -85,15 +87,23 @@ demo.state3.prototype = {
         game.load.spritesheet('fishsheet','assets/charactor/fishsheet.png',157,247);
         game.load.spritesheet('foxgetfishing_purple_sheet','assets/charactor/foxgetfishing_purple_sheet.png',780,651);
         game.load.spritesheet('fish_sheet_purple','assets/charactor/fish_sheet_purple.png',157,247);
-
+        game.load.spritesheet('foxgetfishing_yellow_sheet','assets/charactor/foxgetfishing_yellow_sheet.png',780,651);
+        game.load.spritesheet('fish_sheet_yellow','assets/charactor/fish_sheet_yellow.png',157,247);
+        game.load.spritesheet('foxgetfishing_green_sheet','assets/charactor/foxgetfishing_green_sheet.png',780,651);
+        game.load.spritesheet('fish_sheet_green','assets/charactor/fish_sheet_green.png',157,247);
+        
         game.load.image('fox_getfishsheet_lastframe','assets/charactor/fox_getfishsheet_lastframe.png');
         
         game.load.image('getfishBG','assets/fishingpage/getfishboardBG.png');
         game.load.spritesheet('button_getfish_continue','assets/fishingpage/button_continue_sheet.png',134,82);
         game.load.spritesheet('button_getfish_backhome','assets/fishingpage/button_back_home_sheet.png',134,82);
         
+        //fishbox
         game.load.image('fishbox_orange','assets/fishingpage/fishbox_orange.png');
         game.load.image('fishbox_purple','assets/fishingpage/fishbox_purple.png');
+        game.load.image('fishbox_yellow','assets/fishingpage/fishbox_yellow.png');
+        game.load.image('fishbox_green','assets/fishingpage/fishbox_green.png');
+        
         game.load.spritesheet('fishbox_sheet_highlight','assets/fishingpage/fishbox_sheet_highlight.png',183,148);
         
         game.load.image('failBG','assets/fishingpage/failboardBG.png');
@@ -332,7 +342,8 @@ demo.state3.prototype = {
 
         dropfishingrod.anchor.setTo(0.7,0.9);
         dropfishingrod.alpha = 0;
-
+        
+        //get fish
         foxgetfishingsheet = game.add.sprite(foxpositionX+500, foxpositionY+300, "foxgetfishingsheet");
         foxgetfishingsheet_animation = foxgetfishingsheet.animations.add("foxgetfishingsheet", [0,1,2,3,4,5,6,7,8,9]);
         foxgetfishingsheet.anchor.setTo(0.7,0.9);
@@ -356,6 +367,30 @@ demo.state3.prototype = {
         fish_sheet_purple.angle = -90;
         fish_sheet_purple.alpha = 0;
         fish_sheet_purple_animation = fish_sheet_purple.animations.add("fish_sheet_purple_dynamic", [0,1,2]);
+
+        foxgetfishing_yellow_sheet = game.add.sprite(foxpositionX+500, foxpositionY+300, "foxgetfishing_yellow_sheet");
+        foxgetfishing_yellow_sheet_animation = foxgetfishing_yellow_sheet.animations.add("foxgetfishing_yellow_sheet", [0,1,2,3,4,5,6,7,8,9]);
+        foxgetfishing_yellow_sheet.anchor.setTo(0.7,0.9);
+        foxgetfishing_yellow_sheet.alpha = 0;
+        
+        fish_sheet_yellow = game.add.sprite(foxpositionX+480, foxpositionY+290, "fish_sheet_yellow");
+        fish_sheet_yellow.anchor.setTo(0.7,0.9);
+        fish_sheet_yellow.scale.setTo(0.5,0.5);
+        fish_sheet_yellow.angle = -90;
+        fish_sheet_yellow.alpha = 0;
+        fish_sheet_yellow_animation = fish_sheet_yellow.animations.add("fish_sheet_yellow_dynamic", [0,1,2]);        
+
+        foxgetfishing_green_sheet = game.add.sprite(foxpositionX+500, foxpositionY+300, "foxgetfishing_green_sheet");
+        foxgetfishing_green_sheet_animation = foxgetfishing_green_sheet.animations.add("foxgetfishing_green_sheet", [0,1,2,3,4,5,6,7,8,9]);
+        foxgetfishing_green_sheet.anchor.setTo(0.7,0.9);
+        foxgetfishing_green_sheet.alpha = 0;
+        
+        fish_sheet_green = game.add.sprite(foxpositionX+480, foxpositionY+290, "fish_sheet_green");
+        fish_sheet_green.anchor.setTo(0.7,0.9);
+        fish_sheet_green.scale.setTo(0.5,0.5);
+        fish_sheet_green.angle = -90;
+        fish_sheet_green.alpha = 0;
+        fish_sheet_green_animation = fish_sheet_green.animations.add("fish_sheet_green_dynamic", [0,1,2]);    
         
         fox_getfishsheet_lastframe = game.add.sprite(foxpositionX+500, foxpositionY+300, "fox_getfishsheet_lastframe");
         fox_getfishsheet_lastframe.anchor.setTo(0.7,0.9);
@@ -389,6 +424,14 @@ demo.state3.prototype = {
         fishbox_purple = game.add.sprite(getfishboardX, getfishboardY, "fishbox_purple");
         fishbox_purple.anchor.setTo(0.5,0.5);
         fishbox_purple.scale.setTo(0,0);
+        
+        fishbox_yellow = game.add.sprite(getfishboardX, getfishboardY, "fishbox_yellow");
+        fishbox_yellow.anchor.setTo(0.5,0.5);
+        fishbox_yellow.scale.setTo(0,0);        
+
+        fishbox_green = game.add.sprite(getfishboardX, getfishboardY, "fishbox_green");
+        fishbox_green.anchor.setTo(0.5,0.5);
+        fishbox_green.scale.setTo(0,0);   
         
         fishbox_sheet_highlight = game.add.sprite(getfishboardX, getfishboardY, "fishbox_sheet_highlight");
         fishbox_sheet_highlight.anchor.setTo(0.5,0.5);
@@ -863,7 +906,7 @@ function finishfishing(){
 var rand_fish;
 function fish_sheet(){
     
-    rand_fish= Math.floor(Math.random()*2);
+    rand_fish= Math.floor(Math.random()*4);
     
     console.log(rand_fish);
     if( rand_fish == 0 ){
@@ -885,6 +928,30 @@ function fish_sheet(){
             fish_sheet_purple.alpha = 1;
             fish_sheet_purple.animations.play("fish_sheet_purple_dynamic",15,true);
             foxgetfishing_purple_sheet.alpha = 0;
+            fox_getfishsheet_lastframe.alpha = 1;
+        }, this);        
+        
+    }else if( rand_fish == 2 ){
+
+        foxgetfishing_yellow_sheet.animations.play("foxgetfishing_yellow_sheet",8,false);
+        foxgetfishing_yellow_sheet.alpha = 1;
+
+        foxgetfishing_yellow_sheet_animation.onComplete.add(function () {	
+            fish_sheet_yellow.alpha = 1;
+            fish_sheet_yellow.animations.play("fish_sheet_yellow_dynamic",15,true);
+            foxgetfishing_yellow_sheet.alpha = 0;
+            fox_getfishsheet_lastframe.alpha = 1;
+        }, this);        
+        
+    }else if( rand_fish == 3 ){
+
+        foxgetfishing_green_sheet.animations.play("foxgetfishing_green_sheet",8,false);
+        foxgetfishing_green_sheet.alpha = 1;
+
+        foxgetfishing_green_sheet_animation.onComplete.add(function () {	
+            fish_sheet_green.alpha = 1;
+            fish_sheet_green.animations.play("fish_sheet_green_dynamic",15,true);
+            foxgetfishing_green_sheet.alpha = 0;
             fox_getfishsheet_lastframe.alpha = 1;
         }, this);        
         
@@ -931,6 +998,8 @@ function continuefishing(){
     btn_getfish_continue.inputEnabled = false;
     game.add.tween(fishbox_purple.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
     game.add.tween(fishbox_orange.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(fishbox_yellow.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(fishbox_green.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
     game.add.tween(fishbox_sheet_highlight.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
     
     game.add.tween(btn_getfish_continue.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
@@ -946,6 +1015,8 @@ function continuefishing(){
     fishsheet.alpha = 0;
     fish_sheet_purple_animation.stop();
     fish_sheet_purple.alpha = 0;
+    fish_sheet_yellow_animation.stop();
+    fish_sheet_yellow.alpha = 0;
     fox_getfishsheet_lastframe.alpha = 0;
     
     fishingrod.alpha = 1;
@@ -968,6 +1039,10 @@ function showupfishboard(){
         game.add.tween(fishbox_orange.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
     }else if ( rand_fish == 1 ){
         game.add.tween(fishbox_purple.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+    }else if ( rand_fish == 2 ){
+        game.add.tween(fishbox_yellow.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+    }else if ( rand_fish == 3 ){
+        game.add.tween(fishbox_green.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
     }
 
     game.add.tween(btn_getfish_continue.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
