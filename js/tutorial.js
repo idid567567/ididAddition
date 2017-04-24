@@ -25,6 +25,7 @@ function startfishing_tutorial(){
     mark_tutorial.inputEnabled = false;
     scorebarBG.alpha = 1;       
     scorebar.alpha = 1;
+    scorebar_tween = game.add.tween(scorebar).to({alpha:'-0.2'},500,'Quad.easeInOut',true,0,false,true).loop(true);
     
     question_pannel1_create_fx.alpha = 1;
     question_pannel1_create_fx_animation = question_pannel1_create_fx.animations.play("question_pannel1_create_fx",20,false);
@@ -235,19 +236,11 @@ function finish_tutorial(){
     start_game_text.inputEnabled = false;
     start_game_text_tween.stop();
     start_game_text_tween = game.add.tween(start_game_text).to({alpha:0},500,'Linear',true);
-    for(var n = 0;n<=10;n++){
-        game.add.tween(answer_number0[n]).to({alpha:0},500,'Quad.easeInOut',true);
-        game.add.tween(answer_number1[n]).to({alpha:0},500,'Quad.easeInOut',true);
-        game.add.tween(answer_number2[n]).to({alpha:0},500,'Quad.easeInOut',true);
+    clean_pannel();
 
-        game.add.tween(question_text0[n]).to({alpha:0},500,'Quad.easeInOut',true);
-        game.add.tween(question_text1[n]).to({alpha:0},500,'Quad.easeInOut',true);
-        game.add.tween(question_text2[n]).to({alpha:0},500,'Quad.easeInOut',true);
 
-    }
-    game.add.tween(question_mark0).to({alpha:0},500,'Quad.easeInOut',true);
-    game.add.tween(question_mark1).to({alpha:0},500,'Quad.easeInOut',true);
     game.add.tween(scorebar).to({alpha:0},500,'Quad.easeInOut',true);
+    scorebar_tween.pause();
 
     for(var i = 0;i<=2;i++){
         game.add.tween(answerpannel_tutorial[i]).to({alpha:0},500,'Quad.easeInOut',true);

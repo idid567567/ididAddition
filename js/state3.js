@@ -30,14 +30,19 @@ var first_try;
 
 var show_up_time,waiting_time;
 
-var tween_continue_text,foxbody_tween,foxtail_tween,fishingrod_tween;
+var tween_continue_text,
+    foxbody_tween,foxtail_tween,
+    fishingrod_tween,
+    scorebar_full_tween;
 
 var foxtail_animation,
     question_green_pannel_animation,
     question_blue_pannel1_animation,
     question_blue_pannel2_animation,
     fishsheet_animation,
-    foxgetfishingsheet_animation;
+    foxgetfishingsheet_animation,
+    foxgetfishing_purple_sheet_animation,
+    fish_sheet_purple_animation;
 
 demo.state3 = function() {};
 demo.state3.prototype = {
@@ -51,7 +56,7 @@ demo.state3.prototype = {
         game.load.image('scorebarred','assets/gameplay/scorebarred.png');
         game.load.image('scorebarBG','assets/gameplay/scorebar_BG.png');
         game.load.image('scorebar_design','assets/gameplay/scorebar_design.png');
-
+        game.load.image('scorebar_full','assets/gameplay/scorebar_full.png');
         
         
         game.load.image('BG','assets/fishingpage/BG.png');
@@ -75,14 +80,22 @@ demo.state3.prototype = {
         game.load.spritesheet('foxfalling','assets/charactor/fallingsheet2.png',450,328);
         game.load.spritesheet('dropfishingrod','assets/charactor/dropfishingrodsheet.png',512,431);
         
+        //fish_sheet
         game.load.spritesheet('foxgetfishingsheet','assets/charactor/foxgetfishingsheet.png',780,651);
-        game.load.image('fox_getfishsheet_lastframe','assets/charactor/fox_getfishsheet_lastframe.png');
         game.load.spritesheet('fishsheet','assets/charactor/fishsheet.png',157,247);
+        game.load.spritesheet('foxgetfishing_purple_sheet','assets/charactor/foxgetfishing_purple_sheet.png',780,651);
+        game.load.spritesheet('fish_sheet_purple','assets/charactor/fish_sheet_purple.png',157,247);
+
+        game.load.image('fox_getfishsheet_lastframe','assets/charactor/fox_getfishsheet_lastframe.png');
         
         game.load.image('getfishBG','assets/fishingpage/getfishboardBG.png');
         game.load.spritesheet('button_getfish_continue','assets/fishingpage/button_continue_sheet.png',134,82);
         game.load.spritesheet('button_getfish_backhome','assets/fishingpage/button_back_home_sheet.png',134,82);
-        game.load.spritesheet('fishbox','assets/fishingpage/fishbox_sheet.png',183,148);
+        
+        game.load.image('fishbox_orange','assets/fishingpage/fishbox_orange.png');
+        game.load.image('fishbox_purple','assets/fishingpage/fishbox_purple.png');
+        game.load.spritesheet('fishbox_sheet_highlight','assets/fishingpage/fishbox_sheet_highlight.png',183,148);
+        
         game.load.image('failBG','assets/fishingpage/failboardBG.png');
         
         //question_pannel
@@ -205,7 +218,6 @@ demo.state3.prototype = {
         //init parameter
         answercount = 0;
         addChangeStateEvent();
-        finalscore = 100;
         scorebarX = 1450;
         scorebarY = 500;
         foxtail_time = 200;
@@ -244,6 +256,12 @@ demo.state3.prototype = {
         scorebar.anchor.setTo(0.5, 0);
         scorebar.scale.setTo(2,1);
         scorebar.alpha = 0;
+    
+        
+        scorebar_full = game.add.sprite(scorebarX+10,110,'scorebar_full');
+        scorebar_full.anchor.setTo(0.5, 0);
+        scorebar_full.scale.setTo(1,1);
+        scorebar_full.alpha = 0;     
         
         scorebarred = game.add.sprite(scorebarX+10,scorebarY,'scorebarred');
         scorebarred.anchor.setTo(0.5, 0);
@@ -254,13 +272,14 @@ demo.state3.prototype = {
         scorebar_design.anchor.setTo(0.5, 0);
         scorebar_design.scale.setTo(1,1);
         scorebar_design.alpha = 1;
+   
         
         mask = game.add.graphics();
         mask.beginFill(0xffffff);
         mask.drawRect(scorebarX,200,20,600);
         scorebar.mask = mask;
         scorebarred.mask = mask;
-   
+        
         var foxpositionX = 150,
             foxpositionY = 500;
         
@@ -285,6 +304,7 @@ demo.state3.prototype = {
         mark = game.add.button(foxpositionX+250, foxpositionY, "mark",startfishing);
         mark.scale.setTo(0,0);
         mark.anchor.setTo(0.5,1);
+        mark.inputEnabled = false;
 
         
 
@@ -318,17 +338,28 @@ demo.state3.prototype = {
         foxgetfishingsheet.anchor.setTo(0.7,0.9);
         foxgetfishingsheet.alpha = 0;
         
-        fox_getfishsheet_lastframe = game.add.sprite(foxpositionX+500, foxpositionY+300, "fox_getfishsheet_lastframe");
-        fox_getfishsheet_lastframe.anchor.setTo(0.7,0.9);
-        fox_getfishsheet_lastframe.alpha = 0;
-        
         fishsheet = game.add.sprite(foxpositionX+480, foxpositionY+290, "fishsheet");
         fishsheet.anchor.setTo(0.7,0.9);
         fishsheet.scale.setTo(0.5,0.5);
         fishsheet.angle = -90;
-        fishsheet.alpha = 0;
-       
+        fishsheet.alpha = 0;       
         fishsheet_animation = fishsheet.animations.add("fishsheet_dynamic", [0,1,2]);
+        
+        foxgetfishing_purple_sheet = game.add.sprite(foxpositionX+500, foxpositionY+300, "foxgetfishing_purple_sheet");
+        foxgetfishing_purple_sheet_animation = foxgetfishing_purple_sheet.animations.add("foxgetfishing_purple_sheet", [0,1,2,3,4,5,6,7,8,9]);
+        foxgetfishing_purple_sheet.anchor.setTo(0.7,0.9);
+        foxgetfishing_purple_sheet.alpha = 0;
+        
+        fish_sheet_purple = game.add.sprite(foxpositionX+480, foxpositionY+290, "fish_sheet_purple");
+        fish_sheet_purple.anchor.setTo(0.7,0.9);
+        fish_sheet_purple.scale.setTo(0.5,0.5);
+        fish_sheet_purple.angle = -90;
+        fish_sheet_purple.alpha = 0;
+        fish_sheet_purple_animation = fish_sheet_purple.animations.add("fish_sheet_purple_dynamic", [0,1,2]);
+        
+        fox_getfishsheet_lastframe = game.add.sprite(foxpositionX+500, foxpositionY+300, "fox_getfishsheet_lastframe");
+        fox_getfishsheet_lastframe.anchor.setTo(0.7,0.9);
+        fox_getfishsheet_lastframe.alpha = 0;
         
         var getfishboardX = centerX,
             getfishboardY = 500;
@@ -350,12 +381,19 @@ demo.state3.prototype = {
         btn_getfish_continue.anchor.setTo(1,-1);
         btn_getfish_continue.scale.setTo(0,0);
         btn_getfish_continue.inputEnabled = false;
-        
-        fishbox = game.add.sprite(getfishboardX, getfishboardY, "fishbox");
-        fishbox.animations.add("fishbox", [0,1,2,3,4,5,6,7,8]);
-        fishbox.anchor.setTo(0.5,0.5);
-        fishbox.scale.setTo(0,0);
+                
+        fishbox_orange = game.add.sprite(getfishboardX, getfishboardY, "fishbox_orange");
+        fishbox_orange.anchor.setTo(0.5,0.5);
+        fishbox_orange.scale.setTo(0,0);
 
+        fishbox_purple = game.add.sprite(getfishboardX, getfishboardY, "fishbox_purple");
+        fishbox_purple.anchor.setTo(0.5,0.5);
+        fishbox_purple.scale.setTo(0,0);
+        
+        fishbox_sheet_highlight = game.add.sprite(getfishboardX, getfishboardY, "fishbox_sheet_highlight");
+        fishbox_sheet_highlight.anchor.setTo(0.5,0.5);
+        fishbox_sheet_highlight.scale.setTo(0,0);
+        fishbox_sheet_highlight_animation = fishbox_sheet_highlight.animations.add("fishbox_sheet_highlight", [0,1,2,3,4,5,6,7]);
         
         //open BG
         blackBG_open_fishing = game.add.sprite(0,0, "blackBG");
@@ -677,6 +715,7 @@ demo.state3.prototype = {
             alertFX.play();
             t2 = 40;
             game.add.tween(mark.scale).to({x:2.2,y:2.2},200,Phaser.Easing.Elastic.Out,true);
+            mark.inputEnabled = true;
         }
         
         if(t2>0 && waitingclick == true ){
@@ -686,6 +725,7 @@ demo.state3.prototype = {
             t2 = -1;
             waitingclick = false;  
             mark.scale.setTo(0,0);
+            mark.inputEnabled = false;
         }       
             
         
@@ -702,8 +742,6 @@ demo.state3.prototype = {
         
         if(scorebar.y <= 215 && playing_status == true){
             finishfishing();
-        }else{
-            finalscore -= 0.02;
         }
         if(scorebarred.alpha > 0){
             scorebarred.alpha -=0.05;
@@ -719,13 +757,6 @@ demo.state3.prototype = {
             foxtail_animation.stop();
             foxtail.frame = 0;
         }
-
-        if(scorebar.alpha <= 0.5 && scorebar.alpha > 0.48){
-            console.log('score');
-            scorebar.alpha = 1;
-        }else if(scorebar.alpha > 0.5){
-            scorebar.alpha -= 0.03;
-        }  
 
     }    
 }
@@ -745,7 +776,8 @@ function startfishing(){
     scorebarred.y = 500;        
     mark.scale.setTo(0,0);      
     playing_status = true;       
-
+    mark.inputEnabled = false;
+    
     create_question(); 
     create_answer_button();
     
@@ -753,7 +785,9 @@ function startfishing(){
     foxbody_tween.pause();
     foxtail_tween.pause();
              
-    scorebar.alpha = 1;
+    game.add.tween(scorebar).to({alpha:1},300,'Quad.easeInOut',true);
+    
+    scorebar_tween.resume();
     foxtail.alpha = 0;
     foxtail.animations.stop("fishing");
     foxbody.alpha = 0;
@@ -766,103 +800,106 @@ function startfishing(){
     game_fishing_music.loopFull(1);
 
 }
+function clean_pannel(){
+    
+    for(var n = 0;n<=10;n++){
+        game.add.tween(answer_number0[n]).to({alpha:0},500,'Quad.easeInOut',true);
+        game.add.tween(answer_number1[n]).to({alpha:0},500,'Quad.easeInOut',true);
+        game.add.tween(answer_number2[n]).to({alpha:0},500,'Quad.easeInOut',true);
+
+        game.add.tween(question_text0[n]).to({alpha:0},500,'Quad.easeInOut',true);
+        game.add.tween(question_text1[n]).to({alpha:0},500,'Quad.easeInOut',true);
+        game.add.tween(question_text2[n]).to({alpha:0},500,'Quad.easeInOut',true);
+    }
+    game.add.tween(question_mark0).to({alpha:0},500,'Quad.easeInOut',true);
+    game.add.tween(question_mark1).to({alpha:0},500,'Quad.easeInOut',true);
+    
+    for(var i = 0;i<=2;i++){
+        game.add.tween(answerpannel[i]).to({alpha:0},500,'Quad.easeInOut',true);
+        answerpannel[i].inputEnabled = false; 
+    }
+
+    game.add.tween(bonds).to({alpha:0},500,'Quad.easeInOut',true);
+    game.add.tween(question_green_pannel).to({alpha:0},500,'Quad.easeInOut',true);
+    game.add.tween(question_blue_pannel1).to({alpha:0},500,'Quad.easeInOut',true);
+    game.add.tween(question_blue_pannel2).to({alpha:0},500,'Quad.easeInOut',true);
+    
+    question_green_pannel_animation.stop();
+    question_blue_pannel1_animation.stop();
+    question_blue_pannel2_animation.stop();
+
+}
+
 function finishfishing(){
 
-    
     if(daily_task_status == false){
         daily_task_status = true;
     }
     
     complete_status = true;
     playing_status = false; 
+    
+    clean_pannel();
+    
+    scorebar_full.alpha = 1;
+    scorebar_full_tween = game.add.tween(scorebar_full).to({alpha:'-0.2'},500,'Quad.easeInOut',true,0,false,true).loop(true);
+    
     scorebar.alpha = 0;
-    scorebar.y = -1000;
-    game.add.tween(scorebar).to({alpha:0},100,'Linear',true);
+    scorebar_tween.pause();
 
-    for(var n = 0;n<=10;n++){
-        answer_number0[n].alpha = 0;
-        answer_number1[n].alpha = 0;
-        answer_number2[n].alpha = 0;
-        question_text0[n].alpha = 0;
-        question_text1[n].alpha = 0;
-        question_text2[n].alpha = 0;
-        question_mark0.alpha = 0;
-        question_mark1.alpha = 0;
-    }
-    
-    answerpannel[0].alpha = 0;
-    answerpannel[1].alpha = 0;
-    answerpannel[2].alpha = 0;
-    answerpannel[0].inputEnabled = false;  
-    answerpannel[1].inputEnabled = false;  
-    answerpannel[2].inputEnabled = false;  
-
-    
-    bonds.alpha = 0;
-    question_green_pannel_animation.stop();
-    question_blue_pannel1_animation.stop();
-    question_blue_pannel2_animation.stop();
-    question_green_pannel.alpha = 0;
-    question_blue_pannel1.alpha = 0;
-    question_blue_pannel2.alpha = 0;
-    
-    blue_FX_sheet.alpha = 0;
-    green_FX_sheet.alpha = 0;
-    
     foxpulling_tween.pause();
     fishingrodpullingsheet_tween.pause();
     foxpulling.alpha = 0;
     fishingrodpullingsheet.alpha = 0;
-    foxgetfishingsheet.animations.play("foxgetfishingsheet",8,false);
-    foxgetfishingsheet.alpha = 1;
+    fish_sheet();
+    
 
-    foxgetfishingsheet_animation.onComplete.add(function () {	
-        fishsheet.alpha = 1;
-        fishsheet.animations.play("fishsheet_dynamic",15,true);
-        foxgetfishingsheet.alpha = 0;
-        fox_getfishsheet_lastframe.alpha = 1;
-    }, this);
 
     shadow.alpha = 0;
-    showupfishboard();
-    
+    showupfishboard();    
     game_fishing_music.stop();
-    successFX.play();
+    successFX.play();   
+}
+var rand_fish;
+function fish_sheet(){
     
+    rand_fish= Math.floor(Math.random()*2);
+    
+    console.log(rand_fish);
+    if( rand_fish == 0 ){
+        foxgetfishingsheet.animations.play("foxgetfishingsheet",8,false);
+        foxgetfishingsheet.alpha = 1;
+
+        foxgetfishingsheet_animation.onComplete.add(function () {	
+            fishsheet.alpha = 1;
+            fishsheet.animations.play("fishsheet_dynamic",15,true);
+            foxgetfishingsheet.alpha = 0;
+            fox_getfishsheet_lastframe.alpha = 1;
+        }, this);        
+    }else if( rand_fish == 1 ){
+
+        foxgetfishing_purple_sheet.animations.play("foxgetfishing_purple_sheet",8,false);
+        foxgetfishing_purple_sheet.alpha = 1;
+
+        foxgetfishing_purple_sheet_animation.onComplete.add(function () {	
+            fish_sheet_purple.alpha = 1;
+            fish_sheet_purple.animations.play("fish_sheet_purple_dynamic",15,true);
+            foxgetfishing_purple_sheet.alpha = 0;
+            fox_getfishsheet_lastframe.alpha = 1;
+        }, this);        
+        
+    }
+
 }
 
 function failfishing(){
     complete_status = true;
     playing_status = false; 
-
+    
+    scorebar_tween.pause();
     scorebar.alpha = 0;
-    scorebar.y = -1000;
-
-    for(var n = 0;n<=10;n++){
-        answer_number0[n].alpha = 0;
-        answer_number1[n].alpha = 0;
-        answer_number2[n].alpha = 0;
-        question_text0[n].alpha = 0;
-        question_text1[n].alpha = 0;
-        question_text2[n].alpha = 0;
-        question_mark0.alpha = 0;
-        question_mark1.alpha = 0;
-    }
     
-    answerpannel[0].alpha = 0;
-    answerpannel[1].alpha = 0;
-    answerpannel[2].alpha = 0;
-    answerpannel[0].inputEnabled = false;  
-    answerpannel[1].inputEnabled = false;  
-    answerpannel[2].inputEnabled = false;  
-    
-    bonds.alpha = 0;
-    question_green_pannel_animation.stop();
-    question_blue_pannel1_animation.stop();
-    question_blue_pannel2_animation.stop();    
-    question_green_pannel.alpha = 0;
-    question_blue_pannel1.alpha = 0;
-    question_blue_pannel2.alpha = 0;
+    clean_pannel();
     
     foxpulling.animations.stop("fishing");
     foxpulling.alpha = 0;
@@ -892,18 +929,23 @@ function continuefishing(){
     
     btn_getfish_backhome.inputEnabled = false;
     btn_getfish_continue.inputEnabled = false;
-    game.add.tween(fishbox.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(fishbox_purple.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(fishbox_orange.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(fishbox_sheet_highlight.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    
     game.add.tween(btn_getfish_continue.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
     game.add.tween(btn_getfish_backhome.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
     game.add.tween(getfishBG.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
     game.add.tween(btn_getfish_continue.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
     game.add.tween(btn_getfish_backhome.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
     game.add.tween(failBG.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
-    
+    fishbox_sheet_highlight_animation.stop();
     foxfalling.alpha = 0;
-    foxgetfishingsheet.alpha = 0;
+    
     fishsheet_animation.stop();
     fishsheet.alpha = 0;
+    fish_sheet_purple_animation.stop();
+    fish_sheet_purple.alpha = 0;
     fox_getfishsheet_lastframe.alpha = 0;
     
     fishingrod.alpha = 1;
@@ -913,17 +955,27 @@ function continuefishing(){
     fishingrod_tween.resume();
     foxbody_tween.resume();
     foxtail_tween.resume();
-
+    
     fishingBG.loopFull(1);
     startFX.play();
- 
+    
+    scorebar_full_tween.stop();
+    game.add.tween(scorebar_full).to({alpha:0},500,'Quad.easeInOut',true);
 }
 function showupfishboard(){
-    game.add.tween(fishbox.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+    game.add.tween(fishbox_sheet_highlight.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+    if( rand_fish == 0 ){
+        game.add.tween(fishbox_orange.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+    }else if ( rand_fish == 1 ){
+        game.add.tween(fishbox_purple.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+    }
+
     game.add.tween(btn_getfish_continue.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
     game.add.tween(btn_getfish_backhome.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
     game.add.tween(getfishBG.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
-    fishbox.animations.play("fishbox",15,true);
+    game.add.tween(fishbox_sheet_highlight.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+    fishbox_sheet_highlight.animations.play("fishbox_sheet_highlight",15,true);
+    
     btn_getfish_backhome.inputEnabled = true;
     btn_getfish_continue.inputEnabled = true;
 }
