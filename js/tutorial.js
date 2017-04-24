@@ -25,7 +25,7 @@ function startfishing_tutorial(){
     mark_tutorial.inputEnabled = false;
     scorebarBG.alpha = 1;       
     scorebar.alpha = 1;
-    scorebar_tween = game.add.tween(scorebar).to({alpha:'-0.2'},500,'Quad.easeInOut',true,0,false,true).loop(true);
+    scorebar_tween = game.add.tween(scorebar).to({alpha:'-0.4'},500,'Quad.easeInOut',true,0,false,true).loop(true);
     
     question_pannel1_create_fx.alpha = 1;
     question_pannel1_create_fx_animation = question_pannel1_create_fx.animations.play("question_pannel1_create_fx",20,false);
