@@ -47,7 +47,9 @@ var foxtail_animation,
     fish_sheet_yellow_animation,
     fish_sheet_dark_blue_animation,
     fish_sheet_red_animation,
-    fishbox_sheet_highlight_animation;
+    fishbox_sheet_highlight_animation,
+    mark_tween,
+    mark_showing_tween;
 
 demo.state3 = function() {};
 demo.state3.prototype = {
@@ -72,7 +74,9 @@ demo.state3.prototype = {
         game.load.image('sunlight2','assets/fishingpage/sunlight2.png');
         
         game.load.image('fishingrod','assets/charactor/fishingrod.png');
+        //mark
         game.load.image('mark','assets/charactor/mark.png');
+        //game.load.image('mark_text','assets/charactor/mark_text.png');
  
         game.load.image('foxbody','assets/charactor/fox_fishingbody.png');
         game.load.image('shadow','assets/charactor/shadow.png');
@@ -322,14 +326,7 @@ demo.state3.prototype = {
         foxtail_animation = foxtail.animations.add("fishing", [0,1,2,3,4,5,6]);
         foxtail.anchor.setTo(0.4,0.9); 
         foxtail.scale.setTo(0.5,0.5);
-        foxtail_tween = game.add.tween(foxtail).to({angle:'-1'},1000,'Quad.easeInOut',true,0,false,true).loop(true);   
-
-        mark = game.add.button(foxpositionX+250, foxpositionY, "mark",startfishing);
-        mark.scale.setTo(0,0);
-        mark.anchor.setTo(0.5,1);
-        mark.inputEnabled = false;
-
-        
+        foxtail_tween = game.add.tween(foxtail).to({angle:'-1'},1000,'Quad.easeInOut',true,0,false,true).loop(true);        
 
         fishingrodpullingsheet = game.add.sprite(foxpositionX+670, foxpositionY+290, "fishingrodpullingsheet");
         fishingrodpullingsheet.animations.add("fishingrodpulling", [0,1,2,3,4]);
@@ -759,9 +756,16 @@ demo.state3.prototype = {
         click_to_continue = game.add.button(0,0, "blackBG",start_tutorial);
         click_to_continue.alpha = 0;
         
-        mark_tutorial = game.add.button(foxpositionX+250, foxpositionY, "mark",startfishing_tutorial);
+        mark_tutorial = game.add.button(foxpositionX+250, foxpositionY-150, "mark",startfishing_tutorial);
         mark_tutorial.scale.setTo(0,0);
-        mark_tutorial.anchor.setTo(0.5,1);
+        mark_tutorial.anchor.setTo(0.5,0.5);
+        
+        mark = game.add.button(foxpositionX+250, foxpositionY-150, "mark",startfishing);
+        mark.scale.setTo(0,0);
+        mark.anchor.setTo(0.5,0.5);
+        mark.inputEnabled = false;
+ 
+                
         
         var textpositionX = 200,
             textpositionY = 250;
@@ -770,7 +774,7 @@ demo.state3.prototype = {
         finger_pointer.alpha = 0;
         finger_pointer.anchor.setTo(0.5,0.5);
         
-        get_fish_tutorial = game.add.sprite(foxpositionX+450, foxpositionY-70,"get_fish_tutorial");
+        get_fish_tutorial = game.add.sprite(foxpositionX+500, foxpositionY-150,"get_fish_tutorial");
         get_fish_tutorial.anchor.setTo(0.5,0.5);
         get_fish_tutorial.scale.setTo(0,0);
 
@@ -834,8 +838,10 @@ demo.state3.prototype = {
         if(show_up_time == 0 && mark.scale.x == 0 && playing_status == false && complete_status == false ){
             alertFX.play();
             t2 = 40;
-            game.add.tween(mark.scale).to({x:2.2,y:2.2},200,Phaser.Easing.Elastic.Out,true);
             mark.inputEnabled = true;
+            mark_tween = game.add.tween(mark.scale).to({x:1,y:1},200,Phaser.Easing.Elastic.Out,true);
+            mark_tween.onComplete.add(completed_mark_tween,this);
+            
         }
         
         if(t2>0 && waitingclick == true ){
@@ -843,13 +849,12 @@ demo.state3.prototype = {
            
         }else if(t2 == 0 && waitingclick == true ){
             t2 = -1;
-            waitingclick = false;  
+            waitingclick = false;
+            //mark_showing_tween.stop();
             mark.scale.setTo(0,0);
             mark.inputEnabled = false;
         }       
             
-        
-
         if(scorebar.y < 800 && playing_status == true){
             scorebar.y += 1.5;
             scorebarred.y += 1.5;
@@ -880,6 +885,10 @@ demo.state3.prototype = {
 
     }    
 }
+function completed_mark_tween(){
+    //mark_showing_tween = game.add.tween(mark.scale).to({x:'-0.1',y:'-0.1'},400,'Quad.easeInOut',true,0,false,true).loop(true); 
+}
+
 var foxpulling_tween,fishingrodpullingsheet_tween;
 function startfishing(){
 
@@ -893,7 +902,8 @@ function startfishing(){
     
     game.add.tween(shadow).to({x:'-10'},1000,'Linear',true,0,false,false).loop(true); 
     scorebar.y = 500; 
-    scorebarred.y = 500;        
+    scorebarred.y = 500; 
+    //mark_showing_tween.stop();
     mark.scale.setTo(0,0);      
     playing_status = true;       
     mark.inputEnabled = false;
@@ -940,9 +950,9 @@ function clean_pannel(){
     }
 
     game.add.tween(bonds).to({alpha:0},500,'Quad.easeInOut',true);
-    game.add.tween(question_green_pannel).to({alpha:0},500,'Quad.easeInOut',true);
-    game.add.tween(question_blue_pannel1).to({alpha:0},500,'Quad.easeInOut',true);
-    game.add.tween(question_blue_pannel2).to({alpha:0},500,'Quad.easeInOut',true);
+    game.add.tween(question_green_pannel).to({alpha:0},500,'Quad.easeInOut',true,500);
+    game.add.tween(question_blue_pannel1).to({alpha:0},500,'Quad.easeInOut',true,500);
+    game.add.tween(question_blue_pannel2).to({alpha:0},500,'Quad.easeInOut',true,500);
     
     question_green_pannel_animation.stop();
     question_blue_pannel1_animation.stop();

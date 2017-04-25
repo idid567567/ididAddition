@@ -106,7 +106,7 @@ function create_question(){
     game.add.tween(question_green_pannel).to({alpha:1},300,'Linear',true,300);
     game.add.tween(question_blue_pannel1).to({alpha:1},300,'Linear',true,300);
     game.add.tween(question_blue_pannel2).to({alpha:1},300,'Linear',true,300);
-    game.add.tween(bonds).to({alpha:1},500,'Linear',true,300);
+    game.add.tween(bonds).to({alpha:1},500,'Linear',true,600);
     
     if( rand%2 == 0 ){
 
@@ -151,9 +151,8 @@ function update_question(){
 function create_answer_button(){
 
     for(var i = 0;i<=2;i++){
-
-            answerpannel[i].alpha = 0.9; 
-            answerpannel[i].inputEnabled = true;  
+        game.add.tween(answerpannel[i]).to({alpha:0.9},200,'Quad.easeInOut',true,100*i);
+        answerpannel[i].inputEnabled = true;  
     }
     answerpannel[0].events.onInputDown.add(checkanswer_fishing0);
     answerpannel[1].events.onInputDown.add(checkanswer_fishing1);

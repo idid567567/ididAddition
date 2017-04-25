@@ -7,17 +7,30 @@ function start_tutorial(){
     show_up_continue_text = false;
 }
 
-var finger_pointer_tween;
+var finger_pointer_tween,
+    mark_tutorial_tween,
+    get_fish_tutorial_tween,
+    mark_tutorial_show_up_tween,
+    mark_text_tween;
 
 function completed_continue_text(){
     alertFX.play();
-    game.add.tween(mark_tutorial.scale).to({x:2.2,y:2.2},200,Phaser.Easing.Elastic.Out,true); 
+    mark_tutorial_show_up_tween = game.add.tween(mark_tutorial.scale).to({x:1,y:1},200,Phaser.Easing.Elastic.Out,true);
+    //game.add.tween(mark_text.scale).to({x:1,y:1},200,Phaser.Easing.Elastic.Out,true);
+    mark_tutorial_show_up_tween.onComplete.add(completed_mark_tutorial_show_up_tween, this);
+    
     finger_pointer.alpha = 1;
     finger_pointer_tween = game.add.tween(finger_pointer).to({y:'+20'},500,'Linear',true,0,false,false).loop(true); 
-    game.add.tween(get_fish_tutorial.scale).to({x:0.6,y:0.6},200,Phaser.Easing.Elastic.Out,true); 
+    game.add.tween(get_fish_tutorial.scale).to({x:0.5,y:0.5},200,Phaser.Easing.Elastic.Out,true,200); 
+}
+function completed_mark_tutorial_show_up_tween(){
+    mark_tutorial_tween = game.add.tween(mark_tutorial.scale).to({x:'-0.1',y:'-0.1'},400,'Quad.easeInOut',true,0,false,true).loop(true); 
+    get_fish_tutorial_tween = game.add.tween(get_fish_tutorial).to({alpha:'-0.2'},400,'Quad.easeInOut',true,0,false,true).loop(true);
 }
 
 function startfishing_tutorial(){
+    mark_tutorial_tween.stop();
+    get_fish_tutorial_tween.stop();
     get_fish_tutorial.alpha = 0;
     finger_pointer.alpha = 0;
     finger_pointer_tween.stop();
@@ -47,13 +60,14 @@ function tutorial_q1(){
     game.add.tween(question_green_pannel).to({alpha:1},500,'Linear',true,300);
     game.add.tween(question_blue_pannel1).to({alpha:1},500,'Linear',true,300);
     game.add.tween(question_blue_pannel2).to({alpha:1},500,'Linear',true,300);
-    game.add.tween(bonds).to({alpha:1},500,'Linear',true,300);
+    game.add.tween(bonds).to({alpha:1},300,'Linear',true,800);
 
     show_question_text(-1,0);
     show_question_text(4,1);
     show_question_text(2,2);  
     for(var i = 0;i<=2;i++){
-        answerpannel_tutorial[i].alpha = 0.9; 
+        game.add.tween(answerpannel_tutorial[i]).to({alpha:0.9},500,'Linear',true,100*i);
+
     }
 
     show_number(3,0);
@@ -71,12 +85,15 @@ var equal_mark_tutorial_tween;
 function completed_tutorial_number_4_tween(){
     game.add.tween(tutorial_number_2).to({x:'-400'},1500,'Quad.easeInOut',true,100);
     game.add.tween(tutorial_number_2.scale).to({x:0.5,y:0.5},1500,'Quad.easeInOut',true,100);
+
     
     game.add.tween(plus_tutorial).to({x:'-500'},1500,'Quad.easeInOut',true,100);
     game.add.tween(plus_tutorial.scale).to({x:0.5,y:0.5},1500,'Quad.easeInOut',true,100);
-    
+
+
     game.add.tween(tutorial_number_4).to({x:'-600'},1500,'Quad.easeInOut',true,100);
     game.add.tween(tutorial_number_4.scale).to({x:0.5,y:0.5},1500,'Quad.easeInOut',true,100);
+
     
     game.add.tween(Qmark_tutorial).to({alpha:1},500,'Quad.easeInOut',true,1600);
     
@@ -114,6 +131,7 @@ function completed_add_mode_text2(){
 
 
 function correct_answer_tutorial(){
+    
     energy_transfer1_tutorial();
     game.add.tween(tutorial_frame_sheet).to({alpha:0},500,'Quad.easeInOut',true);
     game.add.tween(tutorial_number_2).to({alpha:0},500,'Quad.easeInOut',true);
@@ -178,7 +196,6 @@ function completed_Qmark_tutorial2_tween(){
 
     game.add.tween(Qmark_tutorial2).to({x:'-480'},1000,'Linear',true,500);
     game.add.tween(Qmark_tutorial2.scale).to({x:0.5,y:0.5},1000,'Linear',true,500);
-    
     
     equal_mark_tutorial2_tween = game.add.tween(equal_mark_tutorial).to({alpha:1},1000,'Linear',true,500);
     equal_mark_tutorial2_tween.onComplete.add(completed_equal_mark_tutorial2_tween, this);  
@@ -246,16 +263,8 @@ function finish_tutorial(){
         game.add.tween(answerpannel_tutorial[i]).to({alpha:0},500,'Quad.easeInOut',true);
     }
     game.add.tween(correct_text1).to({alpha:0},500,'Quad.easeInOut',true);
-    game.add.tween(bonds).to({alpha:0},500,'Quad.easeInOut',true);
-    game.add.tween(question_green_pannel).to({alpha:0},500,'Quad.easeInOut',true);
-    game.add.tween(question_blue_pannel1).to({alpha:0},500,'Quad.easeInOut',true);
-    game.add.tween(question_blue_pannel2).to({alpha:0},500,'Quad.easeInOut',true);
-    
-    question_green_pannel_animation.stop();
-    question_blue_pannel1_animation.stop();
-    question_blue_pannel2_animation.stop();
 
-    blue_FX_sheet.alpha = 0;
-    green_FX_sheet.alpha = 0;
+    //blue_FX_sheet.alpha = 0;
+    //green_FX_sheet.alpha = 0;
     first_try = false;
 }
