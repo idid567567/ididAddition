@@ -36,7 +36,6 @@ function startfishing_tutorial(){
     finger_pointer_tween.stop();
     mark_tutorial.scale.setTo(0,0);
     mark_tutorial.inputEnabled = false;
-    scorebarBG.alpha = 1;       
     scorebar.alpha = 1;
     scorebar_tween = game.add.tween(scorebar).to({alpha:'-0.4'},500,'Quad.easeInOut',true,0,false,true).loop(true);
     
@@ -263,8 +262,5 @@ function finish_tutorial(){
         game.add.tween(answerpannel_tutorial[i]).to({alpha:0},500,'Quad.easeInOut',true);
     }
     game.add.tween(correct_text1).to({alpha:0},500,'Quad.easeInOut',true);
-
-    //blue_FX_sheet.alpha = 0;
-    //green_FX_sheet.alpha = 0;
     first_try = false;
 }
