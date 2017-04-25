@@ -255,6 +255,8 @@ demo.state3.prototype = {
         waitingclick = false;
         complete_status = false;
         first_try = true;
+        
+        addmode = true;
 
         game.add.sprite(0,0,'BG');
         sunlight1 = game.add.sprite(0,0,'sunlight1');
@@ -466,25 +468,21 @@ demo.state3.prototype = {
         failBG.scale.setTo(0,0);
         
         //button------------------------------------------------------------------------------------------------------------------------
-        btn_getfish_backhome = game.add.button(getfishboardX+1, getfishboardY, 'button_getfish_backhome', backhome, this, 1, 0);
+        btn_getfish_backhome = game.add.button(getfishboardX+1, getfishboardY, 'button_finish_sheet', backhome, this, 1, 0);
         btn_getfish_backhome.anchor.setTo(0,-1);
         btn_getfish_backhome.scale.setTo(0,0);
         btn_getfish_backhome.inputEnabled = false;
         
-        btn_getfish_continue = game.add.button(getfishboardX-1, getfishboardY, 'button_getfish_continue', continuefishing, this, 1, 0);
+        btn_getfish_continue = game.add.button(getfishboardX-1, getfishboardY, 'button_getfish_continue', level_up_fishing, this, 1, 0);
         btn_getfish_continue.anchor.setTo(1,-1);
         btn_getfish_continue.scale.setTo(0,0);
         btn_getfish_continue.inputEnabled = false;
         
-        button_restart_sheet = game.add.button(getfishboardX-1, getfishboardY, 'button_restart_sheet', restartfishing, this, 1, 0);
+        button_restart_sheet = game.add.button(getfishboardX-1, getfishboardY, 'button_restart_sheet', continuefishing, this, 1, 0);
         button_restart_sheet.anchor.setTo(1,-1);
         button_restart_sheet.scale.setTo(0,0);
         button_restart_sheet.inputEnabled = false; 
-        
-        button_finish_sheet = game.add.button(getfishboardX-1, getfishboardY, 'button_finish_sheet', finishfishing_promote, this, 1, 0);
-        button_finish_sheet.anchor.setTo(1,-1);
-        button_finish_sheet.scale.setTo(0,0);
-        button_finish_sheet.inputEnabled = false; 
+
         
         //fishbox-----------------------------------------------------------------------------------------------------------------------
         fishbox_orange = game.add.sprite(getfishboardX, getfishboardY, "fishbox_orange");
@@ -898,7 +896,36 @@ function completed_mark_tween(){
 
 function restartfishing(){
     
+    btn_getfish_backhome.inputEnabled = false;
+    btn_getfish_continue.inputEnabled = false;
+    clean_fish_dynamic();
+
+    
+    game.add.tween(btn_getfish_continue.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(btn_getfish_backhome.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(getfishBG.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(btn_getfish_continue.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(btn_getfish_backhome.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(failBG.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    foxfalling.alpha = 0;
+    
+    fishingrod.alpha = 1;
+    foxbody.alpha = 1;
+    foxtail.alpha = 1;
+    
+    fishingrod_tween.resume();
+    foxbody_tween.resume();
+    foxtail_tween.resume();
+    
+    fishingBG.loopFull(1);
+    startFX.play();
+    
+    scorebar_full_tween.stop();
+    game.add.tween(scorebar_full).to({alpha:0},500,'Quad.easeInOut',true);
 }
+
+
+
 function finishfishing_promote(){}
 
 var foxpulling_tween,fishingrodpullingsheet_tween;
@@ -1032,22 +1059,27 @@ function backhome(){
     game.add.tween(blackBG_close_fishing).to({alpha:1},1000,'Quad.easeIn',true); 
     
 }
+function level_up_fishing(){
+    minusmode = true;
+    addmode = false;
+    continuefishing();
+}
 
 function continuefishing(){
-
     complete_status = false;
+    waitingclick = false;
     
+    playing_status = false;
     btn_getfish_backhome.inputEnabled = false;
     btn_getfish_continue.inputEnabled = false;
     clean_fish_dynamic();
 
-    
     game.add.tween(btn_getfish_continue.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
     game.add.tween(btn_getfish_backhome.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+    game.add.tween(button_restart_sheet.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
     game.add.tween(getfishBG.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
-    game.add.tween(btn_getfish_continue.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
-    game.add.tween(btn_getfish_backhome.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
     game.add.tween(failBG.scale).to({x:0,y:0},250,'Quad.easeOut',true,0);
+
     foxfalling.alpha = 0;
     
     fishingrod.alpha = 1;
@@ -1067,21 +1099,27 @@ function continuefishing(){
 
 function showupfishboard(){
     fish_box_dynamic();
-
-    game.add.tween(btn_getfish_continue.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+    if( addmode == true ){
+        game.add.tween(btn_getfish_continue.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);  
+        btn_getfish_continue.inputEnabled = true;
+    }
+    if( minusmode == true ){
+        game.add.tween(button_restart_sheet.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+        button_restart_sheet.inputEnabled = true;
+    }
     game.add.tween(btn_getfish_backhome.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
     game.add.tween(getfishBG.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
 
     btn_getfish_backhome.inputEnabled = true;
-    btn_getfish_continue.inputEnabled = true;
+    
 }
 
 function showupfailboard(){
     
-    game.add.tween(btn_getfish_continue.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
+    game.add.tween(button_restart_sheet.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
     game.add.tween(btn_getfish_backhome.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
     game.add.tween(failBG.scale).to({x:1,y:1},500,'Quad.easeOut',true,2000);
     
     btn_getfish_backhome.inputEnabled = true;
-    btn_getfish_continue.inputEnabled = true;
+    button_restart_sheet.inputEnabled = true;
 }

@@ -108,42 +108,48 @@ function create_question(){
     game.add.tween(question_blue_pannel2).to({alpha:1},300,'Linear',true,300);
     game.add.tween(bonds).to({alpha:1},500,'Linear',true,600);
     
-    if( rand%2 == 0 ){
+    if( addmode == true ){
 
         show_question_text(-1,0);
         show_question_text(questionlevel1[rand][0],1);
         show_question_text(questionlevel1[rand][1],2);
+        /*
         addmode = true;
         minusmode = false;           
+        */
     }
-    if( rand%2 == 1 ){
+    if( minusmode == true ){
 
         show_question_text(answerlevel1[rand],0);
         show_question_text(-1,1);
         show_question_text(questionlevel1[rand][1],2);
+        /*
         addmode = false;
         minusmode = true;       
+        */
     }
 }
 
 function update_question(){
 
     create_question_index();
-    if( rand%2 == 0 ){
+    if( addmode == true ){
 
         show_question_text(-1,0);
         show_question_text(questionlevel1[rand][0],1);
         show_question_text(questionlevel1[rand][1],2);
-        addmode = true;
+
         minusmode = false;
+
     }
-    if( rand%2 == 1 ){
+    if( minusmode == true ){
 
         show_question_text(answerlevel1[rand],0);
         show_question_text(-1,1);
         show_question_text(questionlevel1[rand][1],2);
+       
         addmode = false;
-        minusmode = true;
+
     }
     update_answerstring();
 }
